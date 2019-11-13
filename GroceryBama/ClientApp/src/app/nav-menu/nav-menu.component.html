@@ -32,9 +32,9 @@
             <a class="nav-link text-dark" [routerLink]="['/fetch-data']">Fetch data</a>
           </li>
           <li class="nav-item" *ngIf="isLoggedIn" (click)="logout()">
-            <a class="nav-link text-dark">{{ authenticator.currentUser.username }}, Logout</a>
+            <a class="nav-link text-dark">{{ authenticator.currentUser.firstname }}, Logout</a>
           </li>
-          <li class="nav-item" *ngIf="!isLoggedIn"  (click)="login('John', 'Smeith')">
+          <li class="nav-item" *ngIf="!isLoggedIn"  (click)="login('jWallace', 'eyr#{2 %DDk--=?=23fere')">
             <a class="nav-link text-dark" >Login</a>
           </li>
         </ul>
