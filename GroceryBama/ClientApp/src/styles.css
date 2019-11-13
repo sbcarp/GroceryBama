@@ -14,3 +14,10 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+body {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: #fbfbfb;
+}

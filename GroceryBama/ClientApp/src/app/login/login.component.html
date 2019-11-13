@@ -1,1 +1,15 @@
-<p>login works!</p>
+
+<div class="center-block">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" formControlName="username" />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" formControlName="password" />
+        </div>
+      <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+      <a [routerLink]="['/']">New to GroceryBama? Register here</a>
+    </form>
+</div>

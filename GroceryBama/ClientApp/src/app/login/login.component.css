@@ -1,0 +1,23 @@
+.center-block {
+  position: fixed;
+  width: 35%;
+  /*margin:auto;*/
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.5s;
+  padding: 20px;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25em;
+  background-color: white;
+}
+@media (max-width: 1024px) {
+  .center-block {
+    width: 50%;
+  }
+}
+@media (max-width: 645px) {
+  .center-block {
+    width: 70%;
+  }
+}

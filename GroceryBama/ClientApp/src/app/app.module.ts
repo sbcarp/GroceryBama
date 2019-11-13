@@ -1,8 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { RequestInterceptor } from './_utilities/request-interceptor'
+
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -14,7 +16,7 @@ import { ManagerComponent } from './manager/manager.component';
 import { DelivererComponent } from './deliverer/deliverer.component';
 import { BuyerComponent } from './buyer/buyer.component';
 
-import { RequestInterceptor } from './_utilities/request-interceptor'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,14 +30,15 @@ import { RequestInterceptor } from './_utilities/request-interceptor'
     BuyerComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-    HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: LoginComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-    ])
+      BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+      HttpClientModule,
+      FormsModule,
+      ReactiveFormsModule,
+      RouterModule.forRoot([
+        { path: '', component: LoginComponent, pathMatch: 'full' },
+        { path: 'counter', component: CounterComponent },
+        { path: 'fetch-data', component: FetchDataComponent },
+      ])
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
