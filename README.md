@@ -39,5 +39,3 @@ INSERT INTO userexample VALUES('Franklin', 'Wong', 'fWong', 'qwerty', 'user');
 INSERT INTO userexample VALUES('Alicia', 'Zelaya', 'aZelaya', '000000', 'user');
 INSERT INTO userexample VALUES('Jennifer', 'Wallace', 'jWallace', 'eyr#{2 %DDk--=?=23fere', 'admin');
 ```
-
-###End
