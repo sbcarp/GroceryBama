@@ -8,6 +8,7 @@
 # Configurations
 ### MySQL Configuration
 It is recommended to use the following settings during installation
+
 `High Availability` Standalone MySQL Server / Classic MySQL Replication
 
 `Authentication Method`  Use Legacy Authentication Method
