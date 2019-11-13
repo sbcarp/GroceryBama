@@ -35,7 +35,8 @@ import { BuyerComponent } from './buyer/buyer.component';
       FormsModule,
       ReactiveFormsModule,
       RouterModule.forRoot([
-        { path: '', component: LoginComponent, pathMatch: 'full' },
+          { path: '', component: HomeComponent, pathMatch: 'full' },
+        { path: 'login', component: LoginComponent},
         { path: 'counter', component: CounterComponent },
         { path: 'fetch-data', component: FetchDataComponent },
       ])

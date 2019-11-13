@@ -10,13 +10,14 @@ export class Authenticator {
         private baseUrl: string) {
         this._currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
-    public isLoggedIn() {
+    public get isLoggedIn() {
         return (this._currentUser != null && this._currentUser.token != null);
     }
     public get currentUser(): User {
         return this._currentUser;
     }
     login(username: string, password: string) {
+        this.logout();
         return this.http.post<any>(this.baseUrl + 'users/login', { username, password })
             .pipe(map(user => {
                 if (user) localStorage.setItem('currentUser', JSON.stringify(user));

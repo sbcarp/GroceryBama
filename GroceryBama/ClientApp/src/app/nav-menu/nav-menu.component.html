@@ -31,11 +31,11 @@
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/fetch-data']">Fetch data</a>
           </li>
-          <li class="nav-item" *ngIf="isLoggedIn" (click)="logout()">
-            <a class="nav-link text-dark">{{ authenticator.currentUser.firstname }}, Logout</a>
+          <li class="nav-item" *ngIf="authenticator.isLoggedIn" (click)="logout()">
+            <a class="nav-link text-dark" [routerLink]="['/login']">{{ authenticator.currentUser.firstname }}, Logout</a>
           </li>
-          <li class="nav-item" *ngIf="!isLoggedIn"  (click)="login('jWallace', 'eyr#{2 %DDk--=?=23fere')">
-            <a class="nav-link text-dark" >Login</a>
+          <li class="nav-item" *ngIf="!authenticator.isLoggedIn">
+            <a class="nav-link text-dark" [routerLink]="['/login']">Login</a>
           </li>
         </ul>
       </div>

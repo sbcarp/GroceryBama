@@ -11,13 +11,11 @@ import { first } from 'rxjs/operators';
 })
 export class NavMenuComponent {
     isExpanded = false;
-    isLoggedIn = false;
     constructor(
         private http: HttpClient,
         @Inject('BASE_URL') private baseUrl: string,
         private authenticator: Authenticator,
         private router: Router) {
-        this.isLoggedIn = this.authenticator.isLoggedIn();
     }
     
     collapse() {
@@ -31,7 +29,6 @@ export class NavMenuComponent {
 
     logout() {
         this.authenticator.logout();
-        this.isLoggedIn = this.authenticator.isLoggedIn();
     }
 
     login(username: string, password: string) {
@@ -39,7 +36,6 @@ export class NavMenuComponent {
             .pipe(first())
             .subscribe(
                 user => {
-                    this.isLoggedIn = this.authenticator.isLoggedIn();
                 },
                 error => { console.log(error); },
 
