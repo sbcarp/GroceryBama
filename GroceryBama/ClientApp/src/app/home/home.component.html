@@ -4,13 +4,16 @@
   </div>
   <div class="items-container" *ngIf="items">
     <div *ngFor="let item of items">
-      <div class="card" style="width: 18rem;">
-        <img src="assets/images/wine-bottle.png" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">{{ item.name }}</h5>
-          <p class="card-text">{{ item.description }}</p>
-          <a href="#" class="btn btn-secondary">Add to Cart</a>
+      <div class="item">
+        <div class="img-container">
+          <img src="{{ item.pictureUrl }}" class="pic" alt="...">
         </div>
+        <div class="item-shortInfo">
+          <div class="item-price">${{ item.listedPrice }}</div>
+        </div>
+        <div class="item-name">{{ item.name }}</div>
+        <div class="item-description">{{ item.description }}</div>
+        <!--<a href="#" class="btn btn-secondary">Add to Cart</a>-->
       </div>
     </div>
   </div>

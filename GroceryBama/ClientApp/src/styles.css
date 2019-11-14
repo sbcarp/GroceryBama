@@ -8,6 +8,16 @@ a {
 code {
   color: #e01a76;
 }
+.flex{
+  display: flex;
+}
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-column {
+  flex-direction: column;
+}
 
 .btn-primary {
   color: #fff;

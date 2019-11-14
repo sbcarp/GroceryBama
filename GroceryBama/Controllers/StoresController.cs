@@ -35,17 +35,19 @@ namespace GroceryBama.Controllers
             item.Quantity = 10;
             item.ExpirationDate = DateTime.Now.AddDays(30);
             item.Description = "Sprite 10 packs";
+            item.PictureUrl = "assets/images/sprite.png";
             items.Add(item);
 
             item = new Item();
-            item.Name = "Fenta";
+            item.Name = "Fanta";
             item.Id = 0;
             item.Group = "beverage";
             item.ListedPrice = 9.99;
             item.WholeSalePrice = 6.99;
             item.Quantity = 10;
             item.ExpirationDate = DateTime.Now.AddDays(30);
-            item.Description = "Fenta 10 packs";
+            item.Description = "Fanta 10 packs";
+            item.PictureUrl = "assets/images/fanta.jpg";
             items.Add(item);
 
             item = new Item();
@@ -57,6 +59,7 @@ namespace GroceryBama.Controllers
             item.Quantity = 10;
             item.ExpirationDate = DateTime.Now.AddDays(30);
             item.Description = "Sweet Tea 10 packs";
+            item.PictureUrl = "assets/images/sweet-tea.png";
             items.Add(item);
 
 

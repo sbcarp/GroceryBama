@@ -18,6 +18,7 @@ namespace GroceryBama
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseUrls("http://*:30103", "https://*:30104")
                 .UseStartup<Startup>();
     }
 }

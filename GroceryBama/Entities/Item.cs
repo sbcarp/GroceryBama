@@ -17,5 +17,6 @@ namespace GroceryBama.Entities
         public double ListedPrice { get; set; }
         public double WholeSalePrice { get; set; }
         public string Description { get; set; }
+        public string PictureUrl { get; set; }
     }
 }
