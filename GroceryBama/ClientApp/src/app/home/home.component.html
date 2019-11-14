@@ -1,6 +1,11 @@
-<div class="shopping-container">
+<div class="shopping-container flex flex-row">
   <div class="filter-container">
-
+    <div *ngFor="let filter of filters; index as i">
+      <div class="custom-control custom-checkbox mb-3">
+        <input type="checkbox" class="custom-control-input" id="customControlValidation{{ i }}" checked>
+        <label class="custom-control-label" for="customControlValidation{{ i }}">{{ filter.name }}</label>
+      </div>
+    </div>
   </div>
   <div class="items-container" *ngIf="items">
     <div *ngFor="let item of items">
@@ -8,11 +13,25 @@
         <div class="img-container">
           <img src="{{ item.pictureUrl }}" class="pic" alt="...">
         </div>
-        <div class="item-shortInfo">
-          <div class="item-price">${{ item.listedPrice }}</div>
+        <div class="item-info-container flex flex-column">
+          <div class="item-shortInfo">
+            <div class="item-price">${{ item.listedPrice }}</div>
+          </div>
+          <div class="item-name">{{ item.name }}</div>
+          <div class="item-description">{{ item.description }}</div>
+          <div class="item-actions-container">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">-</span>
+              </div>
+              <input type="text" class="form-control" value="1">
+              <div class="input-group-append">
+                <span class="input-group-text">+</span>
+              </div>
+            </div>
+            <a href="#" class="btn btn-primary item-add-cart">Add to Cart</a>
+          </div>
         </div>
-        <div class="item-name">{{ item.name }}</div>
-        <div class="item-description">{{ item.description }}</div>
         <!--<a href="#" class="btn btn-secondary">Add to Cart</a>-->
       </div>
     </div>

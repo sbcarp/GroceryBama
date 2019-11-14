@@ -3,11 +3,20 @@ a.navbar-brand {
   text-align: center;
   word-break: break-all;
 }
-.nav-item.link-active{
+.navbar {
+  position: fixed;
+  z-index: 99;
+  width: 100%;
+}
+.nav-item{
+  position: relative;
+}
+.nav-item.link-active {
   font-weight: bold;
 }
 .nav-link{
   cursor: pointer;
+  user-select: none;
 }
 html {
   font-size: 14px;

@@ -9,8 +9,21 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class HomeComponent {
-    items: object[];
+    items: object[]; 
+    filters: object[];
     constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+        this.filters = [
+            { name: "Beverages" },
+            { name: "Baking Goods" },
+            { name: "Canned Goods" },
+            { name: "Cleaning Products" },
+            { name: "Dairy" },
+            { name: "Frozen Foods" },
+            { name: "Meat" },
+            { name: "Personal Care" },
+            { name: "Produce" },
+            { name: "Others" },
+        ];
         http.get<any>(baseUrl + 'stores/getitems').subscribe(result => {
             console.log(result);
             this.items = result;

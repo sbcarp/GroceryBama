@@ -25,7 +25,6 @@ namespace GroceryBama.Controllers
         public JsonResult GetItems()
         {
             List<Item> items = new List<Item>();
-            
             Item item = new Item();
             item.Name = "Sprite";
             item.Id = 0;

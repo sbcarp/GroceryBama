@@ -15,7 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { ManagerComponent } from './manager/manager.component';
 import { DelivererComponent } from './deliverer/deliverer.component';
 import { BuyerComponent } from './buyer/buyer.component';
-
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,8 @@ import { BuyerComponent } from './buyer/buyer.component';
     LoginComponent,
     ManagerComponent,
     DelivererComponent,
-    BuyerComponent
+    BuyerComponent,
+    CartComponent
   ],
   imports: [
       BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -35,10 +36,10 @@ import { BuyerComponent } from './buyer/buyer.component';
       FormsModule,
       ReactiveFormsModule,
       RouterModule.forRoot([
-          { path: '', component: HomeComponent, pathMatch: 'full' },
-        { path: 'login', component: LoginComponent},
-        { path: 'counter', component: CounterComponent },
-        { path: 'fetch-data', component: FetchDataComponent },
+          { path: '', component: HomeComponent, pathMatch: 'full'},
+          { path: 'login', component: LoginComponent },
+          //{ path: 'cart', component: CartComponent },
+          { path: 'fetch-data', component: FetchDataComponent },
       ])
     ],
     providers: [

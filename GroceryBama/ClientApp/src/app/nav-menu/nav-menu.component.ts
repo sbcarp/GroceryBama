@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Authenticator } from 'src/app/_utilities/authenticator'
@@ -11,11 +11,14 @@ import { first } from 'rxjs/operators';
 })
 export class NavMenuComponent {
     isExpanded = false;
+    isCartOpened = false;
+    //@Output() toggleCart: EventEmitter<null> = new EventEmitter();
     constructor(
         private http: HttpClient,
         @Inject('BASE_URL') private baseUrl: string,
         private authenticator: Authenticator,
-        private router: Router) {
+        private router: Router,
+        private elementRef: ElementRef) {
     }
     
     collapse() {
@@ -40,23 +43,12 @@ export class NavMenuComponent {
                 error => { console.log(error); },
 
             )
-        //this.http.post<any>(this.baseUrl + 'users/login', { username, password }).subscribe(user => {
-        //    console.log(user);
-        //    this.isLoggedIn = true;
-        //}, error => console.error(error));
-
-        //this.http.post<any>(`https://localhost:44372/users/login`, { username, password })
-        //    .pipe(map(user => {
-        //        // login successful if there's a jwt token in the response
-        //        if (user && user.token) {
-        //            // store user details and jwt token in local storage to keep user logged in between page refreshes
-        //            localStorage.setItem('currentUser', JSON.stringify(user));
-        //            this.currentUserSubject.next(user);
-        //        }
-
-        //        return user;
-        //    }));
-        
+    }
+    @HostListener('document:click', ['$event'])
+    onClick(event) {
+        if (!this.elementRef.nativeElement.contains(event.target)) {
+            this.isCartOpened = false;
+        }
     }
 
 }

@@ -1,6 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Provide sufficient contrast against white background */
+.app-container {
+  width: 100%;
+  margin-top: 80px;
+}
 a {
   color: #0366d6;
 }
