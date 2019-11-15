@@ -8,6 +8,7 @@ import { RequestInterceptor } from './_utilities/request-interceptor'
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { NavMenuService } from './nav-menu/nav-menu.service'
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
@@ -36,14 +37,16 @@ import { CartComponent } from './cart/cart.component';
       FormsModule,
       ReactiveFormsModule,
       RouterModule.forRoot([
-          { path: '', component: HomeComponent, pathMatch: 'full'},
+          { path: '', redirectTo: '/home', pathMatch: 'full' },
+          { path: 'home', component: HomeComponent },
           { path: 'login', component: LoginComponent },
-          //{ path: 'cart', component: CartComponent },
+          { path: 'cart', component: CartComponent },
           { path: 'fetch-data', component: FetchDataComponent },
       ])
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
+        NavMenuService
     ],
   bootstrap: [AppComponent]
 })

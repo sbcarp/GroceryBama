@@ -22,14 +22,14 @@
           <div class="item-actions-container">
             <div class="input-group">
               <div class="input-group-prepend">
-                <span class="input-group-text">-</span>
+                <span class="input-group-text" (click)="adjustItemQuantity(quantityInput, -1)">-</span>
               </div>
-              <input type="text" class="form-control" value="1">
+              <input #quantityInput type="text" class="form-control" value="1" onfocus="this.select()">
               <div class="input-group-append">
-                <span class="input-group-text">+</span>
+                <span class="input-group-text" (click)="adjustItemQuantity(quantityInput, 1)">+</span>
               </div>
             </div>
-            <a href="#" class="btn btn-primary item-add-cart">Add to Cart</a>
+            <button type="button" class="btn btn-primary item-add-cart" (click)="addToCart(item.id, quantityInput)">Add to Cart</button>
           </div>
         </div>
         <!--<a href="#" class="btn btn-secondary">Add to Cart</a>-->

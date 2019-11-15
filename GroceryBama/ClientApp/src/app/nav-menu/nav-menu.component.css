@@ -7,16 +7,37 @@ a.navbar-brand {
   position: fixed;
   z-index: 99;
   width: 100%;
+  padding: 0;
 }
-.nav-item{
+.nav-item {
   position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 5px 0 5px;
+  font-size: 20px;
+  color: #37454c;
 }
-.nav-item.link-active {
-  font-weight: bold;
-}
+  .nav-item .i{
+  }
+  .nav-item.link-active {
+    /*font-weight: bold;*/
+  }
 .nav-link{
   cursor: pointer;
   user-select: none;
+}
+#cart-icon {
+  font-size:30px;
+}
+#nav-item-user:hover > .dropdown-menu, .dropdown-menu:hover {
+  display: block;
+}
+.dropdown-menu {
+  top: calc(100% - 2px);
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 html {
   font-size: 14px;

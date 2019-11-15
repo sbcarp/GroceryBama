@@ -33,5 +33,6 @@ body {
   position: absolute;
   height: 100%;
   width: 100%;
-  background: #fbfbfb;
+  background: rgb(250,250,250);
+  color: #37454c;
 }

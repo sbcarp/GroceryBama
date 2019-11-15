@@ -11,6 +11,21 @@
   border-radius: 2px;
   background-color: white;
 }
+.form-control {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid #ced4da;
+  border-radius: 0;
+}
+  .form-control:focus {
+    color: unset;
+    background-color: unset;
+    border-color: unset;
+    outline: 0;
+    border-bottom: 1px solid #2196F3;
+    box-shadow: none;
+  }
 @media (max-width: 1024px) {
   .center-block {
     width: 50%;
@@ -20,4 +35,4 @@
   .center-block {
     width: 70%;
   }
-}
+}

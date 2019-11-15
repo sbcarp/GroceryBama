@@ -19,4 +19,9 @@ namespace GroceryBama.Entities
         public string Description { get; set; }
         public string PictureUrl { get; set; }
     }
+    public class ItemToCart
+    {
+        public int Id { get; set; }
+        public int Quantity { get; set; }
+    }
 }

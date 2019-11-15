@@ -1,1 +1,29 @@
-<div class="cart-container">cart Component</div>
+<div class="center-block">
+  <h1>Cart</h1>
+  <div class="cart-container">
+    <div class="cart-items-container" *ngIf="items">
+      <div *ngFor="let item of items">
+        <div class="cart-item">
+          <input type="number" class="item-quantity form-control input-sm" value="{{ item.quantity }}" />
+          &nbsp;
+          <div class="cart-img-container ">
+            <img src="{{ item.pictureUrl }}" class="pic" alt="...">
+          </div>
+          <div class="cart-item-info-container flex flex-column">
+            <div class="cart-item-name">{{ item.name }}</div>
+            <div class="cart-item-description">{{ item.description }}</div>
+          </div>
+          <div class="cart-item-price">${{ item.listedPrice }}</div>
+          <i class="far fa-trash-alt"></i>
+          <!--<a href="#" class="btn btn-secondary">Add to Cart</a>-->
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="cart-summary">
+    <div class="cart-total">Total  ${{total}}</div>
+    <a href="#" class="btn btn-primary">Checkout</a>
+  </div>
+
+</div>

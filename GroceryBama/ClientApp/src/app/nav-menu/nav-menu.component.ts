@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Authenticator } from 'src/app/_utilities/authenticator'
 import { first } from 'rxjs/operators';
+import { NavMenuService } from './nav-menu.service'
 
 @Component({
     selector: 'app-nav-menu',
@@ -11,16 +12,25 @@ import { first } from 'rxjs/operators';
 })
 export class NavMenuComponent {
     isExpanded = false;
-    isCartOpened = false;
+    cartQuantity = 0;
     //@Output() toggleCart: EventEmitter<null> = new EventEmitter();
     constructor(
         private http: HttpClient,
         @Inject('BASE_URL') private baseUrl: string,
         private authenticator: Authenticator,
         private router: Router,
-        private elementRef: ElementRef) {
+        private navMenuService: NavMenuService) {
+        if (authenticator.isLoggedIn) {
+            this.http.get<any>(this.baseUrl + 'stores/getcartquantity').subscribe(result => {
+                this.navMenuService.cartQuantityUpdate(result.cartQuantity);
+            }, error => console.error(error));
+        }
     }
-    
+    ngOnInit() {
+        this.navMenuService.cartQuantityUpdateEvent.subscribe(quantity => {
+            this.cartQuantity = quantity
+        });
+    }
     collapse() {
         this.isExpanded = false;
     }
@@ -44,12 +54,7 @@ export class NavMenuComponent {
 
             )
     }
-    @HostListener('document:click', ['$event'])
-    onClick(event) {
-        if (!this.elementRef.nativeElement.contains(event.target)) {
-            this.isCartOpened = false;
-        }
-    }
+
 
 }
 
