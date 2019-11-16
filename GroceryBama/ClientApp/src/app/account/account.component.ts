@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Authenticator } from 'src/app/_utilities/authenticator'
+
 @Component({
     selector: 'app-account',
     templateUrl: './account.component.html',
@@ -9,6 +10,7 @@ import { Authenticator } from 'src/app/_utilities/authenticator'
 export class AccountComponent {
 /** account ctor */
     user = this.authenticator.currentUser;
+    isInfoChanged = false;
     constructor(private authenticator: Authenticator) {
 
     }

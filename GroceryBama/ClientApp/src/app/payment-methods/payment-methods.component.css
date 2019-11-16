@@ -1,0 +1,18 @@
+form {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cards-container {
+  margin: 20px;
+}
+
+#add-new-card-button {
+  margin: 20px 20px 0 20px;
+  width: calc(100% - 40px);
+}
+
+.hide-card-selection {
+  display: none;
+}

@@ -1,9 +1,9 @@
 @import '~@angular/material/theming';
-$candy-app-primary: mat-palette($mat-grey, 900, 900, 700);
+$candy-app-primary: mat-palette($mat-grey, 900, 900, 900);
 
 // here I am specify the grey instead of Pink.
 
-$candy-app-accent: mat-palette($mat-grey, 900, 900, 700);
+$candy-app-accent: mat-palette($mat-grey, 600,600,600);
 $candy-app-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).

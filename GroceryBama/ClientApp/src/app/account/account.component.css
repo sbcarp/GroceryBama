@@ -7,13 +7,14 @@
 }
 
 .account-info-container {
-  min-height: 300px;
+  min-height: 100px;
   width: 100%;
   border: 1px solid #dee2e6;
   border-radius: 2px;
-  background: white;
+  background: #ffffffbd;
   margin-bottom: 20px;
 }
+
 form {
   padding: 20px;
   display: flex;

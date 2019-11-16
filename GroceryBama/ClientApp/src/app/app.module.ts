@@ -18,10 +18,15 @@ import { DelivererComponent } from './deliverer/deliverer.component';
 import { BuyerComponent } from './buyer/buyer.component';
 import { CartComponent } from './cart/cart.component';
 import { AccountComponent } from './account/account.component';
+import { AddressComponent } from './address/address.component';
+import { PaymentMethodsComponent } from './payment-methods/payment-methods.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -30,12 +35,14 @@ import { MatInputModule } from '@angular/material/input';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-        LoginComponent,
-        AccountComponent,
+    LoginComponent,
+    AccountComponent,
     ManagerComponent,
     DelivererComponent,
     BuyerComponent,
-        CartComponent
+        CartComponent,
+        AddressComponent,
+        PaymentMethodsComponent,
   ],
   imports: [
       BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -52,7 +59,9 @@ import { MatInputModule } from '@angular/material/input';
       BrowserAnimationsModule,
       MatButtonModule,
       MatCheckboxModule,
-      MatInputModule
+      MatRadioModule,
+      MatInputModule,
+      MatExpansionModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },

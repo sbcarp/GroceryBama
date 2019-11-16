@@ -1,79 +1,42 @@
 <div class="center-block">
   <h1>Account</h1>
   <div class="account-info-container">
-    <form class="example-form">
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Username" disabled value="{{ user.username }}">
-      </mat-form-field>
-
-      <table class="example-full-width" cellspacing="0">
-        <tr>
-          <td>
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="First name" disabled value="{{ user.firstname }}">
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="Last Name" disabled value="{{ user.lastname }}">
-            </mat-form-field>
-          </td>
-        </tr>
-      </table>
-
-      <table class="example-full-width" cellspacing="0">
-        <tr>
-          <td>
-            <mat-form-field>
-              <input type="tel" matInput placeholder="Phone Number">
-            </mat-form-field>
-          </td>
-          <td>
-              <mat-form-field class="example-full-width">
-                <input matInput placeholder="Email" [formControl]="emailFormControl">
-              </mat-form-field>
-          </td>
-        </tr>
-      </table>
-      
-    </form>
+    <form >
+      <div class="row">
+        <mat-form-field class="col-4">
+          <input matInput placeholder="Username" disabled value="{{ user.username }}">
+        </mat-form-field>
+        <mat-form-field class="col-4">
+          <input matInput placeholder="First name" disabled value="{{ user.firstname }}">
+        </mat-form-field>
+        <mat-form-field class="col-4">
+          <input matInput placeholder="Last Name" disabled value="{{ user.lastname }}">
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="col-5">
+          <input type="tel" matInput placeholder="Phone Number" (input)="isInfoChanged = true">
+        </mat-form-field>
+        <mat-form-field class="col-7">
+          <input matInput placeholder="Email" (input)="isInfoChanged = true">
+        </mat-form-field>
+      </div>
+      <div *ngIf="isInfoChanged" class="row" style="margin: 0">
+        <button mat-raised-button class="col-3" >Cancel</button>
+        <div class="col-6"></div>
+        <button mat-raised-button class="col-3" [color]="'custom-primary'">Save</button>
+      </div>
+</form>
   </div>
 
   <h1>Address</h1>
   <div class="account-info-container">
-    <form class="example-form">
-
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Street Address">
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Apartment, Suite, Unit, etc.">
-      </mat-form-field>
-
-      <table class="example-full-width" cellspacing="0">
-        <tr>
-          <td>
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="City">
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="State">
-            </mat-form-field>
-          </td>
-        </tr>
-      </table>
-      <mat-form-field class="example-full-width">
-        <input matInput #postalCode maxlength="5" placeholder="Postal Code" value="94043">
-        <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
-      </mat-form-field>
-    </form>
+    <app-address></app-address>
   </div>
 
   <h1>Payment Methods</h1>
   <div class="account-info-container">
-    456789
+    <app-payment-methods></app-payment-methods>
   </div>
 </div>
 
