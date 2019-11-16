@@ -1,0 +1,21 @@
+.center-block {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  max-width: 500px;
+  margin: auto;
+}
+
+.account-info-container {
+  min-height: 300px;
+  width: 100%;
+  border: 1px solid #dee2e6;
+  border-radius: 2px;
+  background: white;
+  margin-bottom: 20px;
+}
+form {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}

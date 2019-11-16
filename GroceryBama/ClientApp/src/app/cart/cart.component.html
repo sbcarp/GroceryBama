@@ -4,7 +4,9 @@
     <div class="cart-items-container" *ngIf="items">
       <div *ngFor="let item of items">
         <div class="cart-item">
-          <input type="number" class="item-quantity form-control input-sm" value="{{ item.quantity }}" />
+          <input matInput type="number" class="item-quantity" onfocus="this.select()" value="{{ item.quantity }}">
+
+          <!--<input type="number" class="item-quantity form-control input-sm" value="{{ item.quantity }}" />-->
           &nbsp;
           <div class="cart-img-container ">
             <img src="{{ item.pictureUrl }}" class="pic" alt="...">
@@ -23,7 +25,7 @@
   </div>
   <div class="cart-summary">
     <div class="cart-total">Total  ${{total}}</div>
-    <a href="#" class="btn btn-primary">Checkout</a>
+    <button mat-raised-button [color]="'custom-primary'">Checkout</button>
   </div>
 
 </div>

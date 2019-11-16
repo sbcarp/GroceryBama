@@ -17,6 +17,11 @@ import { ManagerComponent } from './manager/manager.component';
 import { DelivererComponent } from './deliverer/deliverer.component';
 import { BuyerComponent } from './buyer/buyer.component';
 import { CartComponent } from './cart/cart.component';
+import { AccountComponent } from './account/account.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -25,11 +30,12 @@ import { CartComponent } from './cart/cart.component';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    LoginComponent,
+        LoginComponent,
+        AccountComponent,
     ManagerComponent,
     DelivererComponent,
     BuyerComponent,
-    CartComponent
+        CartComponent
   ],
   imports: [
       BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -41,8 +47,12 @@ import { CartComponent } from './cart/cart.component';
           { path: 'home', component: HomeComponent },
           { path: 'login', component: LoginComponent },
           { path: 'cart', component: CartComponent },
-          { path: 'fetch-data', component: FetchDataComponent },
-      ])
+          { path: 'account', component: AccountComponent },
+      ]),
+      BrowserAnimationsModule,
+      MatButtonModule,
+      MatCheckboxModule,
+      MatInputModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },

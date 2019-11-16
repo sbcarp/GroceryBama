@@ -2,12 +2,12 @@
   <div class="filter-container">
     <div *ngFor="let filter of filters; index as i">
       <div class="custom-control custom-checkbox mb-3">
-        <input type="checkbox" class="custom-control-input" id="customControlValidation{{ i }}" checked>
-        <label class="custom-control-label" for="customControlValidation{{ i }}">{{ filter.name }}</label>
+        <mat-checkbox checked="true">{{ filter.name }}</mat-checkbox>
       </div>
     </div>
   </div>
   <div class="items-container" *ngIf="items">
+    
     <div *ngFor="let item of items">
       <div class="item">
         <div class="img-container">
@@ -29,7 +29,8 @@
                 <span class="input-group-text" (click)="adjustItemQuantity(quantityInput, 1)">+</span>
               </div>
             </div>
-            <button type="button" class="btn btn-primary item-add-cart" (click)="addToCart(item.id, quantityInput)">Add to Cart</button>
+            <button mat-raised-button [color]="'custom-primary'" class="item-add-cart" (click)="addToCart(item.id, quantityInput)">Add to Cart</button>
+            <!--<button type="button" class="btn btn-primary item-add-cart" (click)="addToCart(item.id, quantityInput)">Add to Cart</button>-->
           </div>
         </div>
         <!--<a href="#" class="btn btn-secondary">Add to Cart</a>-->
