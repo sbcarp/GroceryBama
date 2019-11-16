@@ -18,6 +18,15 @@ button:focus {
   background-color: #af1212 !important;
   color: #fff !important;
 }
+
+.center-block {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  max-width: 500px;
+  margin: auto;
+}
+
 code {
   color: #e01a76;
 }

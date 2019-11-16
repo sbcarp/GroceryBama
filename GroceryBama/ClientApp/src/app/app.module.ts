@@ -20,6 +20,7 @@ import { CartComponent } from './cart/cart.component';
 import { AccountComponent } from './account/account.component';
 import { AddressComponent } from './address/address.component';
 import { PaymentMethodsComponent } from './payment-methods/payment-methods.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,6 +28,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
         CartComponent,
         AddressComponent,
         PaymentMethodsComponent,
+        CheckoutComponent,
   ],
   imports: [
       BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -55,13 +58,15 @@ import { MatExpansionModule } from '@angular/material/expansion';
           { path: 'login', component: LoginComponent },
           { path: 'cart', component: CartComponent },
           { path: 'account', component: AccountComponent },
+          { path: 'checkout', component: CheckoutComponent },
       ]),
       BrowserAnimationsModule,
       MatButtonModule,
       MatCheckboxModule,
       MatRadioModule,
       MatInputModule,
-      MatExpansionModule
+      MatExpansionModule,
+      MatSelectModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },

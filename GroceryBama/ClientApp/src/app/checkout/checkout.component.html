@@ -1,0 +1,35 @@
+<div class="center-block">
+  <div class="summary right-float-container">
+    <div class="total">Total  $123</div>
+    <button mat-raised-button [color]="'custom-primary'">Checkout</button>
+  </div>
+  <h2>Delivery Options</h2>
+  <div class="account-info-container">
+    <div class="row" style="padding: 20px;">
+      <mat-form-field class="col-4">
+        <mat-label>Delivery Time</mat-label>
+        <mat-select [value]="deliveryTime">
+          <mat-option value="1">ASAP</mat-option>
+          <mat-option value="2">In 1 Hour</mat-option>
+          <mat-option value="3">In 2 Hours</mat-option>
+          <mat-option value="4">In 5 Hours</mat-option>
+          <mat-option value="5">In 10 Hours</mat-option>
+          <mat-option value="6">In 12 Hours</mat-option>
+          <mat-option value="7">In 24 Hours</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="col-8">
+        <input matInput placeholder="Delivery Instruction">
+      </mat-form-field>
+    </div>
+  </div>
+  <h2>Address</h2>
+  <div class="account-info-container">
+    <app-address></app-address>
+  </div>
+
+  <h2>Payment Methods</h2>
+  <div class="account-info-container">
+    <app-payment-methods></app-payment-methods>
+  </div>
+</div>

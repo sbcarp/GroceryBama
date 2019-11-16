@@ -1,0 +1,40 @@
+.account-info-container {
+  min-height: 100px;
+  width: 100%;
+  border: 1px solid #dee2e6;
+  border-radius: 2px;
+  background: #ffffffbd;
+  margin-bottom: 20px;
+}
+
+form {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.summary {
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  bottom: 0;
+  padding: 15px;
+  /*margin-top: 10px;*/
+  margin-bottom: 20px;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 20px;
+  border: 1px solid #dee2e6;
+  border-radius: 2px;
+  background: #ffffffbd;
+}
+
+@media (min-width: 950px) {
+  .summary {
+    position: absolute;
+    top: 47px;
+    left: unset;
+    bottom: unset;
+    right: -220px;
+    width: 200px;
+  }
+}
