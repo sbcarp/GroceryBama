@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { RequestInterceptor } from './_utilities/request-interceptor'
@@ -22,6 +22,8 @@ import { AddressComponent } from './address/address.component';
 import { PaymentMethodsComponent } from './payment-methods/payment-methods.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { OrderDetailsComponent } from './order-details/order-details.component';
+import { ItemsListComponent } from './items-list/items-list.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,50 +35,53 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavMenuComponent,
-    HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
-    LoginComponent,
-    AccountComponent,
-    ManagerComponent,
-    DelivererComponent,
-    BuyerComponent,
+    declarations: [
+        AppComponent,
+        NavMenuComponent,
+        HomeComponent,
+        CounterComponent,
+        FetchDataComponent,
+        LoginComponent,
+        AccountComponent,
+        ManagerComponent,
+        DelivererComponent,
+        BuyerComponent,
         CartComponent,
         AddressComponent,
         PaymentMethodsComponent,
         CheckoutComponent,
         MyOrdersComponent,
-  ],
-  imports: [
-      BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
-      HttpClientModule,
-      FormsModule,
-      ReactiveFormsModule,
-      RouterModule.forRoot([
-          { path: '', redirectTo: '/home', pathMatch: 'full' },
-          { path: 'home', component: HomeComponent },
-          { path: 'login', component: LoginComponent },
-          { path: 'cart', component: CartComponent },
-          { path: 'account', component: AccountComponent },
-          { path: 'checkout', component: CheckoutComponent },
-          { path: 'myorders', component: MyOrdersComponent },
-      ]),
-      BrowserAnimationsModule,
-      MatButtonModule,
-      MatCheckboxModule,
-      MatRadioModule,
-      MatInputModule,
-      MatExpansionModule,
-      MatSelectModule,
-      MatDividerModule
+        OrderDetailsComponent,
+        ItemsListComponent,
+    ],
+    imports: [
+        BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule.forRoot([
+            { path: '', redirectTo: '/home', pathMatch: 'full' },
+            { path: 'home', component: HomeComponent },
+            { path: 'login', component: LoginComponent },
+            { path: 'cart', component: CartComponent },
+            { path: 'account', component: AccountComponent },
+            { path: 'checkout', component: CheckoutComponent },
+            { path: 'myorders', component: MyOrdersComponent },
+            { path: 'myorders/orderdetails', component: OrderDetailsComponent },
+        ]),
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatInputModule,
+        MatExpansionModule,
+        MatSelectModule,
+        MatDividerModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
         NavMenuService
     ],
-  bootstrap: [AppComponent]
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,7 +1,7 @@
 <div class="center-block">
   <div class="summary right-float-container">
     <div class="total">Total  $123</div>
-    <button mat-raised-button [color]="'custom-primary'">Checkout</button>
+    <button mat-raised-button [color]="'custom-primary'" [routerLink]="['/myorders/orderdetails']" [queryParams]="{receiptmode: true, orderid: 123}">Checkout</button>
   </div>
   <h2>Delivery Options</h2>
   <div class="account-info-container">

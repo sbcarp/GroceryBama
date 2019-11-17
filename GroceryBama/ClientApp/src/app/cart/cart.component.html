@@ -5,26 +5,6 @@
     <button mat-raised-button [color]="'custom-primary'" [routerLink]="['/checkout']">Go to Checkout</button>
   </div>
   <div class="cart-container">
-    <div class="cart-items-container" *ngIf="items">
-      <div *ngFor="let item of items">
-        <div class="cart-item">
-          <input matInput type="number" class="item-quantity" onfocus="this.select()" value="{{ item.quantity }}">
-          <!--<input type="number" class="item-quantity form-control input-sm" value="{{ item.quantity }}" />-->
-          &nbsp;
-          <div class="cart-img-container ">
-            <img src="{{ item.pictureUrl }}" class="pic" alt="...">
-          </div>
-          <div class="cart-item-info-container flex flex-column">
-            <div class="cart-item-name">{{ item.name }}</div>
-            <div class="cart-item-description">{{ item.description }}</div>
-          </div>
-          <div class="cart-item-price">${{ item.listedPrice }}</div>
-          <i class="far fa-trash-alt"></i>
-          <!--<a href="#" class="btn btn-secondary">Add to Cart</a>-->
-        </div>
-        <mat-divider></mat-divider>
-      </div>
-    </div>
-
+    <app-items-list [isCartMode]="true"></app-items-list>
   </div>
 </div>
