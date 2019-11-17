@@ -26,6 +26,9 @@
   background: white;
   margin: 5px;
 }
+.mat-divider {
+  margin: 0 5px 0 5px;
+}
 .item-quantity {
   width: 30px;
   padding: 0;
@@ -38,11 +41,11 @@
     margin: 0;
   }
 .item-quantity {
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 1px solid #ced4da;
-  border-radius: 0;
+  /* border-top: none; */
+  /* border-left: none; */
+  /* border-right: none; */
+  border: 1px solid #9E9E9E;
+  border-radius: 2px;
 }
 
   .item-quantity:focus {
@@ -50,7 +53,7 @@
     background-color: unset;
     border-color: unset;
     outline: 0;
-    border-bottom: 1px solid gray;
+    /*border-bottom: 1px solid gray;*/
     box-shadow: none;
   }
 .cart-item .fa-trash-alt {

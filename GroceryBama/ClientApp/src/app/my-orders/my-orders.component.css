@@ -1,0 +1,86 @@
+.account-info-container {
+  min-height: 100px;
+  width: 100%;
+  border: 1px solid #dee2e6;
+  border-radius: 2px;
+  background: #ffffffbd;
+  margin-bottom: 20px;
+}
+.status {
+  padding-left: 20px;
+  margin-top: 0.5rem;
+}
+  .status.wait {
+    color: #37454c;
+  }
+  .status.in-progress {
+    color: #eea539;
+  }
+  .status.deliveried {
+    color: #4caf50;
+  }
+
+.order-header {
+  align-items: baseline;
+}
+  .order-header .orderId {
+    text-align: center;
+    color: #9E9E9E;
+  }
+  form {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+.account-info-container .banner {
+  align-items: center;
+  padding: 2px;
+  padding-left: 20px;
+  top: 0px;
+  background: #f4f4f4;
+  color: #606060;
+  width: 100%;
+  border-top: 1px solid #e0e0e0;
+  
+}
+.account-info-container .action-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+  .account-info-container .action-container button {
+    /*margin: 10px;*/
+  width: 90%;
+}
+  .account-info-container .img-gallery {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    max-width: 100%;
+    margin: 20px;
+    overflow: hidden;
+  }
+.account-info-container .cart-img-container {
+  height: 100%;
+  width: 50px;
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  margin: 0 5px 0 5px;
+}
+
+.account-info-container img.pic {
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  width: auto;
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

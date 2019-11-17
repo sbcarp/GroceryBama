@@ -1,0 +1,108 @@
+<div class="center-block">
+  <h2>Today</h2>
+  <div class="account-info-container">
+    <div class="row no-gutters order-header">
+      <h4 class="status wait col-8">Waiting</h4>
+      <h6 class="orderId col-4">Order #: 1924521873</h6>
+    </div>
+    <div class="row no-gutters banner">
+      <div class="col-6">
+        <i class="fas fa-store"></i>&nbsp;Publix
+      </div>
+      <div class="col-3">
+        <i class="far fa-clock"></i>&nbsp;ASAP
+      </div>
+      <div class="col-3">
+        <i class="fas fa-dollar-sign"></i>&nbsp;59.64
+      </div>
+
+    </div>
+    <div class="row no-gutters">
+      <div class="col-9">
+        <div class="img-gallery">
+          <div *ngFor="let item of items">
+            <div class="cart-img-container ">
+              <img src="{{ item.pictureUrl }}" class="pic" alt="...">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 action-container">
+        <button mat-stroked-button class="row no-gutters">Details</button>
+        <button mat-stroked-button class="row no-gutters">Cancel</button>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="account-info-container">
+    <div class="row no-gutters order-header">
+      <h4 class="status in-progress col-8">Driver On the Way</h4>
+      <h6 class="orderId col-4">Order #: 1924521873</h6>
+    </div>
+    <div class="row no-gutters banner">
+      <div class="col-6">
+        <i class="fas fa-store"></i>&nbsp;Publix
+      </div>
+      <div class="col-3">
+        <i class="far fa-clock"></i>&nbsp;In 2 Hours
+      </div>
+      <div class="col-3">
+        <i class="fas fa-dollar-sign"></i>&nbsp;59.64
+      </div>
+
+    </div>
+    <div class="row no-gutters">
+      <div class="col-9">
+        <div class="img-gallery">
+          <div *ngFor="let item of items">
+            <div class="cart-img-container ">
+              <img src="{{ item.pictureUrl }}" class="pic" alt="...">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 action-container">
+        <button mat-stroked-button class="row no-gutters">Details</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <h2>Yesterday</h2>
+  <div class="account-info-container">
+    <div class="row no-gutters order-header">
+      <h4 class="status deliveried col-8">Deliveried</h4>
+      <h6 class="orderId col-4">Order #: 1924521873</h6>
+    </div>
+    <div class="row no-gutters banner">
+      <div class="col-6">
+        <i class="fas fa-store"></i>&nbsp;Publix
+      </div>
+      <div class="col-3">
+        <i class="far fa-clock"></i>&nbsp;ASAP
+      </div>
+      <div class="col-3">
+        <i class="fas fa-dollar-sign"></i>&nbsp;59.64
+      </div>
+
+    </div>
+    <div class="row no-gutters">
+      <div class="col-9">
+        <div class="img-gallery">
+          <div *ngFor="let item of items">
+            <div class="cart-img-container ">
+              <img src="{{ item.pictureUrl }}" class="pic" alt="...">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-3 action-container">
+        <button mat-stroked-button class="row no-gutters">Details</button>
+      </div>
+
+    </div>
+
+  </div>
+</div>

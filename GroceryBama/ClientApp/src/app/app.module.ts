@@ -21,6 +21,7 @@ import { AccountComponent } from './account/account.component';
 import { AddressComponent } from './address/address.component';
 import { PaymentMethodsComponent } from './payment-methods/payment-methods.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -29,6 +30,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import { MatSelectModule } from '@angular/material/select';
         AddressComponent,
         PaymentMethodsComponent,
         CheckoutComponent,
+        MyOrdersComponent,
   ],
   imports: [
       BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -59,6 +62,7 @@ import { MatSelectModule } from '@angular/material/select';
           { path: 'cart', component: CartComponent },
           { path: 'account', component: AccountComponent },
           { path: 'checkout', component: CheckoutComponent },
+          { path: 'myorders', component: MyOrdersComponent },
       ]),
       BrowserAnimationsModule,
       MatButtonModule,
@@ -66,7 +70,8 @@ import { MatSelectModule } from '@angular/material/select';
       MatRadioModule,
       MatInputModule,
       MatExpansionModule,
-      MatSelectModule
+      MatSelectModule,
+      MatDividerModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
