@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 import { ManagerComponent } from './manager/manager.component';
 import { DelivererComponent } from './deliverer/deliverer.component';
 import { BuyerComponent } from './buyer/buyer.component';
@@ -33,6 +34,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MAT_LABEL_GLOBAL_OPTIONS } from '@angular/material/core';
 
 @NgModule({
     declarations: [
@@ -53,6 +56,7 @@ import { MatDividerModule } from '@angular/material/divider';
         MyOrdersComponent,
         OrderDetailsComponent,
         ItemsListComponent,
+        RegisterComponent,
     ],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -63,6 +67,7 @@ import { MatDividerModule } from '@angular/material/divider';
             { path: '', redirectTo: '/home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
             { path: 'login', component: LoginComponent },
+            { path: 'register', component: RegisterComponent },
             { path: 'cart', component: CartComponent },
             { path: 'account', component: AccountComponent },
             { path: 'checkout', component: CheckoutComponent },
@@ -76,10 +81,12 @@ import { MatDividerModule } from '@angular/material/divider';
         MatInputModule,
         MatExpansionModule,
         MatSelectModule,
-        MatDividerModule
+        MatDividerModule,
+        MatTabsModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
+        //{ provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: { float: 'always' } },
         NavMenuService
     ],
     bootstrap: [AppComponent]

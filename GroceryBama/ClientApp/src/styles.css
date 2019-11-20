@@ -26,7 +26,14 @@ button:focus {
   max-width: 500px;
   margin: auto;
 }
-
+.center-block-container {
+  min-height: 100px;
+  width: 100%;
+  border: 1px solid #dee2e6;
+  border-radius: 2px;
+  background: #ffffffbd;
+  margin-bottom: 20px;
+}
 code {
   color: #e01a76;
 }

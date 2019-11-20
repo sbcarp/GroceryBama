@@ -1,0 +1,82 @@
+<div class="center-block center-block-container">
+  <mat-tab-group mat-stretch-tabs dynamicHeight>
+    <mat-tab  label="Buyer">
+      <form [formGroup]="registerBuyer" (ngSubmit)="onSubmit()">
+        <ng-container *ngTemplateOutlet="commonFields"></ng-container>
+        <mat-form-field >
+          <input matInput placeholder="Street Address" >
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Apartment, Suite, Unit, etc." >
+        </mat-form-field>
+        <div class="row">
+          <mat-form-field class="col-6">
+            <input matInput placeholder="City">
+          </mat-form-field>
+          <mat-form-field class="col-3">
+            <input matInput placeholder="State">
+          </mat-form-field>
+          <mat-form-field class="col-3">
+            <input matInput #postalCode maxlength="5" placeholder="Zip Code">
+          </mat-form-field>
+          <button id="login-button" type="submit" mat-raised-button [color]="'custom-primary'">Register Buyer</button>
+        </div>
+      </form>
+    </mat-tab>
+    <mat-tab label="Deliverer">
+      <form [formGroup]="registerDeliverer" (ngSubmit)="onSubmit()">
+        <ng-container *ngTemplateOutlet="commonFields"></ng-container>
+        <div class="row">
+          <mat-form-field class="col-6">
+            <input matInput placeholder="Confirmation Code">
+          </mat-form-field>
+        </div>
+        <button id="login-button" type="submit" mat-raised-button [color]="'custom-primary'">Register Deliverer</button>
+      </form>
+    </mat-tab>
+    <mat-tab label="Manager">
+      <form [formGroup]="registerManager" (ngSubmit)="onSubmit()">
+        <ng-container *ngTemplateOutlet="commonFields"></ng-container>
+        <div class="row">
+          <mat-form-field class="col-6">
+            <input matInput placeholder="Confirmation Code">
+          </mat-form-field>
+          <mat-form-field class="col-6">
+            <input matInput placeholder="Assign Store">
+          </mat-form-field>
+        </div>
+        <button id="login-button" type="submit" mat-raised-button [color]="'custom-primary'">Register Manager</button>
+      </form>
+    </mat-tab>
+  </mat-tab-group>
+  <a style="align-self: center;" [routerLink]="['/login']">Have account already? Login here</a>
+</div>
+<form  [formGroup]="fakeFormGroup">
+  <ng-template #commonFields>
+    <div class="row">
+      <mat-form-field for="username" class="col-6">
+        <input formControlName="username" type="text" matInput placeholder="Username">
+      </mat-form-field>
+      <mat-form-field for="password" class="col-6">
+        <input formControlName="password" type="password" matInput placeholder="Password">
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field class="col-6">
+        <input matInput floatLabel="always" placeholder="Last Name">
+      </mat-form-field>
+      <mat-form-field class="col-6">
+        <input matInput floatLabel="always" placeholder="First name">
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field class="col-6">
+        <input matInput  placeholder="Email">
+      </mat-form-field>
+      <mat-form-field class="col-6">
+        <input matInput placeholder="Phone">
+      </mat-form-field>
+    </div>
+  </ng-template>
+</form>
+

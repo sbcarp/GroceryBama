@@ -1,0 +1,18 @@
+::ng-deep .mat-tab-label .mat-tab-label-content {
+  font-size: 20px;
+}
+form {
+  padding: 20px;
+}
+#login-button {
+  width: 100%;
+  margin-left: 15px;
+  margin-right: 15px;
+  height: 50px;
+  font-size: 25px;
+}
+
+.mat-form-field {
+  width: 100%;
+  font-size: 15px;
+}
