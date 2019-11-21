@@ -2,7 +2,7 @@
 - Visual Studio 2019 [[Download](https://visualstudio.microsoft.com/vs/ "Download")]
 	- With ASP.NET and web development Workload installed
 	- GitHub extension for Visual Studio (Optional)
-- MySQL 8.0 [[Download](https://dev.mysql.com/downloads/windows/installer/8.0.html "Download")]
+- MySQL 8.0 [[Download](https://dev.mysql.com/downloads/mysql/ "Download")]
 	- MySQL 8.0 Workbench CE (Optional)
 
 # Configurations
