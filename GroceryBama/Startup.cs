@@ -70,7 +70,6 @@ namespace GroceryBama
             {
                 app.UseSpaStaticFiles();
             }
-
             app.UseRouting();
 
             app.UseAuthentication();

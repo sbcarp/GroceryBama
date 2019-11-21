@@ -20,16 +20,13 @@ namespace GroceryBama.MySqlScripts
             cmd.Parameters.AddWithValue("@password", password);
             MySqlDataReader reader = cmd.ExecuteReader();
             reader.Read();
-            // if no record return
             if (!reader.HasRows) throw new UserCredentialNotMatchException("Incorrect username or password");
-            string firstname = reader.GetFieldValue<string>(0);
-            string lastname = reader.GetFieldValue<string>(1);
-            string role = reader.GetFieldValue<string>(2);
+            User user = new User();
+            user.Username = username;
+            user.Firstname = reader.GetFieldValue<string>(0);
+            user.Lastname = reader.GetFieldValue<string>(1);
+            user.Role = reader.GetFieldValue<string>(2);
             if (reader.Read()) throw new MutipleUsersFoundException("Found more than one user");
-            User user = new User(username, "admin");
-            user.Firstname = firstname;
-            user.Lastname = lastname;
-            user.Role = role;
             return user;
         }
 

@@ -28,7 +28,8 @@ namespace GroceryBama
             {
                 webHostBuilder.UseKestrel(options =>
                  {
-                     options.ListenAnyIP(30104, listenOptions =>
+                     options.ListenAnyIP(80);
+                     options.ListenAnyIP(443, listenOptions =>
                      {
                          listenOptions.UseHttps("grocerybama.com.pfx", "");
                      });

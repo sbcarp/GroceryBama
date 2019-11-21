@@ -46,10 +46,10 @@ a.navbar-brand {
 #cart-icon {
   font-size:30px;
 }
-#nav-item-user:hover > .dropdown-menu, .dropdown-menu:hover {
+.nav-item:hover > .dropdown-menu, .dropdown-menu:hover {
   display: block;
 }
-.dropdown-menu {
+.nav-item .dropdown-menu {
   top: calc(100% - 2px);
   border-top: none;
   border-top-left-radius: 0;
