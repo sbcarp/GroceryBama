@@ -35,8 +35,8 @@ CREATE TABLE userexample
     CONSTRAINT uepk PRIMARY KEY(username)
 ) Engine=InnoDB;
 
-INSERT INTO userexample VALUES('John', 'Smith', 'jSmith', '123456', 'user');
-INSERT INTO userexample VALUES('Franklin', 'Wong', 'fWong', 'qwerty', 'user');
-INSERT INTO userexample VALUES('Alicia', 'Zelaya', 'aZelaya', '000000', 'user');
+INSERT INTO userexample VALUES('John', 'Smith', 'jSmith', '123456', 'buyer');
+INSERT INTO userexample VALUES('Franklin', 'Wong', 'fWong', 'qwerty', 'deliverer');
+INSERT INTO userexample VALUES('Alicia', 'Zelaya', 'aZelaya', '000000', 'manager');
 INSERT INTO userexample VALUES('Jennifer', 'Wallace', 'jWallace', 'eyr#{2 %DDk--=?=23fere', 'admin');
 ```
