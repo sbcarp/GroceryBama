@@ -22,9 +22,10 @@ import { AccountComponent } from './account/account.component';
 import { AddressComponent } from './address/address.component';
 import { PaymentMethodsComponent } from './payment-methods/payment-methods.component';
 import { CheckoutComponent } from './checkout/checkout.component';
-import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { MyOrdersComponent, BottomSheetOrderUpdate } from './my-orders/my-orders.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { ItemsListComponent } from './items-list/items-list.component';
+import { OutstandingOrdersComponent } from './outstanding-orders/outstanding-orders.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,6 +37,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MAT_LABEL_GLOBAL_OPTIONS } from '@angular/material/core';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatListModule } from '@angular/material/list';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
     declarations: [
@@ -57,7 +61,10 @@ import { MAT_LABEL_GLOBAL_OPTIONS } from '@angular/material/core';
         OrderDetailsComponent,
         ItemsListComponent,
         RegisterComponent,
+        BottomSheetOrderUpdate,
+        OutstandingOrdersComponent
     ],
+    entryComponents: [BottomSheetOrderUpdate],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         HttpClientModule,
@@ -73,6 +80,8 @@ import { MAT_LABEL_GLOBAL_OPTIONS } from '@angular/material/core';
             { path: 'checkout', component: CheckoutComponent },
             { path: 'myorders', component: MyOrdersComponent },
             { path: 'myorders/orderdetails', component: OrderDetailsComponent },
+            { path: 'outstandingorders', component: OutstandingOrdersComponent },
+            
         ]),
         BrowserAnimationsModule,
         MatButtonModule,
@@ -82,7 +91,10 @@ import { MAT_LABEL_GLOBAL_OPTIONS } from '@angular/material/core';
         MatExpansionModule,
         MatSelectModule,
         MatDividerModule,
-        MatTabsModule
+        MatTabsModule,
+        MatBottomSheetModule,
+        MatListModule,
+        MatTableModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },

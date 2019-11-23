@@ -13,6 +13,10 @@ export class Authenticator {
     public get isLoggedIn() {
         return (this._currentUser != null && this._currentUser.token != null);
     }
+    public get role() {
+        if (this._currentUser == null) return null;
+        return this._currentUser.role;
+    }
     public get currentUser(): User {
         return this._currentUser;
     }

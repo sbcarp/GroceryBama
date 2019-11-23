@@ -29,13 +29,13 @@
 </form>
   </div>
 
-  <h2>Address</h2>
-  <div class="account-info-container">
+  <h2 *ngIf="authenticator.role == 'buyer'">Address</h2>
+  <div class="account-info-container" *ngIf="authenticator.role == 'buyer'">
     <app-address></app-address>
   </div>
 
-  <h2>Payment Methods</h2>
-  <div class="account-info-container">
+  <h2 *ngIf="authenticator.role == 'buyer'">Payment Methods</h2>
+  <div class="account-info-container" *ngIf="authenticator.role == 'buyer'">
     <app-payment-methods></app-payment-methods>
   </div>
 </div>

@@ -74,7 +74,7 @@ namespace GroceryBama.Controllers
             items.Add(item);
             return Json(items);
         }
-        [Authorize(Roles = "user")]
+        [Authorize(Roles = "buyer,deliverer")]
         [HttpGet("getcartitems")]
         public JsonResult GetCartItems()
         {
@@ -120,7 +120,7 @@ namespace GroceryBama.Controllers
             return Json(items);
         }
 
-        [Authorize(Roles = "user")]
+        [Authorize(Roles = "buyer,deliverer")]
         [HttpPost("addtocart")]
         public JsonResult AddToCart([FromBody] ItemToCart item)
         {
@@ -129,7 +129,7 @@ namespace GroceryBama.Controllers
             return Json(v);
         }
 
-        [Authorize(Roles = "user")]
+        [Authorize(Roles = "buyer,deliverer")]
         [HttpGet("getcartquantity")]
         public JsonResult GetCartQuantity()
         {

@@ -1,0 +1,51 @@
+<div class="center-block">
+  <h2>Outstanding Orders</h2>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+    The actual rendered columns are set as a property on the row definition" -->
+    <!-- Position Column -->
+    <ng-container matColumnDef="storeName">
+      <th mat-header-cell *matHeaderCellDef> Store Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.storeName}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="storeAddress">
+      <th mat-header-cell *matHeaderCellDef> Store Address </th>
+      <td mat-cell *matCellDef="let element"> {{element.storeAddress}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="orderId">
+      <th mat-header-cell *matHeaderCellDef> Order Id </th>
+      <td mat-cell *matCellDef="let element"> {{element.orderId}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="totalPrice">
+      <th mat-header-cell *matHeaderCellDef> Total Price </th>
+      <td mat-cell *matCellDef="let element"> {{element.totalPrice}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="totalNumberOfItems">
+      <th mat-header-cell *matHeaderCellDef> Number of Items </th>
+      <td mat-cell *matCellDef="let element"> {{element.totalNumberOfItems}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="deliveryAddress">
+      <th mat-header-cell *matHeaderCellDef> Delivery Address </th>
+      <td mat-cell *matCellDef="let element"> {{element.deliveryAddress}} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
