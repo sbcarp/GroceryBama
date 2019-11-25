@@ -45,10 +45,13 @@
             <div class="dropdown-menu">
               <h6 class="dropdown-header">Hi, {{ authenticator.currentUser.firstname }}</h6>
               <a class="dropdown-item" [routerLink]="['/account']">Account</a>
+
+              <a class="dropdown-item" [routerLink]="['/inventory']" *ngIf="authenticator.role == 'manager'">Inventory</a>
               <a class="dropdown-item" [routerLink]="['/outstandingorders']" *ngIf="authenticator.role == 'manager'">Outstanding Orders</a>
+              <a class="dropdown-item" [routerLink]="['/dashboard']" *ngIf="authenticator.role == 'manager'">Dashboard</a>
               <a class="dropdown-item" [routerLink]="['/myorders']" *ngIf="authenticator.role == 'buyer' || authenticator.role == 'deliverer'">My Orders</a>
               <h6 class="dropdown-header"> </h6>
-              <a class="dropdown-item" (click)="logout()">Logout</a>
+              <a class="dropdown-item" [routerLink]="['/home']" (click)="logout()">Logout</a>
             </div>
           </li>
           

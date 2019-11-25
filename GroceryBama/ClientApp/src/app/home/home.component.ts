@@ -28,15 +28,14 @@ export class HomeComponent {
         ];
         http.get<any>(baseUrl + 'stores/getitems').subscribe(result => {
             console.log(result);
-            this.items = result;
+            if (result.success) this.items = result.data;
         }, error => console.error(error));
     }
 
     addToCart(itemId, ref) {
         this.adjustItemQuantity(ref, 0);
         this.http.post<any>(this.baseUrl + 'stores/addtocart', { id: itemId, quantity: parseInt(ref.value)}).subscribe(result => {
-            console.log(result);
-            this.navMenuService.cartQuantityUpdate(result.cartQuantity);
+            if (result.success) this.navMenuService.cartQuantityUpdate(result.data.cartQuantity);
         }, error => console.error(error));
     }
     adjustItemQuantity(ref, adjustment) {

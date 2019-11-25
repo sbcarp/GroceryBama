@@ -20,113 +20,52 @@ namespace GroceryBama.Controllers
     [Route("[controller]")]
     public class StoresController : Controller
     {
+        private StoresScript storesScript;
+
+        public StoresController()
+        {
+            storesScript = new StoresScript();
+        }
         [AllowAnonymous]
         [HttpGet("getitems")]
-        public JsonResult GetItems()
+        public ActionResult GetItems()
         {
-            List<Item> items = new List<Item>();
-            Item item = new Item();
-            item.Name = "Sprite";
-            item.Id = 1;
-            item.Group = "beverage";
-            item.ListedPrice = 9.99;
-            item.WholeSalePrice = 6.99;
-            item.Quantity = 10;
-            item.ExpirationDate = DateTime.Now.AddDays(30);
-            item.Description = "Sprite 10 packs";
-            item.PictureUrl = "assets/images/sprite.png";
-            items.Add(item);
-
-            item = new Item();
-            item.Name = "Fanta";
-            item.Id = 2;
-            item.Group = "beverage";
-            item.ListedPrice = 9.99;
-            item.WholeSalePrice = 6.99;
-            item.Quantity = 10;
-            item.ExpirationDate = DateTime.Now.AddDays(30);
-            item.Description = "Fanta 10 packs";
-            item.PictureUrl = "assets/images/fanta.jpg";
-            items.Add(item);
-
-            item = new Item();
-            item.Name = "Sweet Tea";
-            item.Id = 3;
-            item.Group = "beverage";
-            item.ListedPrice = 29.99;
-            item.WholeSalePrice = 6.99;
-            item.Quantity = 10;
-            item.ExpirationDate = DateTime.Now.AddDays(30);
-            item.Description = "Sweet Tea 10 packs";
-            item.PictureUrl = "assets/images/sweet-tea.png";
-            items.Add(item);
-
-            item = new Item();
-            item.Name = "SPAM Canned Meat";
-            item.Id = 4;
-            item.Group = "Canned Good";
-            item.ListedPrice = 12.59;
-            item.WholeSalePrice = 6.99;
-            item.Quantity = 5;
-            item.ExpirationDate = DateTime.Now.AddDays(30);
-            item.Description = "Net weight 340g";
-            item.PictureUrl = "assets/images/spam-canned-meat.jpg";
-            items.Add(item);
-            return Json(items);
+            try
+            {
+                return Json(new BasePacket(true, storesScript.GetCartItems(User.Identity.Name, 0).Items));
+            }
+            catch (Exception ex)
+            {
+                return Json(new ErrorHandler(ex).ToBasePacket());
+            }
         }
         [Authorize(Roles = "buyer,deliverer")]
         [HttpGet("getcartitems")]
         public JsonResult GetCartItems()
         {
-            Console.WriteLine(User.Identity.Name);
-            List<Item> items = new List<Item>();
-            Item item = new Item();
-            item.Name = "Sprite";
-            item.Id = 1;
-            item.Group = "beverage";
-            item.ListedPrice = 9.99;
-            item.WholeSalePrice = 6.99;
-            item.Quantity = 10;
-            item.ExpirationDate = DateTime.Now.AddDays(30);
-            item.Description = "Sprite 10 packs";
-            item.PictureUrl = "assets/images/sprite.png";
-            items.Add(item);
-
-            item = new Item();
-            item.Name = "Fanta";
-            item.Id = 2;
-            item.Group = "beverage";
-            item.ListedPrice = 9.99;
-            item.WholeSalePrice = 6.99;
-            item.Quantity = 10;
-            item.ExpirationDate = DateTime.Now.AddDays(30);
-            item.Description = "Fanta 10 packs";
-            item.PictureUrl = "assets/images/fanta.jpg";
-            items.Add(item);
-
-            item = new Item();
-            item.Name = "Sweet Tea";
-            item.Id = 3;
-            item.Group = "beverage";
-            item.ListedPrice = 29.99;
-            item.WholeSalePrice = 6.99;
-            item.Quantity = 10;
-            item.ExpirationDate = DateTime.Now.AddDays(30);
-            item.Description = "Sweet Tea 10 packs";
-            item.PictureUrl = "assets/images/sweet-tea.png";
-            items.Add(item);
-
-            
-            return Json(items);
+            try
+            {
+                return Json(new BasePacket(true, storesScript.GetCartItems(User.Identity.Name, 0).Items));
+            }
+            catch (Exception ex)
+            {
+                return Json(new ErrorHandler(ex).ToBasePacket());
+            }
         }
 
         [Authorize(Roles = "buyer,deliverer")]
         [HttpPost("addtocart")]
         public JsonResult AddToCart([FromBody] ItemToCart item)
         {
-            Console.WriteLine(item);
-            var v = new { cartQuantity = 2 };
-            return Json(v);
+            try
+            {
+                int cartQuantity = storesScript.AddItemToCart(User.Identity.Name, 0, 0, 5).Quantity;
+                return Json(new BasePacket(true, new { cartQuantity = cartQuantity}));
+            }
+            catch (Exception ex)
+            {
+                return Json(new ErrorHandler(ex).ToBasePacket());
+            }         
         }
 
         [Authorize(Roles = "buyer,deliverer")]
@@ -134,7 +73,7 @@ namespace GroceryBama.Controllers
         public JsonResult GetCartQuantity()
         {
             var v = new { cartQuantity = 1 };
-            return Json(v);
+            return Json(new BasePacket(true, v));
         }
     }
 }

@@ -26,6 +26,8 @@ import { MyOrdersComponent, BottomSheetOrderUpdate } from './my-orders/my-orders
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { ItemsListComponent } from './items-list/items-list.component';
 import { OutstandingOrdersComponent } from './outstanding-orders/outstanding-orders.component';
+import { InventoryComponent } from './inventory/inventory.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -62,7 +64,9 @@ import { MatTableModule } from '@angular/material/table';
         ItemsListComponent,
         RegisterComponent,
         BottomSheetOrderUpdate,
-        OutstandingOrdersComponent
+        OutstandingOrdersComponent,
+        InventoryComponent,
+        DashboardComponent
     ],
     entryComponents: [BottomSheetOrderUpdate],
     imports: [
@@ -81,6 +85,8 @@ import { MatTableModule } from '@angular/material/table';
             { path: 'myorders', component: MyOrdersComponent },
             { path: 'myorders/orderdetails', component: OrderDetailsComponent },
             { path: 'outstandingorders', component: OutstandingOrdersComponent },
+            { path: 'inventory', component: InventoryComponent },
+            { path: 'dashboard', component: DashboardComponent },
             
         ]),
         BrowserAnimationsModule,

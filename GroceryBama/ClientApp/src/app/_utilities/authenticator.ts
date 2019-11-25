@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class Authenticator {
@@ -23,11 +23,13 @@ export class Authenticator {
     login(username: string, password: string) {
         this.logout();
         return this.http.post<any>(this.baseUrl + 'users/login', { username, password })
-            .pipe(map(user => {
-                if (user) localStorage.setItem('currentUser', JSON.stringify(user));
-                this._currentUser = user;
-                return user;
-            }));
+            .pipe(map(result => {
+                    if (result['success']) {
+                        localStorage.setItem('currentUser', JSON.stringify(result['data']));
+                        this._currentUser = result['data'];
+                    }
+                    return result;
+                }));
     }
     logout() {
         // remove user from local storage to log user out

@@ -20,8 +20,7 @@ export class MyOrdersComponent {
         private matBottomSheet: MatBottomSheet,
     ) {
         http.get<any>(baseUrl + 'stores/getcartitems').subscribe(result => {
-            console.log(result);
-            this.items = result;
+            if (result.success) this.items = result.data;
         }, error => console.error(error));
     }
     openBottomSheet() {

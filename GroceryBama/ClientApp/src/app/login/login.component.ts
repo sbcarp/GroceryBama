@@ -24,15 +24,14 @@ export class LoginComponent implements OnInit {
     }
     onSubmit() {
         this.authenticator.login(this.loginForm.controls.username.value, this.loginForm.controls.password.value)
-            .pipe(first())
+            .pipe()
             .subscribe(
-                user => {
+                result => {
                     if (this.authenticator.isLoggedIn)
                         this.router.navigate(['/']);
-
                 },
                 error => { console.log(error); }
-                )
+            )
 
     }
 

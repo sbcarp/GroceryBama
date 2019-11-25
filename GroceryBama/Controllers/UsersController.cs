@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using GroceryBama.MySqlScripts;
 using GroceryBama.Entities;
 using GroceryBama.Exceptions;
+using MySql.Data.MySqlClient;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GroceryBama.Controllers
@@ -27,29 +28,22 @@ namespace GroceryBama.Controllers
         }
         [AllowAnonymous]
         [HttpPost("login")]
-        public User Login([FromBody]UserCredential userCredential)
+        public JsonResult Login([FromBody]UserCredential userCredential)
         {
-            User user;
             try
             {
-                user = usersScript.GetUser(userCredential.Username, userCredential.Password);
-            }
-            catch (UserCredentialNotMatchException)
-            {
-                return null;
-            }
-            catch (MutipleUsersFoundException)
-            {
-                return null;
+                User user = usersScript.GetUser(userCredential.Username, userCredential.Password);
+                user.Token = GenerateToken(user);
+                return Json(new BasePacket(true, user));
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
-                return null;
+                return Json(new ErrorHandler(ex).ToBasePacket());
             }
-            
-            
+        }
 
+        private string GenerateToken(User user)
+        {
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
@@ -61,8 +55,7 @@ namespace GroceryBama.Controllers
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppInformation.Key)), SecurityAlgorithms.HmacSha256Signature)
             };
             var tokenHandler = new JwtSecurityTokenHandler();
-            user.Token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
-            return user;
+            return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
         }
         protected override void Dispose(bool disposing)
         {

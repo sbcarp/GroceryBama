@@ -16,7 +16,7 @@ export class ItemsListComponent {
     constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
         http.get<any>(baseUrl + 'stores/getcartitems').subscribe(result => {
             console.log(result);
-            this.items = result;
+            this.items = result.data;
         }, error => console.error(error));
     }
 }
