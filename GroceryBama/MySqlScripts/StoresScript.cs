@@ -53,10 +53,51 @@ namespace GroceryBama.MySqlScripts
 
         public Cart AddItemToCart(string username, int groceryId, int itemId, int quantity)
         {
-            Cart cart = new Cart();
-            cart.Items = null;
-            cart.Quantity = 4;
+            Cart cart = GetCartItems(username, groceryId);
+            cart.Quantity ++;
             return cart;
+        }
+        public Cart RemoveItemFromCart(string username, int groceryId, int itemId)
+        {
+            Cart cart = GetCartItems(username, groceryId);
+            cart.Quantity--;
+            return cart;
+        }
+        public Cart UpdateCartItemQuantity(string username, int groceryId, int itemId, int newQuantity)
+        {
+            Cart cart = GetCartItems(username, groceryId);
+
+            return cart;
+        }
+        public List<Store> GetStores()
+        {
+            List<Store> stores = new List<Store>();
+
+            return stores;
+        }
+
+        public SearchResult GetItems(int groceryId, int startIndex, int endIndex, string foodGroup)
+        {
+            SearchResult searchResult = new SearchResult();
+
+            return searchResult;
+        }
+
+        public Order Checkout(string username, int groceryId, string deliveryTime, string deliveryInstruction, int paymentMethodId)
+        {
+            return new Order();
+        }
+
+        public SearchResult GetOrders(string username, int startIndex, int endIndex)
+        {
+            SearchResult searchResult = new SearchResult();
+
+            return searchResult;
+        }
+
+        public Order UpdateOrderStatus(string username, int orderId, string newStatus)
+        {
+            return new Order();
         }
     }
 }

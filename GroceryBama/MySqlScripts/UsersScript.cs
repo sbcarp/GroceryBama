@@ -27,5 +27,49 @@ namespace GroceryBama.MySqlScripts
             return user;
         }
 
+        public User GetUserInfo(string username)
+        {
+            User user = new User();
+
+            return user;
+        }
+
+        public User UpdateUserContactInfo(string username, string phoneNumber, string email)
+        {
+            User user = new User();
+
+            return user;
+        }
+
+        public User UpdateUserAddressInfo(string username, string streetAddress, string addressLine2, 
+                                            string city, string state, string zipCode)
+        {
+            User user = new User();
+
+            return user;
+        }
+        public User AddPaymentMethod(string username, string name, string accountNumber, string routineNumber, bool isDefault)
+        {
+            User user = new User();
+
+            return user;
+        }
+        public User UpdatePaymentMethod(string username, int paymentMethodId, string name, string accountNumber, 
+                                        string routineNumber, bool isDefault)
+        {
+            User user = new User();
+
+            return user;
+        }
+        public User DeletePaymentMethod(string username, int paymentMethodId)
+        {
+            User user = new User();
+
+            return user;
+        }
+        public void SwitchStore(string username, int groceryId)
+        {
+
+        }
     }
 }

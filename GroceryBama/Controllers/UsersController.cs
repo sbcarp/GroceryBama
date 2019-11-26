@@ -27,7 +27,7 @@ namespace GroceryBama.Controllers
             usersScript = new UsersScript();
         }
         [AllowAnonymous]
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public JsonResult Login([FromBody]UserCredential userCredential)
         {
             try

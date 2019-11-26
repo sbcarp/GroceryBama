@@ -27,7 +27,7 @@ namespace GroceryBama.Controllers
             storesScript = new StoresScript();
         }
         [AllowAnonymous]
-        [HttpGet("getitems")]
+        [HttpGet("GetItems")]
         public ActionResult GetItems()
         {
             try
@@ -40,7 +40,7 @@ namespace GroceryBama.Controllers
             }
         }
         [Authorize(Roles = "buyer,deliverer")]
-        [HttpGet("getcartitems")]
+        [HttpGet("GetCartItems")]
         public JsonResult GetCartItems()
         {
             try
@@ -54,7 +54,7 @@ namespace GroceryBama.Controllers
         }
 
         [Authorize(Roles = "buyer,deliverer")]
-        [HttpPost("addtocart")]
+        [HttpPost("AddToCart")]
         public JsonResult AddToCart([FromBody] ItemToCart item)
         {
             try
@@ -69,7 +69,7 @@ namespace GroceryBama.Controllers
         }
 
         [Authorize(Roles = "buyer,deliverer")]
-        [HttpGet("getcartquantity")]
+        [HttpGet("GetCartQuantity")]
         public JsonResult GetCartQuantity()
         {
             var v = new { cartQuantity = 1 };
