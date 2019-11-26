@@ -1,11 +1,16 @@
 <div class="shopping-container flex flex-row">
-  <div class="filter-container">
-    <div *ngFor="let filter of filters; index as i">
+  <!--<div class="filter-container">-->
+    <!--<div *ngFor="let filter of filters; index as i">
       <div class="custom-control custom-checkbox mb-3">
         <mat-checkbox checked="true">{{ filter.name }}</mat-checkbox>
       </div>
-    </div>
-  </div>
+    </div>-->
+    <mat-radio-group class="filter-container" aria-labelledby="example-radio-group-label" [(ngModel)]="foodGroup">
+      <mat-radio-button class="example-radio-button" *ngFor="let filter of filters; index as i" [value]="i">
+        {{ filter.name }}
+      </mat-radio-button>
+    </mat-radio-group>
+  <!--  --><!--</div>-->
   <div class="items-container" *ngIf="items">
     
     <div *ngFor="let item of items">

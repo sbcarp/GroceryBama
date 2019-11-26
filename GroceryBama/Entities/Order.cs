@@ -19,6 +19,7 @@ namespace GroceryBama.Entities
         public string DateTime { get; set; }
         public List<Item> Items { get; set; }
         public string Status { get; set; }
+        public string RequestDeliveryTime { get; set; }
         public Order()
         {
             Items = new List<Item>();
