@@ -1,42 +1,42 @@
-<button id="add-new-card-button" mat-raised-button>Add New Card</button>
+
 <div class="cards-container">
-  <mat-radio-group [(ngModel)]="labelPosition">
+  <mat-radio-group [(ngModel)]="defaultPaymentMethodId">
     <mat-accordion>
-      <div *ngFor="let item of test">
+      <div *ngFor="let item of paymentMethods">
         <div class="row">
-          <mat-radio-button [ngClass]="selectMode ? 'col-1': 'hide-card-selection'" style="top: 14px;" value="{{item}}"></mat-radio-button>
+          <mat-radio-button [ngClass]="selectMode ? 'col-1': 'hide-card-selection'" style="top: 14px;" [value]="item.id"></mat-radio-button>
           <div [ngClass]="selectMode ? 'col-11': 'col-12'">
-            <mat-expansion-panel>
+            <mat-expansion-panel [(expanded)]="item.isExpanded">
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  <i class="far fa-credit-card" style="align-self: center;"></i>&nbsp;Card
+                  <i class="far fa-credit-card" style="align-self: center;"></i>&nbsp;{{ item.name }}
                 </mat-panel-title>
                 <mat-panel-description>
-                  40283728739187
+                  {{ item.accountNumber }}
                 </mat-panel-description>
               </mat-expansion-panel-header>
 
-              <form style="padding: 0">
+              <div style="padding: 0">
                 <div class="row">
                   <mat-form-field class="col-4">
-                    <input matInput placeholder="Payment Name">
+                    <input matInput placeholder="Payment Name" [(ngModel)]="item.name" (input)="item.name = $event.target.value">
                   </mat-form-field>
                   <mat-form-field class="col-8">
-                    <input matInput placeholder="Account Number">
+                    <input matInput  placeholder="Account Number" [(ngModel)]="item.accountNumber" (input)="item.accountNumber = $event.target.value">
                   </mat-form-field>
                 </div>
                 <div class="row">
                   <mat-form-field class="col-8">
-                    <input matInput placeholder="Routine Number">
+                    <input matInput  placeholder="Routine Number" [(ngModel)]="item.routineNumber">
                   </mat-form-field>
-                  <mat-checkbox checked="true" class="col-4" style="align-self: center;">Set as default</mat-checkbox>
+                  <mat-checkbox [(ngModel)]="item.isDefault" [checked]="defaultPaymentMethodId == item.id" class="col-4" style="align-self: center;">Set as default</mat-checkbox>
                 </div>
                 <div class="row" style="margin: 0">
-                  <button mat-raised-button class="col-3">Delete</button>
+                  <button mat-raised-button class="col-3" (click)="onDeletePaymentMethod(item.id)">Delete</button>
                   <div class="col-6"></div>
-                  <button mat-raised-button class="col-3" [color]="'custom-primary'">Save</button>
+                  <button mat-raised-button class="col-3" [color]="'custom-primary'" (click)="onSavePaymentMethod(item.id)">Save</button>
                 </div>
-              </form>
+              </div>
             </mat-expansion-panel>
           </div>
         </div>
@@ -44,3 +44,4 @@
     </mat-accordion>
   </mat-radio-group>
 </div>
+<button id="add-new-card-button" mat-raised-button [color]="'custom-primary'" (click)="addNewCard()">Add New Card</button>

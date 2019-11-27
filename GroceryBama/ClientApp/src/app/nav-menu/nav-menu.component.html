@@ -51,7 +51,7 @@
           
           <li class="nav-item" *ngIf="!authenticator.isLoggedIn" [routerLink]="['/login']">
             <i class="fas fa-sign-in-alt"></i>
-            <a class="nav-link text-dark" >Login</a>
+            <a class="nav-link" >Login</a>
           </li>
           <li class="nav-item" *ngIf="authenticator.isLoggedIn && authenticator.role == 'buyer'" [routerLink]="['/cart']" >
             <i id="cart-icon" class="fas fa-shopping-cart"></i>

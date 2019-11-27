@@ -1,10 +1,11 @@
 <div class="center-block">
   <h2>Cart</h2>
   <div class="cart-summary right-float-container">
-    <div class="cart-total">Total  ${{total}}</div>
+    <span>{{ totalNumItems }} Items</span>
+    <div class="cart-total">Total  ${{ totalPrice != null ? totalPrice.toFixed(2) : '0'}}</div>
     <button mat-raised-button [color]="'custom-primary'" [routerLink]="['/checkout']">Go to Checkout</button>
   </div>
   <div class="cart-container">
-    <app-items-list [isCartMode]="true"></app-items-list>
+    <app-items-list #itemsList [isCartMode]="true"></app-items-list>
   </div>
 </div>

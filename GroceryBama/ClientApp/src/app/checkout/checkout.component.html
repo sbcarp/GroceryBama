@@ -1,25 +1,25 @@
 <div class="center-block">
   <div class="summary right-float-container">
     <div class="total">Total  $123</div>
-    <button mat-raised-button [color]="'custom-primary'" [routerLink]="['/myorders/orderdetails']" [queryParams]="{receiptmode: true, orderid: 123}">Checkout</button>
+    <button mat-raised-button [color]="'custom-primary'" (click)="onCheckOut()">Checkout</button>
   </div>
   <h2>Delivery Options</h2>
   <div class="account-info-container">
     <div class="row" style="padding: 20px;">
       <mat-form-field class="col-4">
         <mat-label>Delivery Time</mat-label>
-        <mat-select [value]="deliveryTime">
-          <mat-option value="1">ASAP</mat-option>
-          <mat-option value="2">In 1 Hour</mat-option>
-          <mat-option value="3">In 2 Hours</mat-option>
-          <mat-option value="4">In 5 Hours</mat-option>
-          <mat-option value="5">In 10 Hours</mat-option>
-          <mat-option value="6">In 12 Hours</mat-option>
-          <mat-option value="7">In 24 Hours</mat-option>
+        <mat-select [(ngModel)]="deliveryTime">
+          <mat-option value="ASAP">ASAP</mat-option>
+          <mat-option value="In 1 Hour">In 1 Hour</mat-option>
+          <mat-option value="In 2 Hours">In 2 Hours</mat-option>
+          <mat-option value="In 5 Hours">In 5 Hours</mat-option>
+          <mat-option value="In 10 Hours">In 10 Hours</mat-option>
+          <mat-option value="In 12 Hours">In 12 Hours</mat-option>
+          <mat-option value="In 24 Hours">In 24 Hours</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="col-8">
-        <input matInput placeholder="Delivery Instruction">
+        <input [(ngModel)]="deliveryInstruction" matInput placeholder="Delivery Instruction">
       </mat-form-field>
     </div>
   </div>
@@ -30,6 +30,6 @@
 
   <h2>Payment Methods</h2>
   <div class="account-info-container">
-    <app-payment-methods></app-payment-methods>
+    <app-payment-methods #paymentMethods [selectMode]="true"></app-payment-methods>
   </div>
 </div>

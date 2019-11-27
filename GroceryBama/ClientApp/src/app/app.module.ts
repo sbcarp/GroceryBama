@@ -9,6 +9,7 @@ import { RequestInterceptor } from './_utilities/request-interceptor'
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { NavMenuService } from './nav-menu/nav-menu.service'
+import { Authenticator } from 'src/app/_utilities/authenticator'
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
@@ -107,7 +108,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },
         //{ provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: { float: 'always' } },
-        NavMenuService
+        NavMenuService,
+        Authenticator
     ],
     bootstrap: [AppComponent]
 })

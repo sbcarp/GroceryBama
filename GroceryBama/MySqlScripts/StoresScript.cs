@@ -102,7 +102,7 @@ namespace GroceryBama.MySqlScripts
             return searchResult;
         }
 
-        public Order Checkout(string username, int groceryId, string deliveryTime, string deliveryInstruction, int paymentMethodId)
+        public Order Checkout(string username, int groceryId, string requestDeliveryTime, string deliveryInstruction, int paymentMethodId)
         {
             return new Order();
         }

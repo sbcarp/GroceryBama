@@ -13,5 +13,6 @@ namespace GroceryBama.Entities
         public string Name { get; set; }
         public string AccountNumber { get; set; }
         public string RoutineNumber { get; set; }
+        public bool IsDefault { get; set; }
     }
 }

@@ -1,26 +1,26 @@
-<form class="example-form">
+<form [formGroup]="address" class="example-form" (ngSubmit)="onSaveAddress()">
 
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Street Address" (input)="isInfoChanged = true">
+  <mat-form-field class="example-full-width" >
+    <input formControlName="streetAddress" matInput placeholder="Street Address" (input)="isInfoChanged = true">
   </mat-form-field>
   <mat-form-field class="example-full-width">
-    <input matInput placeholder="Apartment, Suite, Unit, etc." (input)="isInfoChanged = true">
+    <input formControlName="addressLine2" matInput placeholder="Apartment, Suite, Unit, etc." (input)="isInfoChanged = true">
   </mat-form-field>
   <div class="row">
     <mat-form-field class="col-6">
-      <input matInput placeholder="City" (input)="isInfoChanged = true">
+      <input formControlName="city" matInput placeholder="City" (input)="isInfoChanged = true">
     </mat-form-field>
     <mat-form-field class="col-3">
-      <input matInput placeholder="State" (input)="isInfoChanged = true">
+      <input formControlName="state" matInput placeholder="State" (input)="isInfoChanged = true">
     </mat-form-field>
     <mat-form-field class="col-3">
-      <input matInput #postalCode maxlength="5" placeholder="Postal Code" value="94043" (input)="isInfoChanged = true">
+      <input formControlName="zipCode" matInput #postalCode maxlength="5" placeholder="Zip Code" (input)="isInfoChanged = true">
       <!--<mat-hint align="right">{{postalCode.value.length}} / 5</mat-hint>-->
     </mat-form-field>
   </div>
   <div *ngIf="isInfoChanged" class="row" style="margin: 0">
-    <button mat-raised-button class="col-3">Cancel</button>
+    <button mat-raised-button class="col-3" (click)="getUserAddress()">Cancel</button>
     <div class="col-6"></div>
-    <button mat-raised-button class="col-3" [color]="'custom-primary'">Save</button>
+    <button mat-raised-button class="col-3" type="submit" [color]="'custom-primary'">Save</button>
   </div>
 </form>

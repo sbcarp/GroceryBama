@@ -8,8 +8,9 @@ export class RequestInterceptor implements HttpInterceptor {
     constructor(private authenticator: Authenticator, @Inject('BASE_URL') private baseUrl: string) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if (this.authenticator == undefined) return next.handle(request);
         var currentUser = this.authenticator.currentUser;
-        if (currentUser && currentUser.token) {
+        if (currentUser != null && currentUser.token) {
             request = request.clone({
                 setHeaders: {
                     Authorization: `Bearer ${currentUser.token}`,

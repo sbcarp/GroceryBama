@@ -3,6 +3,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { NavMenuService } from '../nav-menu/nav-menu.service'
 import { Subscription } from 'rxjs';
 import { PageEvent, MatPaginator } from '@angular/material/paginator';
+import { Authenticator } from 'src/app/_utilities/authenticator'
+import { Router } from '@angular/router';
+
 //import { EDEADLK } from 'constants';
 @Component({
   selector: 'app-home',
@@ -21,7 +24,9 @@ export class HomeComponent {
     @ViewChild('paginator', { static: false}) paginator: MatPaginator;
     constructor(private http: HttpClient,
         @Inject('BASE_URL') private baseUrl: string,
-        private navMenuService: NavMenuService) {
+        private navMenuService: NavMenuService,
+        private authenticator: Authenticator,
+        private router: Router) {
         this.filters = [
             { name: "Beverages" },
             { name: "Baking Goods" },
@@ -35,7 +40,7 @@ export class HomeComponent {
             { name: "Others" },
         ];
         this.foodGroup = this.filters[0]["name"];
-        this.groceryIdSubscription = navMenuService.getCurrentGroceryId().subscribe(groceryId => {
+        this.groceryIdSubscription = authenticator.groceryId.subscribe(groceryId => {
             this.groceryId = groceryId;
             this.getItems(groceryId, 1, 10, this.foodGroup);
         });
@@ -56,9 +61,14 @@ export class HomeComponent {
     }
     addToCart(itemId, ref) {
         this.adjustItemQuantity(ref, 0);
-        this.http.post<any>(this.baseUrl + 'stores/addtocart', { groceryId: this.groceryId, itemId: itemId, quantity: parseInt(ref.value)}).subscribe(result => {
-            if (result.success) this.navMenuService.cartQuantityUpdate(result.data.cartQuantity);
-        }, error => console.error(error));
+        if (this.authenticator.isLoggedIn) {
+            this.http.post<any>(this.baseUrl + 'stores/addtocart', { groceryId: this.groceryId, itemId: itemId, quantity: parseInt(ref.value) }).subscribe(result => {
+                if (result.success) this.navMenuService.cartQuantityUpdate(result.data.cartQuantity);
+            }, error => console.error(error));
+        }
+        else {
+            this.router.navigateByUrl('/login');
+        }
     }
     adjustItemQuantity(ref, adjustment) {
         var newQuantity = parseInt(ref.value) + adjustment;

@@ -41,12 +41,14 @@ namespace GroceryBama.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost("SwitchStore")]
         public ActionResult SwitchStore([FromBody]int groceryId)
         {
             try
             {
-                storesScript.SwitchStore(User.Identity.Name, groceryId);
+
+                if (User.Identity.IsAuthenticated) storesScript.SwitchStore(User.Identity.Name, groceryId);
                 return Json(new BasePacket(true, null));
             }
             catch (Exception ex)
@@ -136,5 +138,23 @@ namespace GroceryBama.Controllers
             }
         }
 
+        [Authorize(Roles = "buyer")]
+        [HttpPost("Checkout")]
+        public JsonResult Checkout([FromBody] Order order)
+        {
+            try
+            {
+                return Json(new BasePacket(true, storesScript.Checkout(User.Identity.Name, order.GroceryId, order.RequestDeliveryTime, order.DeliveryInstructions, order.paymentMethodId)));
+            }
+            catch (Exception ex)
+            {
+                return Json(new ErrorHandler(ex).ToBasePacket());
+            }
+        }
+        protected override void Dispose(bool disposing)
+        {
+            storesScript.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }
