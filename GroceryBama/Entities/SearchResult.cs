@@ -10,7 +10,7 @@ namespace GroceryBama.Entities
     public class SearchResult
     {
         public int TotalNumberOfResults { get; set; }
-        public List<dynamic> Results { get; set; }
+        public dynamic Results { get; set; }
 
     }
 }

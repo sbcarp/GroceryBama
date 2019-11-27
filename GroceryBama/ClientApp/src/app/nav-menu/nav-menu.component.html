@@ -14,22 +14,16 @@
       <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
            [ngClass]="{ show: isExpanded }">
         <ul class="navbar-nav flex-grow">
-          <li class="nav-item"
-              [routerLinkActive]="['link-active']"
-              [routerLinkActiveOptions]="{ exact: true }"
-              [routerLink]="['/']">
+          <li class="nav-item">
             <i class="fas fa-home"></i>
-            <a class="nav-link">Publix</a>
+            <a class="nav-link" [routerLink]="['/']">{{ currentStoreName }}</a>
             <div class="dropdown-menu">
-              <a class="dropdown-item" [routerLink]="['/account']">The Fresh Market</a>
-              <h6 class="dropdown-header">1190 University Blvd</h6>
-              <h6 class="dropdown-header">(205)391-1204</h6>
-              <a class="dropdown-item" [routerLink]="['/account']">Sam's Club</a>
-              <h6 class="dropdown-header">1401 Skyland Blvd E</h6>
-              <h6 class="dropdown-header">(205)391-1204</h6>
-              <a class="dropdown-item" [routerLink]="['/account']">Walmart</a>
-              <h6 class="dropdown-header">1501 Skyland Blvd E</h6>
-              <h6 class="dropdown-header">(205)391-1204</h6>
+              <a class="dropdown-item" *ngFor="let store of stores" (click)="switchStore(store.id, store.name)">
+                {{ store.name }}
+                <h6 class="dropdown-header">{{ store.address }}</h6>
+                <h6 class="dropdown-header">{{ store.phoneNumber }}</h6>
+                <h6 class="dropdown-header">{{ store.hours }}</h6>
+              </a>
             </div>
           </li>
           <!--<li class="nav-item" [routerLinkActive]="['link-active']">

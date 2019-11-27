@@ -60,26 +60,45 @@ namespace GroceryBama.MySqlScripts
         public Cart RemoveItemFromCart(string username, int groceryId, int itemId)
         {
             Cart cart = GetCartItems(username, groceryId);
+            cart.Items.RemoveAt(0);
             cart.Quantity--;
             return cart;
         }
         public Cart UpdateCartItemQuantity(string username, int groceryId, int itemId, int newQuantity)
         {
             Cart cart = GetCartItems(username, groceryId);
-
+            cart.Items[0].Quantity = 222;
             return cart;
         }
         public List<Store> GetStores()
         {
             List<Store> stores = new List<Store>();
+            Store store = new Store();
+            store.Id = 1;
+            store.Name = "Publix";
+            store.Address = "1190 University Blvd";
+            store.PhoneNumber = "(205)391-1204";
+            store.Hours = "9AM to 10PM";
+            stores.Add(store);
 
+            store = new Store();
+            store.Id = 2;
+            store.Name = "Walmart";
+            store.Address = "1501 Skyland Blvd E";
+            store.PhoneNumber = "(205)391-1204";
+            store.Hours = "7/24 Hours";
+            stores.Add(store);
             return stores;
         }
+        public void SwitchStore(string username, int newGroceryId)
+        {
 
+        }
         public SearchResult GetItems(int groceryId, int startIndex, int endIndex, string foodGroup)
         {
             SearchResult searchResult = new SearchResult();
-
+            searchResult.Results = GetCartItems("sadfaioweuyrapweoiu", groceryId).Items;
+            searchResult.TotalNumberOfResults = 55;
             return searchResult;
         }
 
@@ -98,6 +117,23 @@ namespace GroceryBama.MySqlScripts
         public Order UpdateOrderStatus(string username, int orderId, string newStatus)
         {
             return new Order();
+        }
+
+        public SearchResult GetOutstandingOrders(int groceryId, int startIndex, int endIndex)
+        {
+            SearchResult searchResult = new SearchResult();
+
+            return searchResult;
+        }
+
+        public Statistic GetStatistic(int groceryId)
+        {
+            return new Statistic();
+        }
+
+        public void DeleteItemFromInventory(int groceryId, int itemId)
+        {
+
         }
     }
 }

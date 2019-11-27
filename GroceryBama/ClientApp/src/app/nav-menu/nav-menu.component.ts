@@ -13,6 +13,9 @@ import { NavMenuService } from './nav-menu.service'
 export class NavMenuComponent {
     isExpanded = false;
     cartQuantity = 0;
+    stores = [];
+    currentStoreId = 1;
+    currentStoreName = "";
     //@Output() toggleCart: EventEmitter<null> = new EventEmitter();
     constructor(
         private http: HttpClient,
@@ -20,11 +23,22 @@ export class NavMenuComponent {
         private authenticator: Authenticator,
         private router: Router,
         private navMenuService: NavMenuService) {
-        if (authenticator.isLoggedIn) {
-            this.http.get<any>(this.baseUrl + 'stores/getcartquantity').subscribe(result => {
-                this.navMenuService.cartQuantityUpdate(result.cartQuantity);
-            }, error => console.error(error));
-        }
+        this.http.get<any>(this.baseUrl + 'stores/getStores').subscribe(result => {
+            this.stores = result.data;
+            this.currentStoreId = this.stores[0]["id"];
+            this.currentStoreName = this.stores[0]["name"];
+            if (authenticator.isLoggedIn) {
+                this.http.get<any>(this.baseUrl + 'stores/getcartquantity').subscribe(result => {
+                    this.navMenuService.cartQuantityUpdate(result.data.cartQuantity);
+                }, error => console.error(error));
+                this.currentStoreId = authenticator.currentUser.groceryId;
+                var currentStore = this.stores.find(element => { return element.id == this.currentStoreId });
+                this.currentStoreName = currentStore["name"];
+                this.navMenuService.setCurrentGroceryId(this.currentStoreId);
+            }
+        }, error => console.error(error));
+        
+        
     }
     ngOnInit() {
         this.navMenuService.cartQuantityUpdateEvent.subscribe(quantity => {
@@ -55,7 +69,14 @@ export class NavMenuComponent {
             )
     }
 
-
+    switchStore(groceryId: number, name: string) {
+        this.http.post<any>(this.baseUrl + 'stores/switchStore', groceryId).subscribe(result => {
+            this.navMenuService.setCurrentGroceryId(groceryId);
+            this.currentStoreId = groceryId;
+            this.currentStoreName = name;
+            this.authenticator.switchStore(groceryId);
+        }, error => console.error(error));
+    }
 }
 
 

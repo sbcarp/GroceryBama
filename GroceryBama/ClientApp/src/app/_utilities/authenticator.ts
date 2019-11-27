@@ -4,7 +4,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class Authenticator {
-    public _currentUser: User;
+    private _currentUser;
     constructor(private http: HttpClient,
         @Inject('BASE_URL')
         private baseUrl: string) {
@@ -17,8 +17,12 @@ export class Authenticator {
         if (this._currentUser == null) return null;
         return this._currentUser.role;
     }
-    public get currentUser(): User {
+    public get currentUser() {
         return this._currentUser;
+    }
+    switchStore(groceryId: number) {
+        this._currentUser.groceryId = groceryId;
+        localStorage.setItem('currentUser', this._currentUser);
     }
     login(username: string, password: string) {
         this.logout();
@@ -44,4 +48,5 @@ export class User {
     lastname: string;
     role: string;
     token?: string;
+    groceryId: number;
 }

@@ -119,6 +119,19 @@
   color: gray;
 }
 
+.items-paginator {
+  justify-content: space-between;
+}
+
+  .items-paginator ::ng-deep .mat-paginator-container {
+    justify-content: center;
+  }
+
+  .items-paginator ::ng-deep .mat-paginator-page-size {
+    display: none;
+  }
+
+
 @media (max-width: 645px) {
   .filter-container {
     display: none;

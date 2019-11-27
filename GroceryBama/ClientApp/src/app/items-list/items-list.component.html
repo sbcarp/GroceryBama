@@ -1,7 +1,7 @@
 <div class="cart-items-container" *ngIf="items">
   <div *ngFor="let item of items">
     <div class="cart-item">
-      <input matInput [disabled]="!isCartMode" type="number" class="item-quantity" onfocus="this.select()" value="{{ item.quantity }}">
+      <input matInput [disabled]="!isCartMode" type="number" class="item-quantity" onfocus="this.select()" [(ngModel)]="item.quantity" (change)="updateCartItemQuantity(item.id, item.quantity)">
       <!--<input type="number" class="item-quantity form-control input-sm" value="{{ item.quantity }}" />-->
       &nbsp;
       <div class="cart-img-container ">
@@ -12,7 +12,7 @@
         <div class="cart-item-description">{{ item.description }}</div>
       </div>
       <div class="cart-item-price">${{ item.listedPrice }}</div>
-      <i *ngIf="isCartMode" class="far fa-trash-alt"></i>
+      <i *ngIf="isCartMode" class="far fa-trash-alt" (click)="removeItemFromCart(item.id)"></i>
       <!--<a href="#" class="btn btn-secondary">Add to Cart</a>-->
     </div>
     <mat-divider></mat-divider>

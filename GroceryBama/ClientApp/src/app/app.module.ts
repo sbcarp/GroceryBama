@@ -42,6 +42,7 @@ import { MAT_LABEL_GLOBAL_OPTIONS } from '@angular/material/core';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
     declarations: [
@@ -100,7 +101,8 @@ import { MatTableModule } from '@angular/material/table';
         MatTabsModule,
         MatBottomSheetModule,
         MatListModule,
-        MatTableModule
+        MatTableModule,
+        MatPaginatorModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },

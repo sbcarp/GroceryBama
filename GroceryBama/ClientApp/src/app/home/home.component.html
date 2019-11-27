@@ -1,45 +1,49 @@
 <div class="shopping-container flex flex-row">
   <!--<div class="filter-container">-->
-    <!--<div *ngFor="let filter of filters; index as i">
-      <div class="custom-control custom-checkbox mb-3">
-        <mat-checkbox checked="true">{{ filter.name }}</mat-checkbox>
-      </div>
-    </div>-->
-    <mat-radio-group class="filter-container" aria-labelledby="example-radio-group-label" [(ngModel)]="foodGroup">
-      <mat-radio-button class="example-radio-button" *ngFor="let filter of filters; index as i" [value]="i">
-        {{ filter.name }}
-      </mat-radio-button>
-    </mat-radio-group>
+  <!--<div *ngFor="let filter of filters; index as i">
+    <div class="custom-control custom-checkbox mb-3">
+      <mat-checkbox checked="true">{{ filter.name }}</mat-checkbox>
+    </div>
+  </div>-->
+  <mat-radio-group class="filter-container" [(ngModel)]="foodGroup" (change)="paginator.pageIndex = 0; getItems(groceryId, 1, 10, $event.value)">
+    <mat-radio-button class="example-radio-button" *ngFor="let filter of filters; index as i" [value]="filter.name">
+      {{ filter.name }}
+    </mat-radio-button>
+  </mat-radio-group>
   <!--  --><!--</div>-->
-  <div class="items-container" *ngIf="items">
-    
-    <div *ngFor="let item of items">
-      <div class="item">
-        <div class="img-container">
-          <img src="{{ item.pictureUrl }}" class="pic" alt="...">
-        </div>
-        <div class="item-info-container flex flex-column">
-          <div class="item-shortInfo">
-            <div class="item-price">${{ item.listedPrice }}</div>
+  <div class="col">
+    <div class="items-container" *ngIf="items">
+      <div *ngFor="let item of items">
+        <div class="item">
+          <div class="img-container">
+            <img src="{{ item.pictureUrl }}" class="pic" alt="...">
           </div>
-          <div class="item-name">{{ item.name }}</div>
-          <div class="item-description">{{ item.description }}</div>
-          <div class="item-actions-container">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" (click)="adjustItemQuantity(quantityInput, -1)">-</span>
-              </div>
-              <input #quantityInput type="text" class="form-control" value="1" onfocus="this.select()">
-              <div class="input-group-append">
-                <span class="input-group-text" (click)="adjustItemQuantity(quantityInput, 1)">+</span>
-              </div>
+          <div class="item-info-container flex flex-column">
+            <div class="item-shortInfo">
+              <div class="item-price">${{ item.listedPrice }}</div>
             </div>
-            <button mat-raised-button [color]="'custom-primary'" class="item-add-cart" (click)="addToCart(item.id, quantityInput)">Add to Cart</button>
-            <!--<button type="button" class="btn btn-primary item-add-cart" (click)="addToCart(item.id, quantityInput)">Add to Cart</button>-->
+            <div class="item-name">{{ item.name }}</div>
+            <div class="item-description">{{ item.description }}</div>
+            <div class="item-actions-container">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" (click)="adjustItemQuantity(quantityInput, -1)">-</span>
+                </div>
+                <input #quantityInput type="text" class="form-control" value="1" onfocus="this.select()">
+                <div class="input-group-append">
+                  <span class="input-group-text" (click)="adjustItemQuantity(quantityInput, 1)">+</span>
+                </div>
+              </div>
+              <button mat-raised-button [color]="'custom-primary'" class="item-add-cart" (click)="addToCart(item.id, quantityInput)">Add to Cart</button>
+              <!--<button type="button" class="btn btn-primary item-add-cart" (click)="addToCart(item.id, quantityInput)">Add to Cart</button>-->
+            </div>
           </div>
+          <!--<a href="#" class="btn btn-secondary">Add to Cart</a>-->
         </div>
-        <!--<a href="#" class="btn btn-secondary">Add to Cart</a>-->
       </div>
     </div>
+    <mat-paginator #paginator class="items-paginator" pageSize="10" [length]="numberOfItems" (page)="switchPage(groceryId, $event)">
+    </mat-paginator>
   </div>
+  
 </div>
