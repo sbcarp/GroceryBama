@@ -26,4 +26,8 @@ export class OrderDetailsComponent {
     ngOnInit() {
         
     }
+    orderStatusToString(status) {
+        var statusToString = { 0: "Waiting", 1: "Driver On the Way", 2: "Deliveried", 3: "Canceled" };
+        return statusToString[status];
+    }
 }

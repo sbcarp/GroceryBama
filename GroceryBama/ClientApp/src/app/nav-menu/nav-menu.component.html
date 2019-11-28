@@ -15,7 +15,7 @@
            [ngClass]="{ show: isExpanded }">
         <ul class="navbar-nav flex-grow">
           <li class="nav-item">
-            <i class="fas fa-home"></i>
+            <i class="fas fa-store"></i>
             <a class="nav-link" [routerLink]="['/']">{{ currentStoreName }}</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" *ngFor="let store of stores" (click)="switchStore(store.id, store.name)">

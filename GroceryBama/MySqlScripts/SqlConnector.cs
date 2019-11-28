@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
+using System;
 
 namespace GroceryBama.MySqlScripts
 {
     public class SqlConnector : IDisposable
     {
-        public MySqlConnection Connection; 
+        public MySqlConnection Connection;
         public SqlConnector()
         {
             MySqlConnectionStringBuilder connectionString = new MySqlConnectionStringBuilder();

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace GroceryBama.Controllers
 {
@@ -29,7 +25,7 @@ namespace GroceryBama.Controllers
             Success = isSuccess;
             Data = data;
         }
-        
+
         public BasePacket(bool isSuccess, int errorCode, string message)
         {
             Success = isSuccess;

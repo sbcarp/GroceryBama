@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GroceryBama.Entities;
+﻿using GroceryBama.Entities;
 using MySql.Data.MySqlClient;
-using GroceryBama.Exceptions;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace GroceryBama.MySqlScripts
 {
@@ -80,7 +77,7 @@ namespace GroceryBama.MySqlScripts
             return user;
         }
 
-        public User UpdateUserAddressInfo(string username, string streetAddress, string addressLine2, 
+        public User UpdateUserAddressInfo(string username, string streetAddress, string addressLine2,
                                             string city, string state, string zipCode)
         {
             User user = GetUserInfo(username);
@@ -91,7 +88,7 @@ namespace GroceryBama.MySqlScripts
             User user = GetUserInfo(username);
             return user;
         }
-        
+
         public User AddPaymentMethod(string username, string name, string accountNumber, string routineNumber, bool isDefault)
         {
             User user = GetUserInfo(username);
@@ -103,7 +100,7 @@ namespace GroceryBama.MySqlScripts
             user.PaymentMethods.Add(paymentMethod);
             return user;
         }
-        public User UpdatePaymentMethod(string username, int paymentMethodId, string name, string accountNumber, 
+        public User UpdatePaymentMethod(string username, int paymentMethodId, string name, string accountNumber,
                                         string routineNumber, bool isDefault)
         {
             User user = GetUserInfo(username);

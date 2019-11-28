@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Configuration;
-using System.IO;
+using System;
 namespace GroceryBama
 {
     public class Program
@@ -20,7 +15,7 @@ namespace GroceryBama
         {
             string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             IWebHostBuilder webHostBuilder = WebHost.CreateDefaultBuilder(args);
-            if (env == Environments.Development) 
+            if (env == Environments.Development)
             {
                 webHostBuilder.UseUrls("http://*:30103", "https://*:30104");
             }
@@ -38,6 +33,6 @@ namespace GroceryBama
 
             return webHostBuilder.UseStartup<Startup>();
         }
-        
+
     }
 }

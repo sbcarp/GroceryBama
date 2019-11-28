@@ -4,7 +4,7 @@
   <div class="account-info-container" style="padding: 20px;">
     <div class="row">
       <span class="col-6">Order Id</span>
-      <span class="col-6">{{ order.orderId }}</span>
+      <span class="col-6">{{ order.orderId != undefined ? order.orderId.toString().padStart(9, '0') : '' }}</span>
     </div>
     <div class="row">
       <span class="col-6">Store Name</span>
@@ -24,9 +24,12 @@
     </div>
     <div class="row">
       <span class="col-6">Status</span>
-      <span class="col-6">{{ order.status }}</span>
+      <span class="col-6">{{ orderStatusToString(order.status) }}</span>
     </div>
-
+    <div class="row">
+      <span class="col-6">Address</span>
+      <span class="col-6">{{ order.addressLine2 }}<br />{{ order.streetAddress }}</span>
+    </div>
   </div>
   <div class="account-info-container">
     <app-items-list [isCartMode]="false" [orderId]="orderId"></app-items-list>

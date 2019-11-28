@@ -30,7 +30,7 @@ export class NavMenuComponent {
             this.groceryIdSubscription = authenticator.groceryId.subscribe(groceryId => {
                 this.currentStoreName = this.stores.find(element => { return element.id == groceryId }).name;
             });
-            if (authenticator.isLoggedIn) {
+            if (authenticator.isLoggedIn && authenticator.currentUser.role == "buyer") {
                 this.http.get<any>(this.baseUrl + 'stores/getcartquantity').subscribe(result => {
                     this.navMenuService.cartQuantityUpdate(result.data.cartQuantity);
                 }, error => console.error(error));

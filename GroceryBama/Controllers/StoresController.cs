@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using System.IdentityModel.Tokens.Jwt;
+﻿using GroceryBama.Entities;
 using GroceryBama.MySqlScripts;
-using GroceryBama.Entities;
-using GroceryBama.Exceptions;
-using Newtonsoft.Json.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace GroceryBama.Controllers
 {
@@ -92,12 +82,12 @@ namespace GroceryBama.Controllers
             try
             {
                 int cartQuantity = storesScript.AddItemToCart(User.Identity.Name, Params.groceryId, Params.itemId, Params.quantity).Quantity;
-                return Json(new BasePacket(true, new { cartQuantity = cartQuantity}));
+                return Json(new BasePacket(true, new { cartQuantity = cartQuantity }));
             }
             catch (Exception ex)
             {
                 return Json(new ErrorHandler(ex).ToBasePacket());
-            }         
+            }
         }
 
         [Authorize(Roles = "buyer")]
@@ -144,7 +134,7 @@ namespace GroceryBama.Controllers
         {
             try
             {
-                return Json(new BasePacket(true, storesScript.Checkout(User.Identity.Name, order.GroceryId, order.RequestDeliveryTime, order.DeliveryInstructions, order.paymentMethodId)));
+                return Json(new BasePacket(true, storesScript.Checkout(User.Identity.Name, order.GroceryId, order.RequestDeliveryTime, order.DeliveryInstructions, order.PaymentMethodId)));
             }
             catch (Exception ex)
             {
@@ -152,12 +142,52 @@ namespace GroceryBama.Controllers
             }
         }
 
-        [Authorize(Roles = "buyer")]
+        [Authorize(Roles = "buyer,deliverer")]
         [HttpGet("GetOrderDetail/{orderId}")]
         public JsonResult GetOrderDetail(int orderId)
         {
             return Json(new BasePacket(true, storesScript.GetOrderDetail(User.Identity.Name, orderId)));
         }
+
+        [Authorize(Roles = "buyer,deliverer")]
+        [HttpGet("GetOrders")]
+        public ActionResult GetOrders(int startIndex, int endIndex)
+        {
+            try
+            {
+                return Json(new BasePacket(true, storesScript.GetOrders(User.Identity.Name, startIndex, endIndex)));
+            }
+            catch (Exception ex)
+            {
+                return Json(new ErrorHandler(ex).ToBasePacket());
+            }
+        }
+
+        [Authorize(Roles = "buyer,deliverer")]
+        [HttpPost("UpdateOrderStatus")]
+        public ActionResult UpdateOrderStatus([FromBody]Order order)
+        {
+            try
+            {
+                int orderId = order.OrderId, orderStatus = order.Status;
+                JsonResult permissionDeniedPacket = Json(new BasePacket(false, 7000, "Permission denied"));
+                // Out of range
+                if (orderStatus <= 0 || orderStatus > 3) return permissionDeniedPacket;
+                // When a buyer try to update order to driver on the way or deliveried
+                if (orderStatus > 0 && orderStatus < 3 && !User.IsInRole("deliverer")) return permissionDeniedPacket;
+                // When a deliverer try to cancel an order
+                if (orderStatus == 3 && !User.IsInRole("buyer")) return permissionDeniedPacket;
+                // When a user try to cancel an order that not in waiting status
+                // TODO
+                storesScript.UpdateOrderStatus(User.Identity.Name, orderId, orderStatus);
+                return Json(new BasePacket(true, null));
+            }
+            catch (Exception ex)
+            {
+                return Json(new ErrorHandler(ex).ToBasePacket());
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             storesScript.Dispose();

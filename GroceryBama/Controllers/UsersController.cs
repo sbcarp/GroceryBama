@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using System.IdentityModel.Tokens.Jwt;
+﻿using GroceryBama.Entities;
 using GroceryBama.MySqlScripts;
-using GroceryBama.Entities;
-using GroceryBama.Exceptions;
-using MySql.Data.MySqlClient;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GroceryBama.Controllers
@@ -70,7 +66,7 @@ namespace GroceryBama.Controllers
             {
                 User user = usersScript.GetUserInfo(User.Identity.Name);
                 List<PaymentMethod> paymentMethods = user.PaymentMethods;
-                var returnData = new { defaultPaymentMethodId = user.DefaultPaymentMethodId,  paymentMethods = paymentMethods};
+                var returnData = new { defaultPaymentMethodId = user.DefaultPaymentMethodId, paymentMethods = paymentMethods };
                 return Json(new BasePacket(true, returnData));
             }
             catch (Exception ex)
@@ -135,8 +131,14 @@ namespace GroceryBama.Controllers
             try
             {
                 User user = usersScript.GetUserInfo(User.Identity.Name);
-                var returnData = new { streetAddress = user.StreetAddress, addressLine2 = user.AddressLine2, 
-                                        city = user.City, state = user.State, zipCode = user.ZipCode};
+                var returnData = new
+                {
+                    streetAddress = user.StreetAddress,
+                    addressLine2 = user.AddressLine2,
+                    city = user.City,
+                    state = user.State,
+                    zipCode = user.ZipCode
+                };
                 return Json(new BasePacket(true, returnData));
             }
             catch (Exception ex)
@@ -144,7 +146,7 @@ namespace GroceryBama.Controllers
                 return Json(new ErrorHandler(ex).ToBasePacket());
             }
         }
-        [Authorize(Roles = "buyer")]
+        [Authorize]
         [HttpGet("GetUserContact")]
         public JsonResult GetUserContact()
         {
@@ -179,7 +181,7 @@ namespace GroceryBama.Controllers
             }
         }
 
-        [Authorize(Roles = "buyer")]
+        [Authorize]
         [HttpPost("UpdateUserContact")]
         public JsonResult UpdateUserContact([FromBody]User user)
         {
@@ -193,7 +195,7 @@ namespace GroceryBama.Controllers
                 return Json(new ErrorHandler(ex).ToBasePacket());
             }
         }
-        
+
         private string GenerateToken(User user)
         {
             var tokenDescriptor = new SecurityTokenDescriptor

@@ -1,8 +1,6 @@
-﻿using System;
+﻿using GroceryBama.Entities;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GroceryBama.Entities;
 
 namespace GroceryBama.MySqlScripts
 {
@@ -12,7 +10,7 @@ namespace GroceryBama.MySqlScripts
         {
             Cart cart = new Cart();
             Item item = new Item();
-            
+
             item.Name = "Sprite";
             item.Id = 1;
             item.Group = "beverage";
@@ -54,7 +52,7 @@ namespace GroceryBama.MySqlScripts
         public Cart AddItemToCart(string username, int groceryId, int itemId, int quantity)
         {
             Cart cart = GetCartItems(username, groceryId);
-            cart.Quantity ++;
+            cart.Quantity++;
             return cart;
         }
         public Cart RemoveItemFromCart(string username, int groceryId, int itemId)
@@ -110,7 +108,48 @@ namespace GroceryBama.MySqlScripts
         public SearchResult GetOrders(string username, int startIndex, int endIndex)
         {
             SearchResult searchResult = new SearchResult();
+            searchResult.TotalNumberOfResults = 3;
+            List<Order> orders = new List<Order>();
+            Order order = new Order();
+            order.OrderId = 1;
+            order.DateTime = new DateTime(2019, 11, 27);
+            order.DeliveryInstructions = "I'm tired of making up data";
+            order.GroceryId = 1;
+            order.Items = GetCartItems(username, order.GroceryId).Items;
+            order.RequestDeliveryTime = "ASAP";
+            order.Status = 0;
+            order.StoreName = "Publix";
+            order.TotalItems = 30;
+            order.TotalPrice = 56.33;
+            orders.Add(order);
 
+            order = new Order();
+            order.OrderId = 2;
+            order.DateTime = new DateTime(2019, 11, 26);
+            order.DeliveryInstructions = "I'm tired of making up data";
+            order.GroceryId = 1;
+            order.Items = GetCartItems(username, order.GroceryId).Items;
+            order.RequestDeliveryTime = "In 2 Hours";
+            order.Status = 1;
+            order.StoreName = "Walmart";
+            order.TotalItems = 30;
+            order.TotalPrice = 56.33;
+            orders.Add(order);
+
+            order = new Order();
+            order.OrderId = 3;
+            order.DateTime = new DateTime(2019, 11, 25);
+            order.DeliveryInstructions = "I'm tired of making up data";
+            order.GroceryId = 1;
+            order.Items = GetCartItems(username, order.GroceryId).Items;
+            order.RequestDeliveryTime = "ASAP";
+            order.Status = 2;
+            order.StoreName = "Somewhere";
+            order.TotalItems = 30;
+            order.TotalPrice = 56.33;
+            orders.Add(order);
+
+            searchResult.Results = orders;
             return searchResult;
         }
         public Order GetOrderDetail(string username, int orderId)
@@ -119,20 +158,22 @@ namespace GroceryBama.MySqlScripts
 
             order.OrderId = 1;
             order.GroceryId = 1;
-            order.DateTime = "11/27/2019";
+            order.DateTime = new DateTime(2019, 11, 27);
             order.DeliveryInstructions = "vcvsdagsad";
             order.Items = GetItems(order.GroceryId, 1, 10, "").Results;
-            order.paymentMethodId = 1;
+            order.PaymentMethodId = 1;
             order.RequestDeliveryTime = "ASAP";
-            order.Status = "Waiting";
+            order.Status = 0;
             order.StoreName = "Publix";
             order.TotalItems = 55;
             order.TotalPrice = 66.44;
+            order.AddressLine2 = "apt 122";
+            order.StreetAddress = "555 15th St";
             return order;
         }
-        public Order UpdateOrderStatus(string username, int orderId, string newStatus)
+        public void UpdateOrderStatus(string username, int orderId, int newStatus)
         {
-            return new Order();
+            
         }
 
         public SearchResult GetOutstandingOrders(int groceryId, int startIndex, int endIndex)

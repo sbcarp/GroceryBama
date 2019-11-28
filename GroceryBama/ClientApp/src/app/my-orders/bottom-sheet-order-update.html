@@ -1,12 +1,16 @@
 <mat-nav-list>
-  <a mat-list-item (click)="openLink($event)">
+  <a *ngIf="authenticator.role == 'deliverer'" mat-list-item (click)="updateOrder(1)">
     <span mat-line>I've picked up the items</span>
     <span mat-line style="color: lightgray;">Status will be changed to Driver on the way</span>
   </a>
 
-  <a mat-list-item (click)="openLink($event)">
+  <a *ngIf="authenticator.role == 'deliverer'" mat-list-item (click)="updateOrder(2)">
     <span mat-line>The items have been deliveried</span>
     <span mat-line style="color: lightgray;">Status will be changed to Delievered</span>
   </a>
 
+  <a *ngIf="authenticator.role == 'buyer'" mat-list-item (click)="updateOrder(1)">
+    <span mat-line>Yes I want to cancel this order</span>
+    <span mat-line style="color: lightgray;">This cannot be undo</span>
+  </a>
 </mat-nav-list>
