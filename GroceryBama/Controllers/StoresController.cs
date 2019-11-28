@@ -215,6 +215,34 @@ namespace GroceryBama.Controllers
                 return Json(new ErrorHandler(ex).ToBasePacket());
             }
         }
+        [Authorize(Roles = "manager")]
+        [HttpPost("AddItemToInventory")]
+        public ActionResult AddItemToInventory([FromBody] ItemParams itemParams)
+        {
+            try
+            {
+                storesScript.AddItemToInventory(itemParams.GroceryId, itemParams.ItemId, itemParams.Quantity);
+                return Json(new BasePacket(true, null));
+            }
+            catch (Exception ex)
+            {
+                return Json(new ErrorHandler(ex).ToBasePacket());
+            }
+        }
+        [Authorize(Roles = "manager")]
+        [HttpPost("DeleteItemFromInventory")]
+        public ActionResult DeleteItemFromInventory([FromBody] ItemParams itemParams)
+        {
+            try
+            {
+                storesScript.DeleteItemFromInventory(itemParams.GroceryId, itemParams.ItemId);
+                return Json(new BasePacket(true, null));
+            }
+            catch (Exception ex)
+            {
+                return Json(new ErrorHandler(ex).ToBasePacket());
+            }
+        }
         protected override void Dispose(bool disposing)
         {
             storesScript.Dispose();

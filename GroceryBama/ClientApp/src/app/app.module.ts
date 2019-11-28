@@ -27,7 +27,7 @@ import { MyOrdersComponent, BottomSheetOrderUpdate } from './my-orders/my-orders
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { ItemsListComponent } from './items-list/items-list.component';
 import { OutstandingOrdersComponent } from './outstanding-orders/outstanding-orders.component';
-import { InventoryComponent } from './inventory/inventory.component';
+import { InventoryComponent, UpdateQuantityDialog } from './inventory/inventory.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -44,6 +44,8 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 @NgModule({
     declarations: [
@@ -68,9 +70,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         BottomSheetOrderUpdate,
         OutstandingOrdersComponent,
         InventoryComponent,
-        DashboardComponent
+        DashboardComponent,
+        UpdateQuantityDialog
     ],
-    entryComponents: [BottomSheetOrderUpdate],
+    entryComponents: [BottomSheetOrderUpdate, UpdateQuantityDialog],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         HttpClientModule,
@@ -103,7 +106,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
         MatBottomSheetModule,
         MatListModule,
         MatTableModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatDialogModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true },

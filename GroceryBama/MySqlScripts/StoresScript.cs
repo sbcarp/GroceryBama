@@ -215,7 +215,10 @@ namespace GroceryBama.MySqlScripts
             }
             return statistic;
         }
-
+        public void AddItemToInventory(int groceryId, int itemId, int quantity)
+        {
+            
+        }
         public void DeleteItemFromInventory(int groceryId, int itemId)
         {
 

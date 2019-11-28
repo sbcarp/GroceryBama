@@ -1,7 +1,8 @@
-import { Component, Inject, Injectable, ViewChild } from '@angular/core';
+import { Component, Inject, Injectable, ViewChild  } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Authenticator } from 'src/app/_services/authenticator'
 import { Subscription } from 'rxjs';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-inventory',
@@ -16,7 +17,9 @@ export class InventoryComponent {
     dataSource = this.OrdersData;
     groceryIdSubscription: Subscription;
     groceryId: number;
-    constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private authenticator: Authenticator) {
+    constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string,
+        private authenticator: Authenticator,
+        private dialog: MatDialog) {
         this.groceryIdSubscription = authenticator.groceryId.subscribe(groceryId => {
             this.groceryId = groceryId;
             this.getItems(groceryId, 1, 10, "");
@@ -36,15 +39,52 @@ export class InventoryComponent {
     ngOnDestroy() {
         this.groceryIdSubscription.unsubscribe();
     }
+    openDialog(item): void {
+        const dialogRef = this.dialog.open(UpdateQuantityDialog, {
+            data: { }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result, item.itemId);
+            if (result != undefined) {
+                var quantity = result.quantity;
+                this.http.post<any>(this.baseUrl + 'stores/AddItemToInventory', { groceryId: this.groceryId, itemId: item.itemId, quantity: quantity}).subscribe(result => {
+                    if (result.success) {
+                        item.quantity = quantity;
+                    }
+                }, error => console.error(error));
+            }
+            
+        });
+    }
+    deleteItemFromInventory(item) {
+        this.http.post<any>(this.baseUrl + 'stores/DeleteItemFromInventory', { groceryId: this.groceryId, itemId: item.itemId}).subscribe(result => {
+            if (result.success) {
+                var tmp = this.dataSource.slice(0);
+                tmp.splice(tmp.indexOf(item), 1)
+                this.dataSource = tmp;
+            }
+        }, error => console.error(error));
+    }
     dateReformat(dateStr: string) {
         var dateObj: Date = new Date(dateStr);
         return dateObj.getMonth() + '/' + dateObj.getDate() + '/' + dateObj.getFullYear();
     }
 }
-//const OrdersData: object[] = [
-//    { name: 'Dasani Water', description: '1.5 L bottled water', quantity: 3, retailPrice: 5.66, wholeSalePrice: 3.99, expirationDate: '10/23/2019' },
-//    { itemName: 'Dasani Water', description: '1.5 L bottled water', quantity: 3, retailPrice: 5.66, wholeSalePrice: 3.99, expirationDate: '10/23/2019' },
-//    { itemName: 'Dasani Water', description: '1.5 L bottled water', quantity: 3, retailPrice: 5.66, wholeSalePrice: 3.99, expirationDate: '10/23/2019' },
-//    { itemName: 'Dasani Water', description: '1.5 L bottled water', quantity: 3, retailPrice: 5.66, wholeSalePrice: 3.99, expirationDate: '10/23/2019' },
-//];
 
+
+@Component({
+    selector: 'update-quantity-dialog',
+    templateUrl: 'update-quantity-dialog.html',
+})
+export class UpdateQuantityDialog {
+
+    constructor(
+        public dialogRef: MatDialogRef<UpdateQuantityDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: object) { }
+
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
+
+}
