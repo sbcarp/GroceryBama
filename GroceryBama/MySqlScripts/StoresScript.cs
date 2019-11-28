@@ -121,6 +121,11 @@ namespace GroceryBama.MySqlScripts
             order.StoreName = "Publix";
             order.TotalItems = 30;
             order.TotalPrice = 56.33;
+            order.AddressLine2 = "aaafdsafasdfsa";
+            order.StreetAddress = "123 Ave";
+            order.City = "Tuscaloosa";
+            order.State = "AL";
+            order.ZipCode = "35487";
             orders.Add(order);
 
             order = new Order();
@@ -134,6 +139,11 @@ namespace GroceryBama.MySqlScripts
             order.StoreName = "Walmart";
             order.TotalItems = 30;
             order.TotalPrice = 56.33;
+            order.AddressLine2 = "aaafdsafasdfsa";
+            order.StreetAddress = "123 Ave";
+            order.City = "Tuscaloosa";
+            order.State = "AL";
+            order.ZipCode = "35487";
             orders.Add(order);
 
             order = new Order();
@@ -147,6 +157,11 @@ namespace GroceryBama.MySqlScripts
             order.StoreName = "Somewhere";
             order.TotalItems = 30;
             order.TotalPrice = 56.33;
+            order.AddressLine2 = "aaafdsafasdfsa";
+            order.StreetAddress = "123 Ave";
+            order.City = "Tuscaloosa";
+            order.State = "AL";
+            order.ZipCode = "35487";
             orders.Add(order);
 
             searchResult.Results = orders;
@@ -178,14 +193,27 @@ namespace GroceryBama.MySqlScripts
 
         public SearchResult GetOutstandingOrders(int groceryId, int startIndex, int endIndex)
         {
-            SearchResult searchResult = new SearchResult();
-
-            return searchResult;
+            return GetOrders("",0,0);
         }
 
         public Statistic GetStatistic(int groceryId)
         {
-            return new Statistic();
+            Statistic statistic = new Statistic();
+            if (groceryId == 1)
+            {
+                statistic.GroceryId = groceryId;
+                statistic.StoreName = "Publix";
+                statistic.TotalItemsSold = 5500;
+                statistic.TotalProfit = 657446.45;
+            }
+            else
+            {
+                statistic.GroceryId = groceryId;
+                statistic.StoreName = "Walmart";
+                statistic.TotalItemsSold = 6666;
+                statistic.TotalProfit = 5574613.01;
+            }
+            return statistic;
         }
 
         public void DeleteItemFromInventory(int groceryId, int itemId)

@@ -188,6 +188,33 @@ namespace GroceryBama.Controllers
             }
         }
 
+        [Authorize(Roles = "manager")]
+        [HttpGet("GetOutstandingOrders")]
+        public ActionResult GetOutstandingOrders(int groceryId, int startIndex, int endIndex)
+        {
+            try
+            {
+                return Json(new BasePacket(true, storesScript.GetOutstandingOrders(groceryId, startIndex, endIndex)));
+            }
+            catch (Exception ex)
+            {
+                return Json(new ErrorHandler(ex).ToBasePacket());
+            }
+        }
+
+        [Authorize(Roles = "manager")]
+        [HttpGet("GetStatistic")]
+        public ActionResult GetStatistic(int groceryId)
+        {
+            try
+            {
+                return Json(new BasePacket(true, storesScript.GetStatistic(groceryId)));
+            }
+            catch (Exception ex)
+            {
+                return Json(new ErrorHandler(ex).ToBasePacket());
+            }
+        }
         protected override void Dispose(bool disposing)
         {
             storesScript.Dispose();

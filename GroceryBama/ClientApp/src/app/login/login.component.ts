@@ -27,8 +27,12 @@ export class LoginComponent implements OnInit {
             .pipe()
             .subscribe(
                 result => {
-                    if (this.authenticator.isLoggedIn)
-                        this.router.navigate(['/']);
+                    if (this.authenticator.isLoggedIn) {
+                        if (this.authenticator.role == 'buyer') this.router.navigate(['/']);
+                        else if (this.authenticator.role == 'deliverer') this.router.navigate(['/myorders']);
+                        else if (this.authenticator.role == 'manager') this.router.navigate(['/inventory']);
+                        else this.router.navigate(['/']);
+                    }
                 },
                 error => { console.log(error); }
             )

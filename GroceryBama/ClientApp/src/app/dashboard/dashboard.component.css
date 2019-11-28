@@ -1,1 +1,26 @@
-﻿
+.center-block{
+  max-width: 300px;
+}
+.center-block-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+.title {
+  font-size: 32px;
+  color: gray;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #f1f1f1;
+}
+.profit-container {
+  display: inline-block;
+  align-self: center;
+  margin-bottom: 20px;
+}
+.profit-container h1{
+  font-size: 50px;
+  margin: 0;
+}
+  .profit-container span {
+    text-align: left;
+  }

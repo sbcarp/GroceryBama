@@ -7,7 +7,7 @@
     <!-- Position Column -->
     <ng-container matColumnDef="itemName">
       <th mat-header-cell *matHeaderCellDef> Item Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.itemName}} </td>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
     </ng-container>
 
     <!-- Name Column -->
@@ -24,26 +24,26 @@
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="retailPrice">
-      <th mat-header-cell *matHeaderCellDef> Retail Price </th>
-      <td mat-cell *matCellDef="let element"> {{element.retailPrice}} </td>
+      <th mat-header-cell *matHeaderCellDef> Price </th>
+      <td mat-cell *matCellDef="let element"> {{element.listedPrice}} </td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="wholeSalePrice">
-      <th mat-header-cell *matHeaderCellDef> Whole Sale Price </th>
+      <th mat-header-cell *matHeaderCellDef> WS Price </th>
       <td mat-cell *matCellDef="let element"> {{element.wholeSalePrice}} </td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="expirationDate">
-      <th mat-header-cell *matHeaderCellDef> Expiration Date </th>
-      <td mat-cell *matCellDef="let element"> {{element.expirationDate}} </td>
+      <th mat-header-cell *matHeaderCellDef> Expire On </th>
+      <td mat-cell *matCellDef="let element"> {{dateReformat(element.expirationDate)}} </td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="action">
-      <th mat-header-cell *matHeaderCellDef> Action</th>
-      <td mat-cell *matCellDef="let element"> <button mat-raised-button>Add</button> <button mat-raised-button>Delete</button> </td>
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let element"> <button mat-raised-button>Add</button>&nbsp;<button mat-raised-button>Delete</button> </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

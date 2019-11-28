@@ -1,7 +1,12 @@
 <div class="center-block">
   <div class="center-block-container">
-    <h4>Publix</h4>
-    <h1 style="align-self:center;">$ 25,446</h1>
-    Total Profit
+    <div class="title">{{ statistic.storeName }}</div>
+    <div class="profit-container">
+      <span>Total Profit</span>
+      <h1>$ {{ statistic.totalProfit.toFixed(0) }}</h1>
+      <span style="color:gray;">Total Items Sold: {{ statistic.totalItemsSold }}</span>
+    </div>
+    
+    <!--<h6>Total Items Sold: {{ statistic.totalItemsSold }}</h6>-->
   </div>
 </div>
