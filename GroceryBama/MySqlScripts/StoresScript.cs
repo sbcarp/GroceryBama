@@ -33,19 +33,20 @@ namespace GroceryBama.MySqlScripts
             item.Description = "Fanta 10 packs";
             item.PictureUrl = "assets/images/fanta.jpg";
             cart.Items.Add(item);
-
-            item = new Item();
-            item.Name = "Sweet Tea";
-            item.Id = 3;
-            item.Group = "beverage";
-            item.ListedPrice = 29.99;
-            item.WholeSalePrice = 6.99;
-            item.Quantity = 10;
-            item.ExpirationDate = DateTime.Now.AddDays(30);
-            item.Description = "Sweet Tea 10 packs";
-            item.PictureUrl = "assets/images/sweet-tea.png";
-            cart.Items.Add(item);
-
+            if (groceryID == 1)
+            {
+                item = new Item();
+                item.Name = "Sweet Tea";
+                item.Id = 3;
+                item.Group = "beverage";
+                item.ListedPrice = 29.99;
+                item.WholeSalePrice = 6.99;
+                item.Quantity = 10;
+                item.ExpirationDate = DateTime.Now.AddDays(30);
+                item.Description = "Sweet Tea 10 packs";
+                item.PictureUrl = "assets/images/sweet-tea.png";
+                cart.Items.Add(item);
+            }
             return cart;
         }
 

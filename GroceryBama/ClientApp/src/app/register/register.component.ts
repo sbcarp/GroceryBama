@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
@@ -49,7 +50,7 @@ export class RegisterComponent {
         email: new FormControl('', Validators.required),
         phoneNumber: new FormControl('', Validators.required),
     });
-    constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+    constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router) {
 
     }
     getFormContent(formGroup: FormGroup) {
@@ -63,7 +64,7 @@ export class RegisterComponent {
         var formContent = this.getFormContent(this.registerBuyer);
         formContent["role"] = "buyer";
         this.http.post<any>(this.baseUrl + 'users/register', formContent).subscribe(result => {
-            console.log(result);
+            this.router.navigate(['/login']);
         }, error => console.error(error));
         
     }
@@ -71,14 +72,14 @@ export class RegisterComponent {
         var formContent = this.getFormContent(this.registerDeliverer);
         formContent["role"] = "deliverer";
         this.http.post<any>(this.baseUrl + 'users/register', formContent).subscribe(result => {
-            console.log(result);
+            this.router.navigate(['/login']);
         }, error => console.error(error));
     }
     onRegisterManagerSubmit() {
         var formContent = this.getFormContent(this.registerManager);
         formContent["role"] = "manager";
         this.http.post<any>(this.baseUrl + 'users/register', formContent).subscribe(result => {
-            console.log(result);
+            this.router.navigate(['/login']);
         }, error => console.error(error));
     }
 }

@@ -67,7 +67,7 @@ namespace GroceryBama.Controllers
         {
             try
             {
-                return Json(new BasePacket(true, storesScript.GetCartItems(User.Identity.Name, 0).Items));
+                return Json(new BasePacket(true, storesScript.GetCartItems(User.Identity.Name, 1).Items));
             }
             catch (Exception ex)
             {
