@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { NavMenuService } from '../nav-menu/nav-menu.service'
 import { Subscription } from 'rxjs';
 import { PageEvent, MatPaginator } from '@angular/material/paginator';
-import { Authenticator } from 'src/app/_utilities/authenticator'
+import { Authenticator } from 'src/app/_services/authenticator'
 import { Router } from '@angular/router';
 
 //import { EDEADLK } from 'constants';

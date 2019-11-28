@@ -1,30 +1,30 @@
 <div class="center-block">
   <h2>Account</h2>
   <div class="account-info-container">
-    <form >
+    <form [formGroup]="contact" (ngSubmit)="onSubmit()">
       <div class="row">
         <mat-form-field class="col-4">
-          <input matInput placeholder="Username" disabled value="{{ user.username }}">
+          <input matInput   placeholder="Username" disabled [value]="user.username">
         </mat-form-field>
         <mat-form-field class="col-4">
-          <input matInput placeholder="First name" disabled value="{{ user.firstname }}">
+          <input matInput  placeholder="First name" disabled [value]="user.firstname">
         </mat-form-field>
         <mat-form-field class="col-4">
-          <input matInput placeholder="Last Name" disabled value="{{ user.lastname }}">
+          <input matInput  placeholder="Last Name" disabled [value]="user.lastname">
         </mat-form-field>
       </div>
       <div class="row">
         <mat-form-field class="col-5">
-          <input type="tel" matInput placeholder="Phone Number" (input)="isInfoChanged = true">
+          <input type="tel" matInput placeholder="Phone Number" formControlName="phoneNumber" (input)="isInfoChanged = true">
         </mat-form-field>
         <mat-form-field class="col-7">
-          <input matInput placeholder="Email" (input)="isInfoChanged = true">
+          <input matInput placeholder="Email" formControlName="email" (input)="isInfoChanged = true">
         </mat-form-field>
       </div>
       <div *ngIf="isInfoChanged" class="row" style="margin: 0">
-        <button mat-raised-button class="col-3" >Cancel</button>
+        <button mat-raised-button class="col-3" (click)="getUserContact()" >Cancel</button>
         <div class="col-6"></div>
-        <button mat-raised-button class="col-3" [color]="'custom-primary'">Save</button>
+        <button mat-raised-button class="col-3" type="submit" [color]="'custom-primary'">Save</button>
       </div>
 </form>
   </div>

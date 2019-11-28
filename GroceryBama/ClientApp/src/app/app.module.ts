@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { RequestInterceptor } from './_utilities/request-interceptor'
+import { RequestInterceptor } from './_services/request-interceptor'
 
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { NavMenuService } from './nav-menu/nav-menu.service'
-import { Authenticator } from 'src/app/_utilities/authenticator'
+import { Authenticator } from 'src/app/_services/authenticator'
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';

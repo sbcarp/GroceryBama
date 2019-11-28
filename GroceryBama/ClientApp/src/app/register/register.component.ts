@@ -52,11 +52,15 @@ export class RegisterComponent {
     constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
 
     }
-    onRegisterBuyerSubmit() {
+    getFormContent(formGroup: FormGroup) {
         var formContent = {};
-        for (var key in this.registerBuyer.controls) {
-            formContent[key] = this.registerBuyer.controls[key].value;
+        for (var key in formGroup.controls) {
+            formContent[key] = formGroup.controls[key].value;
         }
+        return formContent;
+    }
+    onRegisterBuyerSubmit() {
+        var formContent = this.getFormContent(this.registerBuyer);
         formContent["role"] = "buyer";
         this.http.post<any>(this.baseUrl + 'users/register', formContent).subscribe(result => {
             console.log(result);
@@ -64,9 +68,17 @@ export class RegisterComponent {
         
     }
     onRegisterDelivererSubmit() {
-
+        var formContent = this.getFormContent(this.registerDeliverer);
+        formContent["role"] = "deliverer";
+        this.http.post<any>(this.baseUrl + 'users/register', formContent).subscribe(result => {
+            console.log(result);
+        }, error => console.error(error));
     }
     onRegisterManagerSubmit() {
-
+        var formContent = this.getFormContent(this.registerManager);
+        formContent["role"] = "manager";
+        this.http.post<any>(this.baseUrl + 'users/register', formContent).subscribe(result => {
+            console.log(result);
+        }, error => console.error(error));
     }
 }

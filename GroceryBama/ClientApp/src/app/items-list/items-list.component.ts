@@ -1,6 +1,6 @@
-import { Component, Inject, Injectable, Input } from '@angular/core';
+import { Component, Inject, Injectable, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Authenticator } from 'src/app/_utilities/authenticator'
+import { Authenticator } from 'src/app/_services/authenticator'
 import { ReplaySubject, Observable } from 'rxjs'
 @Component({
     selector: 'app-items-list',
@@ -17,12 +17,22 @@ export class ItemsListComponent {
     @Input() isCartMode: boolean;
     @Input() orderId: number;
     constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private authenticator: Authenticator ) {
-        http.get<any>(baseUrl + 'stores/getcartitems').subscribe(result => {
-            this.itemsObservable.subscribe(items => {
-                this.items = items;
-            })
-            this.itemsObservable.next(result.data);
-        }, error => console.error(error));
+        
+    }
+    ngOnInit() {
+        if (this.isCartMode) {
+            this.http.get<any>(this.baseUrl + 'stores/getcartitems').subscribe(result => {
+                this.itemsObservable.subscribe(items => {
+                    this.items = items;
+                })
+                this.itemsObservable.next(result.data);
+            }, error => console.error(error));
+        }
+        else {
+            this.http.get<any>(this.baseUrl + 'stores/GetOrderDetail/' + this.orderId).subscribe(result => {
+                this.items = result.data.items;
+            }, error => console.error(error));
+        }
     }
     public getItems(): Observable<any> {
         return this.itemsObservable.asObservable();

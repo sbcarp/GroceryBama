@@ -144,6 +144,25 @@ namespace GroceryBama.Controllers
                 return Json(new ErrorHandler(ex).ToBasePacket());
             }
         }
+        [Authorize(Roles = "buyer")]
+        [HttpGet("GetUserContact")]
+        public JsonResult GetUserContact()
+        {
+            try
+            {
+                User user = usersScript.GetUserInfo(User.Identity.Name);
+                var returnData = new
+                {
+                    email = user.Email,
+                    phoneNumber = user.PhoneNumber,
+                };
+                return Json(new BasePacket(true, returnData));
+            }
+            catch (Exception ex)
+            {
+                return Json(new ErrorHandler(ex).ToBasePacket());
+            }
+        }
 
         [Authorize(Roles = "buyer")]
         [HttpPost("UpdateUserAddress")]
@@ -159,6 +178,22 @@ namespace GroceryBama.Controllers
                 return Json(new ErrorHandler(ex).ToBasePacket());
             }
         }
+
+        [Authorize(Roles = "buyer")]
+        [HttpPost("UpdateUserContact")]
+        public JsonResult UpdateUserContact([FromBody]User user)
+        {
+            try
+            {
+                user = usersScript.UpdateUserContact(User.Identity.Name, user.PhoneNumber, user.Email);
+                return Json(new BasePacket(true, user));
+            }
+            catch (Exception ex)
+            {
+                return Json(new ErrorHandler(ex).ToBasePacket());
+            }
+        }
+        
         private string GenerateToken(User user)
         {
             var tokenDescriptor = new SecurityTokenDescriptor

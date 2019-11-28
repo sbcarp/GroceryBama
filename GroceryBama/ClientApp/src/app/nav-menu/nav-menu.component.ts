@@ -1,7 +1,7 @@
 import { Component, Inject, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Authenticator } from 'src/app/_utilities/authenticator'
+import { Authenticator } from 'src/app/_services/authenticator'
 import { first } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { NavMenuService } from './nav-menu.service'

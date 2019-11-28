@@ -1,6 +1,6 @@
 import { Component, ViewChild, Inject } from '@angular/core';
 import { PaymentMethodsComponent } from 'src/app/payment-methods/payment-methods.component';
-import { Authenticator } from 'src/app/_utilities/authenticator'
+import { Authenticator } from 'src/app/_services/authenticator'
 import { HttpClient } from '@angular/common/http'
 import { Router } from '@angular/router';
 @Component({
@@ -21,7 +21,9 @@ export class CheckoutComponent {
     onCheckOut() {
         var postData = { GroceryId: this.authenticator.groceryIdValue, DeliveryInstructions: this.deliveryInstruction, RequestDeliveryTime: this.deliveryTime, PaymentMethodId: this.paymentMethods.defaultPaymentMethodId}
         this.http.post<any>(this.baseUrl + 'stores/checkout', postData).subscribe(result => {
-            this.router.navigateByUrl('/myorders/orderdetails', { queryParams: { receiptmode: true, orderid: result.data.id }});
+            // Check this if navigateByUrl is having problem https://github.com/angular/angular/issues/18798
+            console.log(result.data);
+            this.router.navigateByUrl('/myorders/orderdetails?receiptmode=true&orderId=' + result.data.orderId, { queryParams: { receiptmode: true, orderId: result.data.orderId }});
         }, error => console.error(error));
     }
 }

@@ -86,6 +86,12 @@ namespace GroceryBama.MySqlScripts
             User user = GetUserInfo(username);
             return user;
         }
+        public User UpdateUserContact(string username, string phoneNumber, string email)
+        {
+            User user = GetUserInfo(username);
+            return user;
+        }
+        
         public User AddPaymentMethod(string username, string name, string accountNumber, string routineNumber, bool isDefault)
         {
             User user = GetUserInfo(username);

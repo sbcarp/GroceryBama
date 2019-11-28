@@ -113,7 +113,23 @@ namespace GroceryBama.MySqlScripts
 
             return searchResult;
         }
+        public Order GetOrderDetail(string username, int orderId)
+        {
+            Order order = new Order();
 
+            order.OrderId = 1;
+            order.GroceryId = 1;
+            order.DateTime = "11/27/2019";
+            order.DeliveryInstructions = "vcvsdagsad";
+            order.Items = GetItems(order.GroceryId, 1, 10, "").Results;
+            order.paymentMethodId = 1;
+            order.RequestDeliveryTime = "ASAP";
+            order.Status = "Waiting";
+            order.StoreName = "Publix";
+            order.TotalItems = 55;
+            order.TotalPrice = 66.44;
+            return order;
+        }
         public Order UpdateOrderStatus(string username, int orderId, string newStatus)
         {
             return new Order();

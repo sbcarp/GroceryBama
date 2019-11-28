@@ -151,6 +151,13 @@ namespace GroceryBama.Controllers
                 return Json(new ErrorHandler(ex).ToBasePacket());
             }
         }
+
+        [Authorize(Roles = "buyer")]
+        [HttpGet("GetOrderDetail/{orderId}")]
+        public JsonResult GetOrderDetail(int orderId)
+        {
+            return Json(new BasePacket(true, storesScript.GetOrderDetail(User.Identity.Name, orderId)));
+        }
         protected override void Dispose(bool disposing)
         {
             storesScript.Dispose();

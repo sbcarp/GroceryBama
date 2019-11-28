@@ -16,7 +16,7 @@ namespace GroceryBama.Entities
         public string StoreName { get; set; }
         public string DeliveryInstructions { get; set; }
         public string Feedback { get; set; }
-        public float TotalPrice { get; set; }
+        public double TotalPrice { get; set; }
         public int TotalItems { get; set; }
         public string DateTime { get; set; }
         public List<Item> Items { get; set; }
