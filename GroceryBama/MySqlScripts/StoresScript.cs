@@ -1,4 +1,5 @@
 ﻿using GroceryBama.Entities;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 
@@ -6,87 +7,93 @@ namespace GroceryBama.MySqlScripts
 {
     public class StoresScript : SqlConnector
     {
-        public Cart GetCartItems(string username, int groceryID)
+        public Cart GetCartItems(string username, int groceryId)
         {
+            MySqlDataReader reader = GetStoredProcedureReader("GetCart",
+                            new MySqlParameter("@p_username", username),
+                            new MySqlParameter("@p_groceryID", groceryId));
+            reader.Read();
             Cart cart = new Cart();
-            Item item = new Item();
 
-            item.Name = "Sprite";
-            item.Id = 1;
-            item.Group = "beverage";
-            item.ListedPrice = 9.99;
-            item.WholeSalePrice = 6.99;
-            item.Quantity = 10;
-            item.ExpirationDate = DateTime.Now.AddDays(30);
-            item.Description = "Sprite 10 packs";
-            item.PictureUrl = "assets/images/sprite.png";
-            cart.Items.Add(item);
+            cart.Quantity = (int)ReadColumn(reader, "Quantity");
 
-            item = new Item();
-            item.Name = "Fanta";
-            item.Id = 2;
-            item.Group = "beverage";
-            item.ListedPrice = 9.99;
-            item.WholeSalePrice = 6.99;
-            item.Quantity = 10;
-            item.ExpirationDate = DateTime.Now.AddDays(30);
-            item.Description = "Fanta 10 packs";
-            item.PictureUrl = "assets/images/fanta.jpg";
-            cart.Items.Add(item);
-            if (groceryID == 1)
+            reader.NextResult();
+            List<Item> items = new List<Item>();
+            while (reader.Read())
             {
-                item = new Item();
-                item.Name = "Sweet Tea";
-                item.Id = 3;
-                item.Group = "beverage";
-                item.ListedPrice = 29.99;
-                item.WholeSalePrice = 6.99;
-                item.Quantity = 10;
-                item.ExpirationDate = DateTime.Now.AddDays(30);
-                item.Description = "Sweet Tea 10 packs";
-                item.PictureUrl = "assets/images/sweet-tea.png";
-                cart.Items.Add(item);
+                Item item = new Item();
+                item.Description = ReadColumn(reader, "Description").ToString();
+                item.ExpirationDate = (DateTime)ReadColumn(reader, "ExpDate");
+                item.Group = ReadColumn(reader, "FoodGroup").ToString();
+                item.Id = (int)ReadColumn(reader, "ItemID");
+                item.ListedPrice = (float)ReadColumn(reader, "PriceP");
+                item.Name = ReadColumn(reader, "ItemName").ToString();
+                item.PictureUrl = ReadColumn(reader, "PictureName").ToString();
+                item.Quantity = (int)ReadColumn(reader, "CartQuantity");
+                item.WholeSalePrice = (float)ReadColumn(reader, "WholeSaleP");
+                items.Add(item);
             }
+            cart.Items = items;
+            reader.Close();
             return cart;
         }
-
-        public Cart AddItemToCart(string username, int groceryId, int itemId, int quantity)
+        public int GetCartQuantity(string username, int groceryId)
         {
-            Cart cart = GetCartItems(username, groceryId);
-            cart.Quantity++;
-            return cart;
+            MySqlDataReader reader = GetStoredProcedureReader("GetCartQuantity",
+                            new MySqlParameter("@p_username", username),
+                            new MySqlParameter("@p_groceryID", groceryId));
+            reader.Read();
+            int cartQuantity = (int)ReadColumn(reader, "Quantity");
+            reader.Close();
+            return cartQuantity;
+        }
+        public int AddItemToCart(string username, int groceryId, int itemId, int quantity)
+        {
+            MySqlDataReader reader = GetStoredProcedureReader("AddItemToCart",
+                            new MySqlParameter("@p_username", username),
+                            new MySqlParameter("@p_itemId", itemId),
+                            new MySqlParameter("@p_groceryID", groceryId),
+                            new MySqlParameter("@p_quantity", quantity));
+            reader.Read();
+            int cartQuantity = (int)ReadColumn(reader, "Quantity");
+            reader.Close();
+            return cartQuantity;
         }
         public Cart RemoveItemFromCart(string username, int groceryId, int itemId)
         {
-            Cart cart = GetCartItems(username, groceryId);
-            cart.Items.RemoveAt(0);
-            cart.Quantity--;
-            return cart;
+            MySqlDataReader reader = GetStoredProcedureReader("RemoveItemFromCart",
+                            new MySqlParameter("@p_username", username),
+                            new MySqlParameter("@p_itemId", itemId),
+                            new MySqlParameter("@p_groceryID", groceryId));
+            reader.Close();
+            return GetCartItems(username, groceryId);
         }
         public Cart UpdateCartItemQuantity(string username, int groceryId, int itemId, int newQuantity)
         {
-            Cart cart = GetCartItems(username, groceryId);
-            cart.Items[0].Quantity = 222;
-            return cart;
+            MySqlDataReader reader = GetStoredProcedureReader("UpdateItemInCart",
+                        new MySqlParameter("@p_username", username),
+                        new MySqlParameter("@p_itemId", itemId),
+                        new MySqlParameter("@p_groceryID", groceryId),
+                        new MySqlParameter("@p_newQuantity", newQuantity));
+            reader.Close();
+            return GetCartItems(username, groceryId);
         }
         public List<Store> GetStores()
         {
-            List<Store> stores = new List<Store>();
-            Store store = new Store();
-            store.Id = 1;
-            store.Name = "Publix";
-            store.Address = "1190 University Blvd";
-            store.PhoneNumber = "(205)391-1204";
-            store.Hours = "9AM to 10PM";
-            stores.Add(store);
+            MySqlDataReader reader = GetStoredProcedureReader("GetStores");
 
-            store = new Store();
-            store.Id = 2;
-            store.Name = "Walmart";
-            store.Address = "1501 Skyland Blvd E";
-            store.PhoneNumber = "(205)391-1204";
-            store.Hours = "7/24 Hours";
-            stores.Add(store);
+            List<Store> stores = new List<Store>();
+            while (reader.Read())
+            {
+                Store store = new Store();
+                store.Address = ReadColumn(reader, "Street").ToString() + ", " + ReadColumn(reader, "City").ToString() + ", " + ReadColumn(reader, "State").ToString();
+                store.Hours = ReadColumn(reader, "OpenHour").ToString() + " to " + ReadColumn(reader, "CloseHour").ToString();
+                store.Id = (int)ReadColumn(reader, "GroceryID");
+                store.Name = ReadColumn(reader, "StoreName").ToString();
+                store.PhoneNumber = ReadColumn(reader, "Phone").ToString();
+                stores.Add(store);
+            }
+            reader.Close();
             return stores;
         }
         public void SwitchStore(string username, int newGroceryId)
@@ -95,9 +102,34 @@ namespace GroceryBama.MySqlScripts
         }
         public SearchResult GetItems(int groceryId, int startIndex, int endIndex, string foodGroup)
         {
+            MySqlDataReader reader = GetStoredProcedureReader("SearchItems",
+                            new MySqlParameter("@p_groceryID", groceryId),
+                            new MySqlParameter("@p_start", startIndex),
+                            new MySqlParameter("@p_end", endIndex),
+                            new MySqlParameter("@p_foodGroup", foodGroup));
+            reader.Read();
             SearchResult searchResult = new SearchResult();
-            searchResult.Results = GetCartItems("sadfaioweuyrapweoiu", groceryId).Items;
-            searchResult.TotalNumberOfResults = 55;
+
+            searchResult.TotalNumberOfResults = (int)ReadColumn(reader, "ItemCount");
+
+            reader.NextResult();
+            List<Item> items = new List<Item>();
+            while (reader.Read())
+            {
+                Item item = new Item();
+                item.Description = ReadColumn(reader, "Description").ToString();
+                item.ExpirationDate =(DateTime)ReadColumn(reader, "ExpDate");
+                item.Group = ReadColumn(reader, "FoodGroup").ToString();
+                item.Id = (int)ReadColumn(reader, "ItemID");
+                item.ListedPrice = (float)ReadColumn(reader, "PriceP");
+                item.Name = ReadColumn(reader, "ItemName").ToString();
+                item.PictureUrl = ReadColumn(reader, "PictureName").ToString();
+                item.Quantity = (int)ReadColumn(reader, "Quantity");
+                item.WholeSalePrice = (float)ReadColumn(reader, "WholeSaleP");
+                items.Add(item);
+            }
+            searchResult.Results = items;
+            reader.Close();
             return searchResult;
         }
 
@@ -205,14 +237,14 @@ namespace GroceryBama.MySqlScripts
                 statistic.GroceryId = groceryId;
                 statistic.StoreName = "Publix";
                 statistic.TotalItemsSold = 5500;
-                statistic.TotalProfit = 657446.45;
+                statistic.TotalProfit = (float)657446.45;
             }
             else
             {
                 statistic.GroceryId = groceryId;
                 statistic.StoreName = "Walmart";
                 statistic.TotalItemsSold = 6666;
-                statistic.TotalProfit = 5574613.01;
+                statistic.TotalProfit = (float)5574613.01;
             }
             return statistic;
         }

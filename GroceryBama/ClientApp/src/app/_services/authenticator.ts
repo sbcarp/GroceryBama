@@ -36,6 +36,7 @@ export class Authenticator{
     }
     public setGroceryId(groceryId: number) {
         //localStorage.setItem('currentGroceryId', this.currentGroceryId._getNow().toString());
+        console.log('GroceryID is set to ' + groceryId);
         this.currentGroceryIdValue = groceryId;
         this.currentGroceryId.next(groceryId);
     }

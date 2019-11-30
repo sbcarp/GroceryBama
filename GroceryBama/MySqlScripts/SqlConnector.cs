@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Data;
 
 namespace GroceryBama.MySqlScripts
 {
@@ -18,7 +19,18 @@ namespace GroceryBama.MySqlScripts
             Connection.Open();
             Console.WriteLine("Connection Opened");
         }
-
+        public MySqlDataReader GetStoredProcedureReader(string procedureName, params MySqlParameter[] mySqlParameters)
+        {
+            MySqlCommand cmd = new MySqlCommand(procedureName, Connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddRange(mySqlParameters);
+            MySqlDataReader reader = cmd.ExecuteReader();
+            return reader;
+        }
+        public object ReadColumn(MySqlDataReader reader, string fieldName)
+        {
+            return reader.GetValue(reader.GetOrdinal(fieldName));
+        }
         public void Dispose()
         {
             Connection.Close();

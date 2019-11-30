@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { Authenticator } from 'src/app/_services/authenticator'
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 //import { EDEADLK } from 'constants';
 @Component({
@@ -26,18 +27,19 @@ export class HomeComponent {
         @Inject('BASE_URL') private baseUrl: string,
         private navMenuService: NavMenuService,
         private authenticator: Authenticator,
-        private router: Router) {
+        private router: Router,
+        private snackBar: MatSnackBar) {
         this.filters = [
-            { name: "Beverages" },
-            { name: "Baking Goods" },
-            { name: "Canned Goods" },
-            { name: "Cleaning Products" },
-            { name: "Dairy" },
-            { name: "Frozen Foods" },
-            { name: "Meat" },
-            { name: "Personal Care" },
-            { name: "Produce" },
-            { name: "Others" },
+            { name: "Beverages", value: "Beverages"},
+            { name: "Baking Goods", value: "BakingGoods" },
+            { name: "Canned Goods", value: "CannedGoods" },
+            { name: "Cleaning Products", value: "CleaningProducts" },
+            { name: "Dairy", value: "Dairy" },
+            { name: "Frozen Foods", value: "FrozenFoods" },
+            { name: "Meat", value: "Meat" },
+            { name: "Personal Care", value: "PersonalCare" },
+            { name: "Produce", value: "Produce" },
+            { name: "Others", value: "Others" },
         ];
         this.foodGroup = this.filters[0]["name"];
         this.groceryIdSubscription = authenticator.groceryId.subscribe(groceryId => {
@@ -56,6 +58,7 @@ export class HomeComponent {
             if (result.success) {
                 this.items = result.data.results;
                 this.numberOfItems = result.data.totalNumberOfResults;
+                window.scroll(0, 0);
             }
         }, error => console.error(error));
     }
@@ -64,6 +67,7 @@ export class HomeComponent {
         if (this.authenticator.isLoggedIn) {
             this.http.post<any>(this.baseUrl + 'stores/addtocart', { groceryId: this.groceryId, itemId: itemId, quantity: parseInt(ref.value) }).subscribe(result => {
                 if (result.success) this.navMenuService.cartQuantityUpdate(result.data.cartQuantity);
+                this.snackBar.open("Your item is added to cart", null, { duration: 2000 });
             }, error => console.error(error));
         }
         else {

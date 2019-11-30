@@ -6,7 +6,7 @@
     </div>
   </div>-->
   <mat-radio-group class="filter-container" [(ngModel)]="foodGroup" (change)="paginator.pageIndex = 0; getItems(groceryId, 1, 10, $event.value)">
-    <mat-radio-button class="example-radio-button" *ngFor="let filter of filters; index as i" [value]="filter.name">
+    <mat-radio-button class="example-radio-button" *ngFor="let filter of filters; index as i" [value]="filter.value">
       {{ filter.name }}
     </mat-radio-button>
   </mat-radio-group>
@@ -16,7 +16,7 @@
       <div *ngFor="let item of items">
         <div class="item">
           <div class="img-container">
-            <img src="{{ item.pictureUrl }}" class="pic" alt="...">
+            <img src="{{ 'assets/images/' + item.pictureUrl }}" class="pic" alt="...">
           </div>
           <div class="item-info-container flex flex-column">
             <div class="item-shortInfo">

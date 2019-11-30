@@ -22,17 +22,19 @@ namespace GroceryBama.MySqlScripts
         }
         public User GetUser(string username, string password)
         {
-            MySqlCommand cmd = new MySqlCommand("login", Connection);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@p_username", username);
-            cmd.Parameters.AddWithValue("@p_password", password);
-            MySqlDataReader reader = cmd.ExecuteReader();
+            MySqlDataReader reader = GetStoredProcedureReader("login", 
+                            new MySqlParameter("@p_username", username),
+                            new MySqlParameter("@p_password", password));
             reader.Read();
             User user = new User();
-            user.Username = reader.GetValue(reader.GetOrdinal("username")).ToString();
-            user.Firstname = reader.GetValue(reader.GetOrdinal("fname")).ToString();
-            user.Lastname = reader.GetValue(reader.GetOrdinal("lname")).ToString();
-            user.Role = reader.GetValue(reader.GetOrdinal("role")).ToString();
+            user.Username = ReadColumn(reader, "Username").ToString();
+            user.Firstname = ReadColumn(reader, "FirstName").ToString(); 
+            user.Lastname = ReadColumn(reader, "LastName").ToString();
+            user.Role = ReadColumn(reader, "UserType").ToString();
+            user.Email = ReadColumn(reader, "Email").ToString();
+            user.PhoneNumber = ReadColumn(reader, "Phone").ToString();
+            user.GroceryId = (int)ReadColumn(reader, "DefaultStoreID");
+            reader.Close();
             return user;
         }
 

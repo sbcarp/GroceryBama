@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { Authenticator } from 'src/app/_services/authenticator'
 import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
     });
     constructor(
         private authenticator: Authenticator,
-        private router: Router
+        private router: Router,
+        private snackBar: MatSnackBar
     ) { }
 
     ngOnInit() {
@@ -33,8 +35,15 @@ export class LoginComponent implements OnInit {
                         else if (this.authenticator.role == 'manager') this.router.navigate(['/inventory']);
                         else this.router.navigate(['/']);
                     }
+                    else {
+                        if (result.errorCode == 5002) this.snackBar.open("Incorrect username or password :(", null, {duration: 2000});
+                        else this.snackBar.open("Server error :(", null, { duration: 2000 });
+                    }
                 },
-                error => { console.log(error); }
+                error => {
+                    this.snackBar.open("Network error :(", null, { duration: 2000 });
+                    console.log(error);
+                }
             )
 
     }

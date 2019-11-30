@@ -5,13 +5,13 @@
       <!--<input type="number" class="item-quantity form-control input-sm" value="{{ item.quantity }}" />-->
       &nbsp;
       <div class="cart-img-container ">
-        <img src="{{ item.pictureUrl }}" class="pic" alt="...">
+        <img src="{{'assets/images/' + item.pictureUrl }}" class="pic" alt="...">
       </div>
       <div class="cart-item-info-container flex flex-column">
         <div class="cart-item-name">{{ item.name }}</div>
         <div class="cart-item-description">{{ item.description }}</div>
       </div>
-      <div class="cart-item-price">${{ item.listedPrice }}</div>
+      <div class="cart-item-price">${{  item.listedPrice }}</div>
       <i *ngIf="isCartMode" class="far fa-trash-alt" (click)="removeItemFromCart(item.id)"></i>
       <!--<a href="#" class="btn btn-secondary">Add to Cart</a>-->
     </div>

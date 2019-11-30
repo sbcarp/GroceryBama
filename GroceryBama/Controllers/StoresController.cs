@@ -63,11 +63,11 @@ namespace GroceryBama.Controllers
 
         [Authorize(Roles = "buyer")]
         [HttpGet("GetCartItems")]
-        public JsonResult GetCartItems()
+        public JsonResult GetCartItems(int groceryId)
         {
             try
             {
-                return Json(new BasePacket(true, storesScript.GetCartItems(User.Identity.Name, 1).Items));
+                return Json(new BasePacket(true, storesScript.GetCartItems(User.Identity.Name, groceryId).Items));
             }
             catch (Exception ex)
             {
@@ -81,7 +81,7 @@ namespace GroceryBama.Controllers
         {
             try
             {
-                int cartQuantity = storesScript.AddItemToCart(User.Identity.Name, Params.groceryId, Params.itemId, Params.quantity).Quantity;
+                int cartQuantity = storesScript.AddItemToCart(User.Identity.Name, Params.groceryId, Params.itemId, Params.quantity);
                 return Json(new BasePacket(true, new { cartQuantity = cartQuantity }));
             }
             catch (Exception ex)
@@ -92,10 +92,17 @@ namespace GroceryBama.Controllers
 
         [Authorize(Roles = "buyer")]
         [HttpGet("GetCartQuantity")]
-        public JsonResult GetCartQuantity()
+        public JsonResult GetCartQuantity(int groceryId)
         {
-            var v = new { cartQuantity = 1 };
-            return Json(new BasePacket(true, v));
+            try
+            {
+                int quantity = storesScript.GetCartQuantity(User.Identity.Name, groceryId);
+                return Json(new BasePacket(true, new { CartQuantity = quantity }));
+            }
+            catch (Exception ex)
+            {
+                return Json(new ErrorHandler(ex).ToBasePacket());
+            }
         }
 
         [Authorize(Roles = "buyer")]

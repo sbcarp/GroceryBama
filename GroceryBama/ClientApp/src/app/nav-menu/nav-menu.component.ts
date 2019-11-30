@@ -1,6 +1,6 @@
 import { Component, Inject, Output, EventEmitter, HostListener, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Authenticator } from 'src/app/_services/authenticator'
 import { first } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
@@ -17,6 +17,7 @@ export class NavMenuComponent {
     stores = [];
     currentStoreName = "";
     groceryIdSubscription: Subscription;
+    groceryId: number;
     //@Output() toggleCart: EventEmitter<null> = new EventEmitter();
     constructor(
         private http: HttpClient,
@@ -28,16 +29,19 @@ export class NavMenuComponent {
         this.http.get<any>(this.baseUrl + 'stores/getStores').subscribe(result => {
             this.stores = result.data;
             this.groceryIdSubscription = authenticator.groceryId.subscribe(groceryId => {
+                this.groceryId = groceryId;
                 this.currentStoreName = this.stores.find(element => { return element.id == groceryId }).name;
+                this.getCartQuantity();
             });
-            if (authenticator.isLoggedIn && authenticator.currentUser.role == "buyer") {
-                this.http.get<any>(this.baseUrl + 'stores/getcartquantity').subscribe(result => {
-                    this.navMenuService.cartQuantityUpdate(result.data.cartQuantity);
-                }, error => console.error(error));
-            }
         }, error => console.error(error));
-        
-        
+    }
+    getCartQuantity() {
+        if (this.authenticator.isLoggedIn && this.authenticator.role == "buyer") {
+            var params = new HttpParams().append('groceryId', this.groceryId.toString())
+            this.http.get<any>(this.baseUrl + 'stores/getcartquantity', { params }).subscribe(result => {
+                this.navMenuService.cartQuantityUpdate(result.data.cartQuantity);
+            }, error => console.error(error));
+        }
     }
     ngOnDestroy() {
         this.groceryIdSubscription.unsubscribe();

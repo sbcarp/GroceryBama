@@ -11,8 +11,8 @@ namespace GroceryBama.Entities
         public string Group { get; set; }
         public DateTime ExpirationDate { get; set; }
         public int Quantity { get; set; }
-        public double ListedPrice { get; set; }
-        public double WholeSalePrice { get; set; }
+        public float ListedPrice { get; set; }
+        public float WholeSalePrice { get; set; }
         public string Description { get; set; }
         public string PictureUrl { get; set; }
     }

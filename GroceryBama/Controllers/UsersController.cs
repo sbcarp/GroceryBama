@@ -28,9 +28,8 @@ namespace GroceryBama.Controllers
         {
             try
             {
-                User user = usersScript.GetUser(userCredential.Username, userCredential.Password);
+                User user = usersScript.GetUser(userCredential.Username.Trim(), userCredential.Password);
                 user.Token = GenerateToken(user);
-                user.GroceryId = 1;
                 return Json(new BasePacket(true, user));
             }
             catch (Exception ex)
