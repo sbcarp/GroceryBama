@@ -223,12 +223,12 @@ namespace GroceryBama.Controllers
             }
         }
         [Authorize(Roles = "manager")]
-        [HttpPost("AddItemToInventory")]
-        public ActionResult AddItemToInventory([FromBody] ItemParams itemParams)
+        [HttpPost("UpdateInventoryItemQuantity")]
+        public ActionResult UpdateInventoryItemQuantity([FromBody] ItemParams itemParams)
         {
             try
             {
-                storesScript.AddItemToInventory(itemParams.GroceryId, itemParams.ItemId, itemParams.Quantity);
+                storesScript.UpdateInventoryItemQuantity(itemParams.ItemId, itemParams.Quantity);
                 return Json(new BasePacket(true, null));
             }
             catch (Exception ex)

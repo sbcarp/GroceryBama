@@ -1,8 +1,9 @@
-import { Component, Inject, Injectable, ViewChild  } from '@angular/core';
+import { Component, Inject, Injectable, ViewChild, ElementRef  } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Authenticator } from 'src/app/_services/authenticator'
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
     selector: 'app-inventory',
@@ -17,6 +18,8 @@ export class InventoryComponent {
     dataSource = this.OrdersData;
     groceryIdSubscription: Subscription;
     groceryId: number;
+    resultsLength: number;
+    @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
     constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string,
         private authenticator: Authenticator,
         private dialog: MatDialog) {
@@ -31,10 +34,17 @@ export class InventoryComponent {
         this.http.get<any>(this.baseUrl + 'stores/getitems', { params }).subscribe(result => {
             console.log(result);
             if (result.success) {
+                this.resultsLength = result.data.totalNumberOfResults;
                 this.dataSource = result.data.results;
                 //this.numberOfItems = result.data.totalNumberOfResults;
             }
         }, error => console.error(error));
+    }
+    switchPage(groceryId: number, pageEvent: PageEvent) {
+        var startIndex = pageEvent.pageIndex * pageEvent.pageSize + 1;
+        var endIndex = startIndex + pageEvent.pageSize - 1;
+        if (endIndex > pageEvent.length) endIndex = pageEvent.length;
+        this.getItems(groceryId, startIndex, endIndex, "");
     }
     ngOnDestroy() {
         this.groceryIdSubscription.unsubscribe();
@@ -48,7 +58,7 @@ export class InventoryComponent {
             console.log(result, item.itemId);
             if (result != undefined) {
                 var quantity = result.quantity;
-                this.http.post<any>(this.baseUrl + 'stores/AddItemToInventory', { groceryId: this.groceryId, itemId: item.itemId, quantity: quantity}).subscribe(result => {
+                this.http.post<any>(this.baseUrl + 'stores/UpdateInventoryItemQuantity', { itemId: item.id, quantity: quantity}).subscribe(result => {
                     if (result.success) {
                         item.quantity = quantity;
                     }
@@ -78,11 +88,15 @@ export class InventoryComponent {
     templateUrl: 'update-quantity-dialog.html',
 })
 export class UpdateQuantityDialog {
-
+    @ViewChild('ConfirmButton', { static: false}) ConfirmButton: ElementRef;
     constructor(
         public dialogRef: MatDialogRef<UpdateQuantityDialog>,
-        @Inject(MAT_DIALOG_DATA) public data: object) { }
-
+        @Inject(MAT_DIALOG_DATA) public data: object) {
+        
+    }
+    ngAfterViewInit() {
+        console.log(this.ConfirmButton);
+    }
     onNoClick(): void {
         this.dialogRef.close();
     }

@@ -232,26 +232,24 @@ namespace GroceryBama.MySqlScripts
 
         public Statistic GetStatistic(int groceryId)
         {
+
+            MySqlDataReader reader = GetStoredProcedureReader("GetStatistics",
+                            new MySqlParameter("@p_groceryID", groceryId));
+            reader.Read();
             Statistic statistic = new Statistic();
-            if (groceryId == 1)
-            {
-                statistic.GroceryId = groceryId;
-                statistic.StoreName = "Publix";
-                statistic.TotalItemsSold = 5500;
-                statistic.TotalProfit = (float)657446.45;
-            }
-            else
-            {
-                statistic.GroceryId = groceryId;
-                statistic.StoreName = "Walmart";
-                statistic.TotalItemsSold = 6666;
-                statistic.TotalProfit = (float)5574613.01;
-            }
+            statistic.StoreName = ReadColumn(reader, "StoreName").ToString();
+            statistic.TotalItemsSold = (int)ReadColumn(reader, "TotalItemsSold");
+            statistic.TotalProfit = (float)ReadColumn(reader, "TotalRevenue");
+            reader.Close();
             return statistic;
         }
-        public void AddItemToInventory(int groceryId, int itemId, int quantity)
+        public void UpdateInventoryItemQuantity(int groceryId, int quantity)
         {
-            
+            MySqlDataReader reader = GetStoredProcedureReader("UpdateInventoryItemQuantity",
+                            new MySqlParameter("@p_itemID", groceryId),
+                            new MySqlParameter("@p_Quantity", quantity));
+
+            reader.Close();
         }
         public void DeleteItemFromInventory(int groceryId, int itemId)
         {

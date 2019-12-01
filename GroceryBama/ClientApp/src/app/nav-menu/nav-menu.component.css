@@ -55,7 +55,7 @@ a.navbar-brand {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   max-height: 500px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 html {
   font-size: 14px;

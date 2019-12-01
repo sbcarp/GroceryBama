@@ -20,8 +20,11 @@ button:focus {
 }
 .mat-stack-bar-success {
   color: #333333 !important;
-  background: #f5f5f5f7 !important;
+  background: #fffffff7 !important;
 }
+  .mat-stack-bar-success .mat-simple-snackbar {
+    font-size: 15px !important;
+  }
 .center-block {
   display: flex;
   flex-direction: column;
