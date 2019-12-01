@@ -40,56 +40,69 @@ namespace GroceryBama.MySqlScripts
 
         public User GetUserInfo(string username)
         {
+            MySqlDataReader reader = GetStoredProcedureReader("GetUserInfo",
+                            new MySqlParameter("@p_username", username));
+            reader.Read();
             User user = new User();
-            user.AddressLine2 = "Building 302";
-            user.City = "Tuscaloosa";
-            user.DefaultPaymentMethodId = 1;
-            user.Email = "odsijf@gmail.com";
-            user.Firstname = "Snow";
-            user.GroceryId = 2;
-            user.Lastname = "Jhon";
+            user.Username = ReadColumn(reader, "Username").ToString();
+            user.Firstname = ReadColumn(reader, "FirstName").ToString();
+            user.Lastname = ReadColumn(reader, "LastName").ToString();
+            user.Role = ReadColumn(reader, "UserType").ToString();
+            user.Email = ReadColumn(reader, "Email").ToString();
+            user.PhoneNumber = ReadColumn(reader, "Phone").ToString();
+            user.GroceryId = (int)ReadColumn(reader, "DefaultStoreID");
+            // Buyer attributes
+            if (ReadColumn(reader, "DefaultPaymentId") == System.DBNull.Value) return user;
+            user.DefaultPaymentMethodId = (int)ReadColumn(reader, "DefaultPaymentId");
+            user.AddressLine2 = ReadColumn(reader, "AddressLine2").ToString();
+            user.StreetAddress = ReadColumn(reader, "Street").ToString();
+            user.City = ReadColumn(reader, "City").ToString();
+            user.State = ReadColumn(reader, "State").ToString();
+            user.ZipCode = ReadColumn(reader, "ZipCode").ToString();
+            // Buyer Payment methods
+            reader.NextResult();
             user.PaymentMethods = new List<PaymentMethod>();
-            user.PhoneNumber = "2058874645";
-            user.Role = "buyer";
-            user.State = "AL";
-            user.StreetAddress = "444 14th Ave";
-            user.Username = username;
-            user.ZipCode = "35487";
-            PaymentMethod paymentMethod = new PaymentMethod();
-            paymentMethod.Id = 1;
-            paymentMethod.Name = "Wells Fargo";
-            paymentMethod.AccountNumber = "44216496794616";
-            paymentMethod.RoutineNumber = "7979797";
-            user.PaymentMethods.Add(paymentMethod);
-            paymentMethod = new PaymentMethod();
-            paymentMethod.Id = 2;
-            paymentMethod.Name = "Credit Union";
-            paymentMethod.AccountNumber = "1967941979794";
-            paymentMethod.RoutineNumber = "659897";
-            user.PaymentMethods.Add(paymentMethod);
-            PaymentMethod defaultPaymentMethod = user.PaymentMethods.Find(item => { return item.Id == user.DefaultPaymentMethodId; });
-            if (defaultPaymentMethod != null) defaultPaymentMethod.IsDefault = true;
+            while (reader.Read())
+            {
+                PaymentMethod paymentMethod = new PaymentMethod();
+                if (ReadColumn(reader, "PaymentID") == System.DBNull.Value) return user;
+                paymentMethod.Id = (int)ReadColumn(reader, "PaymentID");
+                paymentMethod.IsDefault = paymentMethod.Id == user.DefaultPaymentMethodId;
+                paymentMethod.Name = ReadColumn(reader, "PaymentName").ToString();
+                paymentMethod.AccountNumber = ReadColumn(reader, "AccountNumber").ToString();
+                paymentMethod.RoutineNumber = ReadColumn(reader, "RoutineNumber").ToString();
+                user.PaymentMethods.Add(paymentMethod);
+            }
+            reader.Close();
             return user;
+
+            
         }
 
         public User UpdateUserContactInfo(string username, string phoneNumber, string email)
         {
-            User user = new User();
-
-            return user;
+            MySqlDataReader reader = GetStoredProcedureReader("UpdateUserContactInfo",
+                            new MySqlParameter("@p_username", username),
+                            new MySqlParameter("@p_phone", phoneNumber),
+                            new MySqlParameter("@p_email", email));
+            reader.Close();
+            return GetUserInfo(username);
         }
 
         public User UpdateUserAddressInfo(string username, string streetAddress, string addressLine2,
                                             string city, string state, string zipCode)
         {
-            User user = GetUserInfo(username);
-            return user;
+            MySqlDataReader reader = GetStoredProcedureReader("UpdateUserAddressInfo",
+                        new MySqlParameter("@p_username", username),
+                        new MySqlParameter("@p_street", streetAddress),
+                        new MySqlParameter("@p_line2", addressLine2),
+                        new MySqlParameter("@p_city", city),
+                        new MySqlParameter("@p_state", state),
+                        new MySqlParameter("@p_zip", zipCode));
+            reader.Close();
+            return GetUserInfo(username);
         }
-        public User UpdateUserContact(string username, string phoneNumber, string email)
-        {
-            User user = GetUserInfo(username);
-            return user;
-        }
+
 
         public User AddPaymentMethod(string username, string name, string accountNumber, string routineNumber, bool isDefault)
         {

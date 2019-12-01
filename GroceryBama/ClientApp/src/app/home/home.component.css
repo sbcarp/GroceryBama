@@ -27,7 +27,6 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden;
   width: 200px;
   height: 300px;
   background: #ffffffd6;
@@ -78,14 +77,73 @@
 
 .item-actions-container .item-add-cart {
 }
-
-.item .img-container {
+.item .inner-container{
+  height: 100%;
   width: 100%;
-  padding-top: 100%;
-  position: absolute;
-  display: block;
-  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
 }
+.item .item-label {
+  width: 70px;
+  background: transparent;
+  height: 70px;
+  position: absolute;
+  left: -5px;
+  top: -5px;
+  overflow: hidden;
+}
+  .item .item-label span {
+    position: absolute;
+    left: -25px;
+    height: 29px;
+    line-height: 25px;
+    top: 10px;
+    padding: 2px 5px 2px 5px;
+    border-left: none;
+    background: #bd4e4e;
+    color: white;
+    z-index: 1;
+    border-top-right-radius: 1px;
+    border-bottom-right-radius: 1px;
+    box-shadow: #000000b3 1px 1px 2px;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    text-align: center;
+    width: 100px;
+  }
+  .item.disabled .item-label span {
+    color: #c9c9c9;
+    background: #f9f9f9;
+    font-size: 15px;
+  }
+  .item .item-label::before,
+  .item .item-label::after {
+    content: '';
+    border: 3px solid #8b2929;
+    z-index: -1;
+    position: absolute;
+    display: block;
+  }
+.item.disabled .item-label::before,
+.item.disabled .item-label::after {
+  border-color: #9E9E9E;
+}
+      
+  .item .item-label::before {
+    left: 0;
+    bottom: 0;
+  }
+  .item .item-label::after {
+    right: 0;
+    top: 0;
+  }
+  .item .img-container {
+    width: 100%;
+    padding-top: 100%;
+    position: absolute;
+    display: block;
+    box-sizing: border-box;
+  }
 .item img.pic {
   padding: 10px;
   max-width: 100%;

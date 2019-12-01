@@ -133,8 +133,9 @@ namespace GroceryBama.MySqlScripts
             return searchResult;
         }
 
-        public Order Checkout(string username, int groceryId, string requestDeliveryTime, string deliveryInstruction, int paymentMethodId)
+        public Order Checkout(string username, int groceryId, DateTime requestDeliveryTime, string deliveryInstruction, int paymentMethodId)
         {
+
             return new Order();
         }
 
@@ -149,7 +150,7 @@ namespace GroceryBama.MySqlScripts
             order.DeliveryInstructions = "I'm tired of making up data";
             order.GroceryId = 1;
             order.Items = GetCartItems(username, order.GroceryId).Items;
-            order.RequestDeliveryTime = "ASAP";
+            order.RequestDeliveryTime = DateTime.Now;
             order.Status = 0;
             order.StoreName = "Publix";
             order.TotalItems = 30;
@@ -167,7 +168,7 @@ namespace GroceryBama.MySqlScripts
             order.DeliveryInstructions = "I'm tired of making up data";
             order.GroceryId = 1;
             order.Items = GetCartItems(username, order.GroceryId).Items;
-            order.RequestDeliveryTime = "In 2 Hours";
+            order.RequestDeliveryTime = DateTime.Now.AddHours(2);
             order.Status = 1;
             order.StoreName = "Walmart";
             order.TotalItems = 30;
@@ -185,7 +186,7 @@ namespace GroceryBama.MySqlScripts
             order.DeliveryInstructions = "I'm tired of making up data";
             order.GroceryId = 1;
             order.Items = GetCartItems(username, order.GroceryId).Items;
-            order.RequestDeliveryTime = "ASAP";
+            order.RequestDeliveryTime = DateTime.Now;
             order.Status = 2;
             order.StoreName = "Somewhere";
             order.TotalItems = 30;
@@ -210,7 +211,7 @@ namespace GroceryBama.MySqlScripts
             order.DeliveryInstructions = "vcvsdagsad";
             order.Items = GetItems(order.GroceryId, 1, 10, "").Results;
             order.PaymentMethodId = 1;
-            order.RequestDeliveryTime = "ASAP";
+            order.RequestDeliveryTime = DateTime.Now;
             order.Status = 0;
             order.StoreName = "Publix";
             order.TotalItems = 55;

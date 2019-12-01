@@ -14,30 +14,37 @@
   <div class="col">
     <div class="items-container" *ngIf="items">
       <div *ngFor="let item of items">
-        <div class="item">
-          <div class="img-container">
-            <img src="{{ 'assets/images/' + item.pictureUrl }}" class="pic" alt="...">
+        <div class="item" [ngClass]="item.quantity == 0 ? 'disabled': ''">
+          <div class="item-label" *ngIf="item.quantity < 100">
+            <span *ngIf="!item.quantity">Sold Out</span>
+            <span *ngIf="item.quantity">{{ item.quantity }}&nbsp;left</span>
           </div>
-          <div class="item-info-container flex flex-column">
-            <div class="item-shortInfo">
-              <div class="item-price">${{ item.listedPrice }}</div>
+          <div class="inner-container">
+            <div class="img-container">
+              <img src="{{ 'assets/images/' + item.pictureUrl }}" class="pic" alt="...">
             </div>
-            <div class="item-name">{{ item.name }}</div>
-            <div class="item-description">{{ item.description }}</div>
-            <div class="item-actions-container">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" (click)="adjustItemQuantity(quantityInput, -1)">-</span>
-                </div>
-                <input #quantityInput type="text" class="form-control" value="1" onfocus="this.select()">
-                <div class="input-group-append">
-                  <span class="input-group-text" (click)="adjustItemQuantity(quantityInput, 1)">+</span>
-                </div>
+            <div class="item-info-container flex flex-column">
+              <div class="item-shortInfo">
+                <div class="item-price">${{ item.listedPrice }}</div>
               </div>
-              <button mat-raised-button [color]="'custom-primary'" class="item-add-cart" (click)="addToCart(item.id, quantityInput)">Add to Cart</button>
-              <!--<button type="button" class="btn btn-primary item-add-cart" (click)="addToCart(item.id, quantityInput)">Add to Cart</button>-->
+              <div class="item-name">{{ item.name }}</div>
+              <div class="item-description">{{ item.description!=''? item.description : item.name }}</div>
+              <div class="item-actions-container">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" (click)="adjustItemQuantity(quantityInput, -1)">-</span>
+                  </div>
+                  <input #quantityInput type="text" class="form-control" value="1" onfocus="this.select()">
+                  <div class="input-group-append">
+                    <span class="input-group-text" (click)="adjustItemQuantity(quantityInput, 1)">+</span>
+                  </div>
+                </div>
+                <button mat-raised-button [color]="'custom-primary'" class="item-add-cart" (click)="addToCart(item.id, quantityInput)">Add to Cart</button>
+                <!--<button type="button" class="btn btn-primary item-add-cart" (click)="addToCart(item.id, quantityInput)">Add to Cart</button>-->
+              </div>
             </div>
           </div>
+          
           <!--<a href="#" class="btn btn-secondary">Add to Cart</a>-->
         </div>
       </div>

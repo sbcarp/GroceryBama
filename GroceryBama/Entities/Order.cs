@@ -10,8 +10,8 @@ namespace GroceryBama.Entities
 
         public int OrderId { get; set; }
         public int GroceryId { get; set; }
-        public int BuyerId { get; set; }
-        public int DelivererId { get; set; }
+        public int BuyerUsername { get; set; }
+        public int DelivererUsername { get; set; }
         public int PaymentMethodId { get; set; }
         public string StoreName { get; set; }
         public string DeliveryInstructions { get; set; }
@@ -20,7 +20,7 @@ namespace GroceryBama.Entities
         public int TotalItems { get; set; }
         public DateTime DateTime { get; set; }
         public int Status { get; set; }
-        public string RequestDeliveryTime { get; set; }
+        public DateTime RequestDeliveryTime { get; set; }
         public string StreetAddress { get; set; }
         public string AddressLine2 { get; set; }
         public string City { get; set; }

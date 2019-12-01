@@ -186,7 +186,7 @@ namespace GroceryBama.Controllers
         {
             try
             {
-                user = usersScript.UpdateUserContact(User.Identity.Name, user.PhoneNumber, user.Email);
+                user = usersScript.UpdateUserContactInfo(User.Identity.Name, user.PhoneNumber, user.Email);
                 return Json(new BasePacket(true, user));
             }
             catch (Exception ex)

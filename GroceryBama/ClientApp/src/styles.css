@@ -18,7 +18,10 @@ button:focus {
   background-color: #af1212 !important;
   color: #fff !important;
 }
-
+.mat-stack-bar-success {
+  color: #333333 !important;
+  background: #f5f5f5f7 !important;
+}
 .center-block {
   display: flex;
   flex-direction: column;
@@ -55,6 +58,7 @@ code {
 }
 
 body {
+  z-index: -100;
   position: absolute;
   height: 100%;
   width: 100%;

@@ -25,10 +25,13 @@ export class AccountComponent {
     }
     getUserContact() {
         this.http.get<any>(this.baseUrl + 'users/getUserContact').subscribe(result => {
-            this.contact.controls["phoneNumber"].setValue(result.data.phoneNumber);
-            this.contact.controls["email"].setValue(result.data.email);
+            this.setFormControls(result);
             this.isInfoChanged = false;
         }, error => console.error(error));
+    }
+    setFormControls(result) {
+        this.contact.controls["phoneNumber"].setValue(result.data.phoneNumber);
+        this.contact.controls["email"].setValue(result.data.email);
     }
     onSubmit() {
         var formContent = {};
@@ -36,7 +39,8 @@ export class AccountComponent {
             formContent[key] = this.contact.controls[key].value;
         }
         this.http.post<any>(this.baseUrl + 'users/updateUserContact', formContent).subscribe(result => {
-            this.getUserContact();
+            this.setFormControls(result);
+            this.isInfoChanged = false;
         });
     }
 }
