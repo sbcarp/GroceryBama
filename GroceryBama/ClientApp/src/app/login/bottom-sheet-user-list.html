@@ -1,0 +1,6 @@
+<mat-nav-list>
+  <a *ngFor="let user of users" mat-list-item (click)="selectUser(user.username, user.password)">
+    <span mat-line>[{{user.role}}]&nbsp;&nbsp;{{user.username}}</span>
+    <!--<span mat-line style="color: lightgray;">Status will be changed to Driver on the way</span>-->
+  </a>
+</mat-nav-list>

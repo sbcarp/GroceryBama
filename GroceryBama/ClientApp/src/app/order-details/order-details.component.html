@@ -30,6 +30,10 @@
       <span class="col-6">Address</span>
       <span class="col-6">{{ order.addressLine2 }}<br />{{ order.streetAddress }}</span>
     </div>
+    <div class="row">
+      <button mat-stroked-button *ngIf="receiptMode" [routerLink]="['/myorders']" class="my-orders-button">Go to My Orders</button>
+      <button mat-stroked-button *ngIf="!receiptMode" [routerLink]="['/myorders']" class="my-orders-button">Back to My Orders</button>
+    </div>
   </div>
   <div class="account-info-container">
     <app-items-list [isCartMode]="false" [orderId]="orderId"></app-items-list>

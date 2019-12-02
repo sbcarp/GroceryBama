@@ -13,7 +13,7 @@ import { Authenticator } from 'src/app/_services/authenticator'
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent, BottomSheetUserList } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ManagerComponent } from './manager/manager.component';
 import { DelivererComponent } from './deliverer/deliverer.component';
@@ -71,9 +71,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         OutstandingOrdersComponent,
         InventoryComponent,
         DashboardComponent,
-        UpdateQuantityDialog
+        UpdateQuantityDialog,
+        BottomSheetUserList,
     ],
-    entryComponents: [BottomSheetOrderUpdate, UpdateQuantityDialog],
+    entryComponents: [BottomSheetOrderUpdate, UpdateQuantityDialog, BottomSheetUserList],
     imports: [
         BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
         HttpClientModule,

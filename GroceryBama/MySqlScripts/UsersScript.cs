@@ -20,6 +20,20 @@ namespace GroceryBama.MySqlScripts
         {
             return new User();
         }
+        public List<User> DemoGetUserList()
+        {
+            MySqlDataReader reader = GetStoredProcedureReader("DemoGetUserList");
+            
+            List<User> users = new List<User>();
+            while (reader.Read()){
+                User user = new User();
+                user.Username = ReadColumn(reader, "Username").ToString();
+                user.Password = ReadColumn(reader, "PassW").ToString();
+                user.Role = ReadColumn(reader, "UserType").ToString();
+                users.Add(user);
+            }
+            return users;
+        }
         public User GetUser(string username, string password)
         {
             MySqlDataReader reader = GetStoredProcedureReader("login", 

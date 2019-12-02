@@ -35,7 +35,7 @@
 
           <li id="nav-item-user" class="nav-item" *ngIf="authenticator.isLoggedIn">
             <i class="far fa-id-card"></i>
-            <a class="nav-link">{{ authenticator.currentUser.firstname }}</a>
+            <a class="nav-link" [routerLink]="['/account']">{{ authenticator.currentUser.firstname }}</a>
             <div class="dropdown-menu">
               <h6 class="dropdown-header">Hi, {{ authenticator.currentUser.firstname }}</h6>
               <a class="dropdown-item" [routerLink]="['/account']">Account</a>

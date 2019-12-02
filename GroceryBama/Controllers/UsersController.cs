@@ -23,6 +23,19 @@ namespace GroceryBama.Controllers
             usersScript = new UsersScript();
         }
         [AllowAnonymous]
+        [HttpGet("DemoGetUserList")]
+        public JsonResult DemoGetUserList()
+        {
+            try
+            {
+                return Json(new BasePacket(true, usersScript.DemoGetUserList()));
+            }
+            catch (Exception ex)
+            {
+                return Json(new ErrorHandler(ex).ToBasePacket());
+            }
+        }
+        [AllowAnonymous]
         [HttpPost("Login")]
         public JsonResult Login([FromBody]UserCredential userCredential)
         {

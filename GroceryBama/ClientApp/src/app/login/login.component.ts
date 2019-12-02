@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Authenticator } from 'src/app/_services/authenticator'
 import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA, MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent  {
     loginForm = new FormGroup({
         username: new FormControl('', Validators.required),
         password: new FormControl('', Validators.required),
@@ -18,11 +20,21 @@ export class LoginComponent implements OnInit {
     constructor(
         private authenticator: Authenticator,
         private router: Router,
-        private snackBar: MatSnackBar
-    ) { }
+        private snackBar: MatSnackBar,
+        private matBottomSheet: MatBottomSheet,
+    ) {
 
-    ngOnInit() {
 
+    }
+
+    ngAfterViewInit() {
+        var bottomSheetRef = this.matBottomSheet.open(BottomSheetUserList);
+
+        bottomSheetRef.afterDismissed().subscribe(result => {
+            if (result == undefined) return;
+            this.loginForm.controls.username.setValue(result.username);
+            this.loginForm.controls.password.setValue(result.password);
+        });
     }
     onSubmit() {
         this.authenticator.login(this.loginForm.controls.username.value, this.loginForm.controls.password.value)
@@ -48,4 +60,24 @@ export class LoginComponent implements OnInit {
 
     }
 
+}
+
+@Component({
+    selector: 'bottom-sheet-user-list',
+    templateUrl: 'bottom-sheet-user-list.html',
+})
+export class BottomSheetUserList {
+    users: object[];
+    constructor(private matBottomSheetRef: MatBottomSheetRef<BottomSheetUserList>,
+        @Inject(MAT_BOTTOM_SHEET_DATA) private data: any,
+        private http: HttpClient,
+        @Inject('BASE_URL') private baseUrl: string,
+        private authenticator: Authenticator, ) {
+        this.http.get<any>(this.baseUrl + 'users/demoGetUserList').subscribe(result => {
+            if (result.success) this.users = result.data;
+        }, error => console.error(error));
+    }
+    selectUser(username, password): void {
+        this.matBottomSheetRef.dismiss({ username: username, password: password });
+    }
 }
