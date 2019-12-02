@@ -10,7 +10,9 @@ Step 1. Download and install .NET Core 3.0 hosting bundle: [[Download] https://d
 
 Step 2. Disable windows firewalls & and antivirus if necessary
 
-Step 3. Run the scripts in MySQL Workbench, make sure the port number is the default one: TODO
+Step 3. Run the scripts in MySQL Workbench,[[Scripts] https://docs.google.com/document/d/11RKRwwu7tyrILoEFjJlEf7VItdrr4hJiTAsBCoXQvAY/edit?usp=sharing]
+
+Note: make sure the port number of the instance is the default one: 3306
 
 Step 4. Go to the folder GroceryBama\bin\Release\, Run GroceryBama as administrator
 
