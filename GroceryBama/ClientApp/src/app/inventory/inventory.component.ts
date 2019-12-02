@@ -78,7 +78,7 @@ export class InventoryComponent {
     }
     dateReformat(dateStr: string) {
         var dateObj: Date = new Date(dateStr);
-        return dateObj.getMonth() + '/' + dateObj.getDate() + '/' + dateObj.getFullYear();
+        return (dateObj.getMonth()+1) + '/' + dateObj.getDate() + '/' + dateObj.getFullYear();
     }
 }
 

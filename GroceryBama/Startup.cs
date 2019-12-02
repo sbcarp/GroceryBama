@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Linq;
 using System.Text;
 namespace GroceryBama
@@ -69,6 +71,20 @@ namespace GroceryBama
                 app.UseHsts();
             }
             app.UseResponseCompression();
+            //app.UseResponseCaching();
+            //app.Use(async (context, next) =>
+            //{
+            //    context.Response.GetTypedHeaders().CacheControl =
+            //        new Microsoft.Net.Http.Headers.CacheControlHeaderValue()
+            //        {
+            //            Public = true,
+            //            MaxAge = TimeSpan.FromHours(1)
+            //        };
+            //    //context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] =
+            //    //    new string[] { "Accept-Encoding" };
+
+            //    await next();
+            //});
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())

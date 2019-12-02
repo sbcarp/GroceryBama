@@ -1,6 +1,7 @@
 <div class="center-block">
   <div class="summary right-float-container">
-    <div class="total">Total  $123</div>
+    <span>{{ totalNumItems }} Items</span>
+    <div class="total">Total  ${{ totalPrice != null ? totalPrice.toFixed(2) : '0'}}</div>
     <button mat-raised-button [color]="'custom-primary'" (click)="onCheckOut()">Checkout</button>
   </div>
   <h2>Delivery Options</h2>
@@ -9,13 +10,13 @@
       <mat-form-field class="col-4">
         <mat-label>Delivery Time</mat-label>
         <mat-select [(ngModel)]="deliveryTime">
-          <mat-option value="ASAP">ASAP</mat-option>
-          <mat-option value="In 1 Hour">In 1 Hour</mat-option>
-          <mat-option value="In 2 Hours">In 2 Hours</mat-option>
-          <mat-option value="In 5 Hours">In 5 Hours</mat-option>
-          <mat-option value="In 10 Hours">In 10 Hours</mat-option>
-          <mat-option value="In 12 Hours">In 12 Hours</mat-option>
-          <mat-option value="In 24 Hours">In 24 Hours</mat-option>
+          <mat-option [value]="0">ASAP</mat-option>
+          <mat-option [value]="1">In 1 Hour</mat-option>
+          <mat-option [value]="2">In 2 Hours</mat-option>
+          <mat-option [value]="5">In 5 Hours</mat-option>
+          <mat-option [value]="10">In 10 Hours</mat-option>
+          <mat-option [value]="12">In 12 Hours</mat-option>
+          <mat-option [value]="24">In 24 Hours</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="col-8">

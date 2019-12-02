@@ -1,9 +1,9 @@
-import { Component, Inject, Injectable, EventEmitter, Output } from '@angular/core';
+import { Component, Inject, Injectable, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Authenticator } from 'src/app/_services/authenticator'
 import { MatBottomSheet, MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { startWith, tap, delay } from 'rxjs/operators';
 @Component({
     selector: 'app-my-orders',
     templateUrl: './my-orders.component.html',
@@ -16,23 +16,29 @@ export class MyOrdersComponent {
     items: object[];
     orders: object[];
     lastReformatedDate: string = "";
-    constructor(http: HttpClient,
-                @Inject('BASE_URL') baseUrl: string,
+    constructor(private http: HttpClient,
+                @Inject('BASE_URL') private baseUrl: string,
                 private authenticator: Authenticator,
-                private matBottomSheet: MatBottomSheet, ) {
-
+        private matBottomSheet: MatBottomSheet,
+        private changeDetectorRef: ChangeDetectorRef) {
+        
         var params = new HttpParams().append('startIndex', '1')
             .append('endIndex', '10');
-        http.get<any>(baseUrl + 'stores/GetOrders', { params }).subscribe(result => {
+        this.http.get<any>(this.baseUrl + 'stores/GetOrders', { params }).subscribe(result => {
             if (result.success) this.orders = result.data.results;
             console.log(this.orders);
         }, error => console.error(error));
     }
-    isDateDisplay(dateTime: string) {
+    ngAfterContentChecked() {
+        //this.changeDetectorRef.detectChanges();
+    }
+    isDateDisplay(order: object) {
+        var dateTime: string = order["dateTime"];
+        if (order["isDateDispaly"] != null) return order["isDateDispaly"];
         var reformatedDate: string = this.dateDisplayReformat(dateTime);
-        var result = this.lastReformatedDate != reformatedDate;
+        order["isDateDispaly"] = this.lastReformatedDate != reformatedDate;
         this.lastReformatedDate = reformatedDate;
-        return result;
+        return order["isDateDispaly"] ;
     }
     dateDisplayReformat(dateTime: string) {
         var givenDateTime: Date = new Date(dateTime);
@@ -40,7 +46,7 @@ export class MyOrdersComponent {
         var diffInYears: number = todayDateTime.getFullYear() - givenDateTime.getFullYear();
         var diffInMonths: number = todayDateTime.getMonth() - givenDateTime.getMonth();
         var diffInDays: number = todayDateTime.getDate() - givenDateTime.getDate();
-        if (diffInYears || diffInMonths) return givenDateTime.getMonth() + "/" + givenDateTime.getDate() + "/" + givenDateTime.getFullYear();
+        if (diffInYears || diffInMonths) return (givenDateTime.getMonth()+1) + "/" + givenDateTime.getDate() + "/" + givenDateTime.getFullYear();
         if (diffInDays == 0) return "Today";
         else if (diffInDays == 1) return "Yesterday";
         else if (diffInDays > 1 && diffInDays < 7) {
@@ -49,7 +55,7 @@ export class MyOrdersComponent {
             var dayToName = { 1: "Monday", 2: "Tuesday", 3: "Wednesday", 4: "Thursday", 5: "Friday", 6: "Saturday", 0: "Sunday" };
             return dayToName[givenDayInTheWeek];
         }
-        return givenDateTime.getMonth() + "/" + givenDateTime.getDate();
+        return (givenDateTime.getMonth()+1) + "/" + givenDateTime.getDate();
     }
     orderStatusToString(status: number) {
         var statusToString = { 0: "Waiting", 1: "Driver On the Way", 2: "Deliveried", 3: "Canceled" };
@@ -68,6 +74,18 @@ export class MyOrdersComponent {
             if (result == undefined) return; 
             this.orders.find(element => { return element["orderId"] == result.orderId; })["status"] = result.status;
         });
+    }
+    //checkOrderStatus(order) {
+    //    if (order.status == null) return false;
+    //    if (order.status == 0) return true;
+    //    return false;
+    //}
+    reformatTime(requestDeliveryTime) {
+        var dateTimeObj: Date = new Date(requestDeliveryTime);
+        var suffix: string = dateTimeObj.getHours() < 12 ? "AM" : "PM";
+        var hours = dateTimeObj.getHours() <= 12 ? dateTimeObj.getHours() : dateTimeObj.getHours() - 11;
+        return hours + ':' + dateTimeObj.getMinutes().toString().padStart(2, '0') + ' ' + suffix;
+
     }
 }
 

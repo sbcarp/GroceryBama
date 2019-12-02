@@ -141,6 +141,7 @@ namespace GroceryBama.Controllers
         {
             try
             {
+                order.RequestDeliveryTime = DateTime.Now.AddHours(order.RequestDeliveryTimeOffsetInHours);
                 return Json(new BasePacket(true, storesScript.Checkout(User.Identity.Name, order.GroceryId, order.RequestDeliveryTime, order.DeliveryInstructions, order.PaymentMethodId)));
             }
             catch (Exception ex)
@@ -176,17 +177,22 @@ namespace GroceryBama.Controllers
         {
             try
             {
-                int orderId = order.OrderId, orderStatus = order.Status;
+                int orderId = order.OrderId, newOrderStatus = order.Status;
                 JsonResult permissionDeniedPacket = Json(new BasePacket(false, 7000, "Permission denied"));
+                JsonResult invalidOperationPacket = Json(new BasePacket(false, 7001, "Invalid operation"));
                 // Out of range
-                if (orderStatus <= 0 || orderStatus > 3) return permissionDeniedPacket;
+                if (newOrderStatus <= 0 || newOrderStatus > 3) return permissionDeniedPacket;
                 // When a buyer try to update order to driver on the way or deliveried
-                if (orderStatus > 0 && orderStatus < 3 && !User.IsInRole("deliverer")) return permissionDeniedPacket;
+                if (newOrderStatus > 0 && newOrderStatus < 3 && !User.IsInRole("deliverer")) return permissionDeniedPacket;
                 // When a deliverer try to cancel an order
-                if (orderStatus == 3 && !User.IsInRole("buyer")) return permissionDeniedPacket;
-                // When a user try to cancel an order that not in waiting status
-                // TODO
-                storesScript.UpdateOrderStatus(User.Identity.Name, orderId, orderStatus);
+                if (newOrderStatus == 3 && !User.IsInRole("buyer")) return permissionDeniedPacket;
+                // When a user try to cancel an order that is not in waiting status
+                Order toBeUpdatedOrder = storesScript.GetOrderDetail(User.Identity.Name, orderId);
+                if (newOrderStatus == 3 && toBeUpdatedOrder.Status != 0) return invalidOperationPacket;
+                // When a user try to update an order that is canceled
+                if (toBeUpdatedOrder.Status == 3) return invalidOperationPacket;
+
+                storesScript.UpdateOrderStatus(User.Identity.Name, orderId, newOrderStatus);
                 return Json(new BasePacket(true, null));
             }
             catch (Exception ex)

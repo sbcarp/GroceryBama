@@ -39,7 +39,8 @@ export class OutstandingOrdersComponent {
     }
     dateReformat(dateStr: string) {
         var dateObj: Date = new Date(dateStr);
-        return dateObj.getMonth() + '/' + dateObj.getDate() + '/' + dateObj.getFullYear();
+        console.log(dateObj);
+        return (dateObj.getMonth()+1) + '/' + dateObj.getDate() + '/' + dateObj.getFullYear();
     }
     addressReformat(order: object) {
         // { { element.addressLine2 + "<br>" } } { { element.streetAddress + ', ' + element.city + ', ' + element.state } }

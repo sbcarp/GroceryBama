@@ -135,8 +135,16 @@ namespace GroceryBama.MySqlScripts
 
         public Order Checkout(string username, int groceryId, DateTime requestDeliveryTime, string deliveryInstruction, int paymentMethodId)
         {
-
-            return new Order();
+            MySqlDataReader reader = GetStoredProcedureReader("Checkout",
+                            new MySqlParameter("@p_username", username),
+                            new MySqlParameter("@p_groceryID", groceryId),
+                            new MySqlParameter("@p_requestDeliveryTime", requestDeliveryTime),
+                            new MySqlParameter("@p_deliveryInstruction", deliveryInstruction),
+                            new MySqlParameter("@p_paymentMethodId", paymentMethodId)); 
+            reader.Read();
+            int newOrderId = (int)ReadColumn(reader, "t_newOrderID");
+            reader.Close();
+            return GetOrderDetail(username, newOrderId);
         }
 
         public SearchResult GetOrders(string username, int startIndex, int endIndex)
@@ -144,90 +152,152 @@ namespace GroceryBama.MySqlScripts
             SearchResult searchResult = new SearchResult();
             searchResult.TotalNumberOfResults = 3;
             List<Order> orders = new List<Order>();
-            Order order = new Order();
-            order.OrderId = 1;
-            order.DateTime = new DateTime(2019, 11, 27);
-            order.DeliveryInstructions = "I'm tired of making up data";
-            order.GroceryId = 1;
-            order.Items = GetCartItems(username, order.GroceryId).Items;
-            order.RequestDeliveryTime = DateTime.Now;
-            order.Status = 0;
-            order.StoreName = "Publix";
-            order.TotalItems = 30;
-            order.TotalPrice = 56.33;
-            order.AddressLine2 = "aaafdsafasdfsa";
-            order.StreetAddress = "123 Ave";
-            order.City = "Tuscaloosa";
-            order.State = "AL";
-            order.ZipCode = "35487";
-            orders.Add(order);
-
-            order = new Order();
-            order.OrderId = 2;
-            order.DateTime = new DateTime(2019, 11, 26);
-            order.DeliveryInstructions = "I'm tired of making up data";
-            order.GroceryId = 1;
-            order.Items = GetCartItems(username, order.GroceryId).Items;
-            order.RequestDeliveryTime = DateTime.Now.AddHours(2);
-            order.Status = 1;
-            order.StoreName = "Walmart";
-            order.TotalItems = 30;
-            order.TotalPrice = 56.33;
-            order.AddressLine2 = "aaafdsafasdfsa";
-            order.StreetAddress = "123 Ave";
-            order.City = "Tuscaloosa";
-            order.State = "AL";
-            order.ZipCode = "35487";
-            orders.Add(order);
-
-            order = new Order();
-            order.OrderId = 3;
-            order.DateTime = new DateTime(2019, 11, 25);
-            order.DeliveryInstructions = "I'm tired of making up data";
-            order.GroceryId = 1;
-            order.Items = GetCartItems(username, order.GroceryId).Items;
-            order.RequestDeliveryTime = DateTime.Now;
-            order.Status = 2;
-            order.StoreName = "Somewhere";
-            order.TotalItems = 30;
-            order.TotalPrice = 56.33;
-            order.AddressLine2 = "aaafdsafasdfsa";
-            order.StreetAddress = "123 Ave";
-            order.City = "Tuscaloosa";
-            order.State = "AL";
-            order.ZipCode = "35487";
-            orders.Add(order);
-
+            MySqlDataReader reader = GetStoredProcedureReader("GetOrders",
+                            new MySqlParameter("@p_username", username),
+                            new MySqlParameter("@p_start", startIndex),
+                            new MySqlParameter("@p_end", endIndex));
+            reader.Read();
+            searchResult.TotalNumberOfResults = (int)ReadColumn(reader, "OrderCount");
+            reader.NextResult();
+            while (reader.Read())
+            {
+                Order order = new Order();
+                order.OrderId = (int)ReadColumn(reader, "OrderID");
+                order.DelivererUsername = ReadColumn(reader, "DelivererUsername").ToString();
+                order.DeliveryInstructions = ReadColumn(reader, "Instructions").ToString();
+                order.Feedback = ReadColumn(reader, "Feedback").ToString();
+                order.TotalPrice = (float)ReadColumn(reader, "TotalPrice");
+                order.TotalItems = (int)ReadColumn(reader, "TotalItems");
+                order.RequestDeliveryTime = (DateTime)ReadColumn(reader, "RequestDeliveryTime");
+                order.Status = (int)ReadColumn(reader, "Status");
+                order.BuyerUsername = ReadColumn(reader, "BuyerUsername").ToString();
+                order.PaymentMethodId = (int)ReadColumn(reader, "PaymentMethodID");
+                order.DateTime = (DateTime)ReadColumn(reader, "DateTime");
+                order.StoreName = ReadColumn(reader, "StoreName").ToString();
+                order.GroceryId = (int)ReadColumn(reader, "GroceryID");
+                order.AddressLine2 = ReadColumn(reader, "AddressLine2").ToString();
+                order.StreetAddress = ReadColumn(reader, "Street").ToString();
+                order.City = ReadColumn(reader, "City").ToString();
+                order.State = ReadColumn(reader, "State").ToString();
+                order.ZipCode = ReadColumn(reader, "ZipCode").ToString();
+                orders.Add(order);
+            }
+            reader.NextResult();
+            foreach (Order order in orders)
+            {
+                List<Item> items = new List<Item>();
+                while (reader.Read())
+                {
+                    Item item = new Item();
+                    item.Id = (int)ReadColumn(reader, "ItemID");
+                    item.Name = ReadColumn(reader, "ItemName").ToString();
+                    item.Group = ReadColumn(reader, "FoodGroup").ToString();
+                    item.ExpirationDate = (DateTime)ReadColumn(reader, "ExpDate");
+                    item.Quantity = (int)ReadColumn(reader, "Quantity");
+                    item.ListedPrice = (float)ReadColumn(reader, "PriceP");
+                    item.WholeSalePrice = (float)ReadColumn(reader, "WholeSaleP");
+                    item.Description = ReadColumn(reader, "Description").ToString();
+                    item.PictureUrl = ReadColumn(reader, "PictureName").ToString();
+                    items.Add(item);
+                }
+                order.Items = items;
+                reader.NextResult();
+            }
             searchResult.Results = orders;
+            reader.Close();
             return searchResult;
         }
         public Order GetOrderDetail(string username, int orderId)
         {
+            MySqlDataReader reader = GetStoredProcedureReader("GetOrder",
+                            new MySqlParameter("@p_username", username),
+                            new MySqlParameter("@p_orderID", orderId));
+            reader.Read();
             Order order = new Order();
+            order.OrderId = (int)ReadColumn(reader, "OrderID");
+            order.DelivererUsername = ReadColumn(reader, "DelivererUsername").ToString();
+            order.DeliveryInstructions = ReadColumn(reader, "Instructions").ToString();
+            order.Feedback = ReadColumn(reader, "Feedback").ToString();
+            order.TotalPrice = (float)ReadColumn(reader, "TotalPrice");
+            order.TotalItems = (int)ReadColumn(reader, "TotalItems");
+            order.RequestDeliveryTime = (DateTime)ReadColumn(reader, "RequestDeliveryTime");
+            order.Status = (int)ReadColumn(reader, "Status");
+            order.BuyerUsername = ReadColumn(reader, "BuyerUsername").ToString();
+            order.PaymentMethodId = (int)ReadColumn(reader, "PaymentMethodID");
+            order.DateTime = (DateTime)ReadColumn(reader, "DateTime");
+            order.StoreName = ReadColumn(reader, "StoreName").ToString();
+            order.GroceryId = (int)ReadColumn(reader, "GroceryID");
+            order.AddressLine2 = ReadColumn(reader, "AddressLine2").ToString();
+            order.StreetAddress = ReadColumn(reader, "Street").ToString();
+            order.City = ReadColumn(reader, "City").ToString();
+            order.State = ReadColumn(reader, "State").ToString();
+            order.ZipCode = ReadColumn(reader, "ZipCode").ToString();
 
-            order.OrderId = 1;
-            order.GroceryId = 1;
-            order.DateTime = new DateTime(2019, 11, 27);
-            order.DeliveryInstructions = "vcvsdagsad";
-            order.Items = GetItems(order.GroceryId, 1, 10, "").Results;
-            order.PaymentMethodId = 1;
-            order.RequestDeliveryTime = DateTime.Now;
-            order.Status = 0;
-            order.StoreName = "Publix";
-            order.TotalItems = 55;
-            order.TotalPrice = 66.44;
-            order.AddressLine2 = "apt 122";
-            order.StreetAddress = "555 15th St";
+            reader.NextResult();
+            List<Item> items = new List<Item>();
+            while (reader.Read())
+            {
+                Item item = new Item();
+                item.Id = (int)ReadColumn(reader, "ItemID");
+                item.Name = ReadColumn(reader, "ItemName").ToString();
+                item.Group = ReadColumn(reader, "FoodGroup").ToString();
+                item.ExpirationDate = (DateTime)ReadColumn(reader, "ExpDate");
+                item.Quantity = (int)ReadColumn(reader, "Quantity");
+                item.ListedPrice = (float)ReadColumn(reader, "PriceP");
+                item.WholeSalePrice = (float)ReadColumn(reader, "WholeSaleP");
+                item.Description = ReadColumn(reader, "Description").ToString();
+                item.PictureUrl = ReadColumn(reader, "PictureName").ToString();
+                items.Add(item);
+            }
+            order.Items = items;
+            reader.Close();
             return order;
         }
         public void UpdateOrderStatus(string username, int orderId, int newStatus)
         {
-            
+            MySqlDataReader reader = GetStoredProcedureReader("UpdateOrderStatus",
+                            new MySqlParameter("@p_username", username),
+                            new MySqlParameter("@p_orderID", orderId),
+                            new MySqlParameter("@p_newStatus", newStatus));
+
+            reader.Close();
         }
 
         public SearchResult GetOutstandingOrders(int groceryId, int startIndex, int endIndex)
         {
-            return GetOrders("",0,0);
+            MySqlDataReader reader = GetStoredProcedureReader("GetOutstandingOrders",
+                            new MySqlParameter("@p_groceryID", groceryId),
+                            new MySqlParameter("@p_start", startIndex),
+                            new MySqlParameter("@p_end", endIndex));
+            reader.Read();
+            SearchResult searchResult = new SearchResult();
+            searchResult.TotalNumberOfResults = (int)ReadColumn(reader, "OrderCount");
+            reader.NextResult();
+            List<Order> orders = new List<Order>();
+            while (reader.Read())
+            {
+                Order order = new Order();
+                order.OrderId = (int)ReadColumn(reader, "OrderID");
+                order.StoreName = ReadColumn(reader, "StoreName").ToString();
+                order.RequestDeliveryTime = (DateTime)ReadColumn(reader, "RequestDeliveryTime");
+                order.DateTime = (DateTime)ReadColumn(reader, "DateTime");
+                order.TotalPrice = (float)ReadColumn(reader, "TotalPrice");
+                order.TotalItems = (int)ReadColumn(reader, "TotalItems");
+                orders.Add(order);
+            }
+            reader.NextResult();
+            foreach (Order order in orders)
+            {
+                reader.Read();
+                order.AddressLine2 = ReadColumn(reader, "AddressLine2").ToString();
+                order.StreetAddress = ReadColumn(reader, "Street").ToString();
+                order.City = ReadColumn(reader, "City").ToString();
+                order.State = ReadColumn(reader, "State").ToString();
+                order.ZipCode = ReadColumn(reader, "ZipCode").ToString();
+            }
+            reader.Close();
+            searchResult.Results = orders;
+            return searchResult;
         }
 
         public Statistic GetStatistic(int groceryId)

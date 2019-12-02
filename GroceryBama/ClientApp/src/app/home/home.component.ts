@@ -67,7 +67,7 @@ export class HomeComponent {
         if (this.authenticator.isLoggedIn) {
             this.http.post<any>(this.baseUrl + 'stores/addtocart', { groceryId: this.groceryId, itemId: itemId, quantity: parseInt(ref.value) }).subscribe(result => {
                 if (result.success) this.navMenuService.cartQuantityUpdate(result.data.cartQuantity);
-                this.snackBar.open("Your item is added to cart", null, { duration: 200000, verticalPosition: "bottom", panelClass: "mat-stack-bar-success" });
+                this.snackBar.open("Your item is added to cart", null, { duration: 2000, verticalPosition: "bottom", panelClass: "mat-stack-bar-success" });
             }, error => console.error(error));
         }
         else {
