@@ -6,11 +6,11 @@ IE is not recommmanded
 # How To Run (Binary)
 System Reuqirements: Windows 7 or higher
 
-Step 1. Download and install .NET Core 3.0 hosting bundle: [[Download] https://dotnet.microsoft.com/download/dotnet-core/thank-you/runtime-aspnetcore-3.0.1-windows-hosting-bundle-installer]
+Step 1. Download and install .NET Core 3.0 hosting bundle: [[Download](https://dotnet.microsoft.com/download/dotnet-core/thank-you/runtime-aspnetcore-3.0.1-windows-hosting-bundle-installer)]
 
 Step 2. Disable windows firewalls & and antivirus if necessary
 
-Step 3. Run the scripts in MySQL Workbench,[[Scripts] https://docs.google.com/document/d/11RKRwwu7tyrILoEFjJlEf7VItdrr4hJiTAsBCoXQvAY/edit?usp=sharing]
+Step 3. Run the scripts in MySQL Workbench,[[Scripts](https://docs.google.com/document/d/11RKRwwu7tyrILoEFjJlEf7VItdrr4hJiTAsBCoXQvAY/edit?usp=sharing)]
 
 Note: make sure the port number of the instance is the default one: 3306
 
@@ -34,30 +34,5 @@ It is recommended to use the following settings during installation
 
 `Authentication Method`  Use Legacy Authentication Method
 
-Then use the script to create a new user and database, if you want to use names or credentials other than default, remember to change the file `AppInformation.cs` under project root folder and exclude it in `.gitignore`.
-```sql
-DROP DATABASE  IF EXISTS grocerybama;
-CREATE DATABASE grocerybama;
-USE grocerybama;
+Then use the scripts above to create a new user and database, if you want to use names or credentials other than default, remember to change the file `AppInformation.cs` under project root folder and exclude it in `.gitignore`.
 
-DROP USER IF EXISTS 'grocerybama.admin'@'localhost';
-CREATE USER  'grocerybama.admin'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-GRANT ALL PRIVILEGES ON grocerybama . * TO 'grocerybama.admin'@'localhost';
-FLUSH PRIVILEGES;
-
-
-CREATE TABLE userexample
-(
-    fname VARCHAR(20) NOT NULL,
-    lname VARCHAR(20) NOT NULL,
-    username VARCHAR(50) NOT NULL,
-    password VARCHAR(50) NOT NULL,
-    role VARCHAR(15) NOT NULL,
-    CONSTRAINT uepk PRIMARY KEY(username)
-) Engine=InnoDB;
-
-INSERT INTO userexample VALUES('John', 'Smith', 'jSmith', '123456', 'buyer');
-INSERT INTO userexample VALUES('Franklin', 'Wong', 'fWong', 'qwerty', 'deliverer');
-INSERT INTO userexample VALUES('Alicia', 'Zelaya', 'aZelaya', '000000', 'manager');
-INSERT INTO userexample VALUES('Jennifer', 'Wallace', 'jWallace', 'eyr#{2 %DDk--=?=23fere', 'admin');
-```
