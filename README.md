@@ -1,7 +1,7 @@
-# How To Run (Url)
+# DEMO
 Open https://grocerybama.com/
 
-IE is not recommmanded
+IE is not recommended
 
 # How To Run (Binary)
 System Reuqirements: Windows 7 or higher
@@ -14,7 +14,7 @@ Step 3. Run the scripts in MySQL Workbench,[[Scripts](https://docs.google.com/do
 
 Note: make sure the port number of the instance is the default one: 3306
 
-Step 4. Go to the folder GroceryBama\bin\Release\, Run GroceryBama as administrator
+Step 4. Go to the folder GroceryBama\bin\Release\, Run GroceryBama.exe as administrator
 
 Step 5. Open the localhost url in browser with displayed port number
 
