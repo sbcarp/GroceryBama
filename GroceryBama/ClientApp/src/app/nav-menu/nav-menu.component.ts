@@ -22,7 +22,7 @@ export class NavMenuComponent {
     constructor(
         private http: HttpClient,
         @Inject('BASE_URL') private baseUrl: string,
-        private authenticator: Authenticator,
+        public authenticator: Authenticator,
         private router: Router,
         private navMenuService: NavMenuService) {
         

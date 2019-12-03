@@ -5,7 +5,7 @@
     <button mat-raised-button [color]="'custom-primary'" (click)="onCheckOut()">Checkout</button>
   </div>
   <h2>Delivery Options</h2>
-  <div class="account-info-container">
+  <div class="center-block-container">
     <div class="row" style="padding: 20px;">
       <mat-form-field class="col-4">
         <mat-label>Delivery Time</mat-label>
@@ -25,12 +25,12 @@
     </div>
   </div>
   <h2>Address</h2>
-  <div class="account-info-container">
+  <div class="center-block-container">
     <app-address></app-address>
   </div>
 
   <h2>Payment Methods</h2>
-  <div class="account-info-container">
+  <div class="center-block-container">
     <app-payment-methods #paymentMethods [selectMode]="true"></app-payment-methods>
   </div>
 </div>

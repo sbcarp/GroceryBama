@@ -14,13 +14,13 @@ import { NavMenuService } from '../nav-menu/nav-menu.service'
 export class ItemsListComponent {
 /** items-list ctor */
     //items: object[];
-    private items;
+    items: any;
     private itemsObservable = new ReplaySubject(1);
     @Input() isCartMode: boolean;
     @Input() orderId: number;
     groceryIdSubscription: Subscription;
     groceryId: number;
-    constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private authenticator: Authenticator,
+    constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, public authenticator: Authenticator,
                 private navMenuService: NavMenuService,) {
         
     }

@@ -10,15 +10,47 @@ namespace GroceryBama.MySqlScripts
     {
         public User RegisterBuyer(User user)
         {
-            return new User();
+            MySqlDataReader reader = GetStoredProcedureReader("RegisterBuyer",
+                            new MySqlParameter("@p_username", user.Username),
+                            new MySqlParameter("@p_firstname", user.Firstname),
+                            new MySqlParameter("@p_lastname", user.Lastname),
+                            new MySqlParameter("@p_password", user.Password),
+                            new MySqlParameter("@p_phone", user.PhoneNumber),
+                            new MySqlParameter("@p_email", user.Email),
+                            new MySqlParameter("@p_street", user.StreetAddress),
+                            new MySqlParameter("@p_city", user.City),
+                            new MySqlParameter("@p_addressline2", user.AddressLine2),
+                            new MySqlParameter("@p_zipcode", user.ZipCode),
+                            new MySqlParameter("@p_state", user.State));
+            reader.Close();
+            return GetUserInfo(user.Username);
         }
         public User RegisterDeliverer(User user)
         {
-            return new User();
+            MySqlDataReader reader = GetStoredProcedureReader("RegisterDeliverer",
+                            new MySqlParameter("@p_username", user.Username),
+                            new MySqlParameter("@p_firstname", user.Firstname),
+                            new MySqlParameter("@p_lastname", user.Lastname),
+                            new MySqlParameter("@p_password", user.Password),
+                            new MySqlParameter("@p_phone", user.PhoneNumber),
+                            new MySqlParameter("@p_email", user.Email),
+                            new MySqlParameter("@p_confirmationCode", user.ConfirmationCode));
+            reader.Close();
+            return GetUserInfo(user.Username);
         }
         public User RegisterManager(User user)
         {
-            return new User();
+            MySqlDataReader reader = GetStoredProcedureReader("RegisterManager",
+                            new MySqlParameter("@p_username", user.Username),
+                            new MySqlParameter("@p_firstname", user.Firstname),
+                            new MySqlParameter("@p_lastname", user.Lastname),
+                            new MySqlParameter("@p_password", user.Password),
+                            new MySqlParameter("@p_phone", user.PhoneNumber),
+                            new MySqlParameter("@p_email", user.Email),
+                            new MySqlParameter("@p_groceryID", user.GroceryId),
+                            new MySqlParameter("@p_confirmationCode", user.ConfirmationCode));
+            reader.Close();
+            return GetUserInfo(user.Username);
         }
         public List<User> DemoGetUserList()
         {
@@ -66,8 +98,10 @@ namespace GroceryBama.MySqlScripts
             user.PhoneNumber = ReadColumn(reader, "Phone").ToString();
             user.GroceryId = (int)ReadColumn(reader, "DefaultStoreID");
             // Buyer attributes
-            if (ReadColumn(reader, "DefaultPaymentId") == System.DBNull.Value) return user;
-            user.DefaultPaymentMethodId = (int)ReadColumn(reader, "DefaultPaymentId");
+            if (user.Role != "buyer") return user;
+            if (ReadColumn(reader, "DefaultPaymentId") == System.DBNull.Value) user.DefaultPaymentMethodId = null;
+            else user.DefaultPaymentMethodId = (int)ReadColumn(reader, "DefaultPaymentId");
+
             user.AddressLine2 = ReadColumn(reader, "AddressLine2").ToString();
             user.StreetAddress = ReadColumn(reader, "Street").ToString();
             user.City = ReadColumn(reader, "City").ToString();
@@ -120,26 +154,35 @@ namespace GroceryBama.MySqlScripts
 
         public User AddPaymentMethod(string username, string name, string accountNumber, string routineNumber, bool isDefault)
         {
-            User user = GetUserInfo(username);
-            PaymentMethod paymentMethod = new PaymentMethod();
-            paymentMethod.Id = 3;
-            paymentMethod.Name = name;
-            paymentMethod.AccountNumber = accountNumber;
-            paymentMethod.RoutineNumber = routineNumber;
-            user.PaymentMethods.Add(paymentMethod);
-            return user;
+            MySqlDataReader reader = GetStoredProcedureReader("AddUserPaymentMethod",
+                        new MySqlParameter("@p_username", username),
+                        new MySqlParameter("@p_paymentname", name),
+                        new MySqlParameter("@p_AccountNumber", accountNumber),
+                        new MySqlParameter("@p_RoutineNumber", routineNumber),
+                        new MySqlParameter("@p_isDefault", isDefault));
+            reader.Close();
+            return GetUserInfo(username);
         }
         public User UpdatePaymentMethod(string username, int paymentMethodId, string name, string accountNumber,
                                         string routineNumber, bool isDefault)
         {
-            User user = GetUserInfo(username);
-            return user;
+            MySqlDataReader reader = GetStoredProcedureReader("UpdateUserPaymentMethod",
+                         new MySqlParameter("@p_paymentID", paymentMethodId),
+                         new MySqlParameter("@p_username", username),
+                         new MySqlParameter("@p_paymentname", name),
+                         new MySqlParameter("@p_AccountNumber", accountNumber),
+                         new MySqlParameter("@p_RoutineNumber", routineNumber),
+                         new MySqlParameter("@p_isDefault", isDefault));
+            reader.Close();
+            return GetUserInfo(username);
         }
         public User DeletePaymentMethod(string username, int paymentMethodId)
         {
-            User user = GetUserInfo(username);
-            user.PaymentMethods.Remove(user.PaymentMethods.Last());
-            return user;
+            MySqlDataReader reader = GetStoredProcedureReader("DeleteUserPaymentMethod",
+                         new MySqlParameter("@p_username", username),
+                         new MySqlParameter("@p_paymentID", paymentMethodId));
+            reader.Close();
+            return GetUserInfo(username);
         }
         public void SwitchStore(string username, int groceryId)
         {

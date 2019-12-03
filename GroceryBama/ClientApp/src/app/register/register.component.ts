@@ -1,7 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
@@ -10,6 +11,7 @@ import { Router } from '@angular/router';
 /** register component*/
 export class RegisterComponent {
 /** register ctor */
+    stores = [];
     registerBuyer = new FormGroup({
         username: new FormControl('', Validators.required),
         password: new FormControl('', Validators.required),
@@ -31,7 +33,7 @@ export class RegisterComponent {
         email: new FormControl('', Validators.required),
         phoneNumber: new FormControl('', Validators.required),
         confirmationCode: new FormControl('', Validators.required),
-        groceryId: new FormControl('', Validators.required),
+        groceryId: new FormControl(1, Validators.required),
     });
     registerDeliverer = new FormGroup({
         username: new FormControl('', Validators.required),
@@ -50,8 +52,11 @@ export class RegisterComponent {
         email: new FormControl('', Validators.required),
         phoneNumber: new FormControl('', Validators.required),
     });
-    constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router) {
-
+    constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private router: Router,
+                private snackBar: MatSnackBar,) {
+        this.http.get<any>(this.baseUrl + 'stores/getStores').subscribe(result => {
+            this.stores = result.data;
+        }, error => console.error(error));
     }
     getFormContent(formGroup: FormGroup) {
         var formContent = {};
@@ -63,23 +68,27 @@ export class RegisterComponent {
     onRegisterBuyerSubmit() {
         var formContent = this.getFormContent(this.registerBuyer);
         formContent["role"] = "buyer";
-        this.http.post<any>(this.baseUrl + 'users/register', formContent).subscribe(result => {
-            this.router.navigate(['/login']);
-        }, error => console.error(error));
-        
+        this.callRegistration(formContent);
     }
     onRegisterDelivererSubmit() {
         var formContent = this.getFormContent(this.registerDeliverer);
         formContent["role"] = "deliverer";
-        this.http.post<any>(this.baseUrl + 'users/register', formContent).subscribe(result => {
-            this.router.navigate(['/login']);
-        }, error => console.error(error));
+        this.callRegistration(formContent);
     }
     onRegisterManagerSubmit() {
         var formContent = this.getFormContent(this.registerManager);
         formContent["role"] = "manager";
+        this.callRegistration(formContent);
+    }
+    callRegistration(formContent) {
         this.http.post<any>(this.baseUrl + 'users/register', formContent).subscribe(result => {
-            this.router.navigate(['/login']);
-        }, error => console.error(error));
+            if (result.success) {
+                this.snackBar.open("Your account has been created :)", null, { duration: 4000, verticalPosition: "bottom", panelClass: "mat-stack-bar-success" });
+                this.router.navigate(['/login']);
+            }
+            else {
+                this.snackBar.open("Registration failed: " + result.message, null, { duration: 4000, verticalPosition: "bottom", panelClass: "mat-stack-bar-success" });
+            }
+        }, error => this.snackBar.open("Network error :(", null, { duration: 2000, verticalPosition: "bottom", panelClass: "mat-stack-bar-success" }));
     }
 }

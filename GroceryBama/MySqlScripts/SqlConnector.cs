@@ -17,7 +17,6 @@ namespace GroceryBama.MySqlScripts
             connectionString.Database = AppInformation.SqlDatabase;
             Connection = new MySqlConnection(connectionString.ToString());
             Connection.Open();
-            Console.WriteLine("Connection Opened");
         }
         public MySqlDataReader GetStoredProcedureReader(string procedureName, params MySqlParameter[] mySqlParameters)
         {
@@ -34,7 +33,6 @@ namespace GroceryBama.MySqlScripts
         public void Dispose()
         {
             Connection.Close();
-            Console.WriteLine("Connection Closed");
         }
     }
 }

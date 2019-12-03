@@ -112,7 +112,11 @@
             <input matInput formControlName="confirmationCode" placeholder="Confirmation Code">
           </mat-form-field>
           <mat-form-field class="col-6">
-            <input matInput formControlName="groceryId" placeholder="Assign Store">
+            <!--<input matInput formControlName="groceryId" placeholder="Assign Store">-->
+            <mat-label>Assign Store</mat-label>
+            <mat-select formControlName="groceryId" required>  <!--[(ngModel)]="deliveryTime">-->
+              <mat-option *ngFor="let store of stores" [value]="store.id">{{store.name}}</mat-option>
+            </mat-select>
           </mat-form-field>
           <button id="login-button" type="submit" mat-raised-button [color]="'custom-primary'">Register Manager</button>
         </div>

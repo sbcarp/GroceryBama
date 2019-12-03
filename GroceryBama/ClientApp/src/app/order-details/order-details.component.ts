@@ -11,8 +11,8 @@ export class OrderDetailsComponent {
 /** order-details ctor */
     receiptMode: boolean;
     orderId: number;
-    order = {};
-    items = {};
+    order: any;
+    items: any;
     constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string,
                 private route: ActivatedRoute) {
         var queryParamMap = this.route.snapshot.queryParamMap;

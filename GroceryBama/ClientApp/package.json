@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod --aot --optimization --build-optimizer --vendor-chunk --common-chunk --extract-licenses --extract-css --source-map=false",
     "build:ssr": "ng run GroceryBama:server:dev",
     "test": "ng test",
     "lint": "ng lint",
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.800.6",
-    "@angular/cli": "8.0.6",
+    "@angular/cli": "^8.3.20",
     "@angular/compiler-cli": "8.0.0",
     "@angular/language-service": "8.0.0",
     "@types/jasmine": "~3.3.9",

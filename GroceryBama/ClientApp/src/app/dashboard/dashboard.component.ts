@@ -13,8 +13,8 @@ export class DashboardComponent {
 /** dashboard ctor */
     groceryIdSubscription: Subscription;
     groceryId: number;
-    statistic: object = {};
-    constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private authenticator: Authenticator) {
+    statistic: any;
+    constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, public authenticator: Authenticator) {
         this.groceryIdSubscription = authenticator.groceryId.subscribe(groceryId => {
             this.groceryId = groceryId;
             this.getStatistic(groceryId);

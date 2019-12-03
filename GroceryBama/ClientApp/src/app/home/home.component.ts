@@ -26,7 +26,7 @@ export class HomeComponent {
     constructor(private http: HttpClient,
         @Inject('BASE_URL') private baseUrl: string,
         private navMenuService: NavMenuService,
-        private authenticator: Authenticator,
+        public authenticator: Authenticator,
         private router: Router,
         private snackBar: MatSnackBar) {
         this.filters = [
@@ -65,9 +65,10 @@ export class HomeComponent {
     addToCart(itemId, ref) {
         this.adjustItemQuantity(ref, 0);
         if (this.authenticator.isLoggedIn) {
-            this.http.post<any>(this.baseUrl + 'stores/addtocart', { groceryId: this.groceryId, itemId: itemId, quantity: parseInt(ref.value) }).subscribe(result => {
+            var quantity = parseInt(ref.value);
+            this.http.post<any>(this.baseUrl + 'stores/addtocart', { groceryId: this.groceryId, itemId: itemId, quantity: quantity }).subscribe(result => {
                 if (result.success) this.navMenuService.cartQuantityUpdate(result.data.cartQuantity);
-                this.snackBar.open("Your item is added to cart", null, { duration: 2000, verticalPosition: "bottom", panelClass: "mat-stack-bar-success" });
+                this.snackBar.open("Your " + (quantity <= 1 ? "item is":"items are") + " added to cart", null, { duration: 2000, verticalPosition: "bottom", panelClass: "mat-stack-bar-success" });
             }, error => console.error(error));
         }
         else {

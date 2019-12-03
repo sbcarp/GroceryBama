@@ -11,8 +11,6 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { NavMenuService } from './nav-menu/nav-menu.service'
 import { Authenticator } from 'src/app/_services/authenticator'
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginComponent, BottomSheetUserList } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ManagerComponent } from './manager/manager.component';
@@ -52,8 +50,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         AppComponent,
         NavMenuComponent,
         HomeComponent,
-        CounterComponent,
-        FetchDataComponent,
         LoginComponent,
         AccountComponent,
         ManagerComponent,

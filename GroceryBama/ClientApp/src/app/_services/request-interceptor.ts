@@ -6,7 +6,7 @@ import { timeout } from 'rxjs/operators';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
-    constructor(private authenticator: Authenticator, @Inject('BASE_URL') private baseUrl: string) { }
+    constructor(public authenticator: Authenticator, @Inject('BASE_URL') private baseUrl: string) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (this.authenticator == undefined) return next.handle(request);

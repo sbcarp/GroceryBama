@@ -1,6 +1,6 @@
 <div class="center-block">
   <h2>Account</h2>
-  <div class="account-info-container">
+  <div class="center-block-container">
     <form [formGroup]="contact" (ngSubmit)="onSubmit()">
       <div class="row">
         <mat-form-field class="col-4">
@@ -30,12 +30,12 @@
   </div>
 
   <h2 *ngIf="authenticator.role == 'buyer'">Address</h2>
-  <div class="account-info-container" *ngIf="authenticator.role == 'buyer'">
+  <div class="center-block-container" *ngIf="authenticator.role == 'buyer'">
     <app-address></app-address>
   </div>
 
   <h2 *ngIf="authenticator.role == 'buyer'">Payment Methods</h2>
-  <div class="account-info-container" *ngIf="authenticator.role == 'buyer'">
+  <div class="center-block-container" *ngIf="authenticator.role == 'buyer'">
     <app-payment-methods></app-payment-methods>
   </div>
 </div>

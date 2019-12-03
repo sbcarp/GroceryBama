@@ -1,7 +1,7 @@
 <div class="center-block">
   <h2 *ngIf="receiptMode"><i class="far fa-check-circle" style="color: #4CAF50;"></i>&nbsp;Your order has been placed</h2>
   <h2 *ngIf="!receiptMode">Order Details</h2>
-  <div class="account-info-container" style="padding: 20px;">
+  <div class="center-block-container" style="padding: 20px;">
     <div class="row">
       <span class="col-6">Order Id</span>
       <span class="col-6">{{ order.orderId != undefined ? order.orderId.toString().padStart(9, '0') : '' }}</span>
@@ -14,6 +14,11 @@
       <span class="col-6">Placed On</span>
       <span class="col-6">{{ order.dateTime }}</span>
     </div>
+    <div class="row">
+      <span class="col-6">Schedule Deliver On</span>
+      <span class="col-6">{{ order.requestDeliveryTime }}</span>
+    </div>
+    
     <div class="row">
       <span class="col-6">Number of Items</span>
       <span class="col-6">{{ order.totalItems }}</span>
@@ -35,7 +40,7 @@
       <button mat-stroked-button *ngIf="!receiptMode" [routerLink]="['/myorders']" class="my-orders-button">Back to My Orders</button>
     </div>
   </div>
-  <div class="account-info-container">
+  <div class="center-block-container">
     <app-items-list [isCartMode]="false" [orderId]="orderId"></app-items-list>
   </div>
 </div>

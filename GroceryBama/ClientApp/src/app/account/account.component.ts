@@ -20,7 +20,7 @@ export class AccountComponent {
         email: new FormControl(null, Validators.required),
     });
     isInfoChanged = false;
-    constructor(private authenticator: Authenticator, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string ) {
+    constructor(public authenticator: Authenticator, private http: HttpClient, @Inject('BASE_URL') private baseUrl: string ) {
         this.getUserContact();
     }
     getUserContact() {

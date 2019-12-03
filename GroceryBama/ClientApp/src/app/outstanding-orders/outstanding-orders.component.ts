@@ -17,7 +17,7 @@ export class OutstandingOrdersComponent {
     groceryIdSubscription: Subscription;
     groceryId: number;
 
-    constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, private authenticator: Authenticator) {
+    constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string, public authenticator: Authenticator) {
         this.groceryIdSubscription = authenticator.groceryId.subscribe(groceryId => {
             this.groceryId = groceryId;
             this.getOutstandingOrders(groceryId, 1, 10);

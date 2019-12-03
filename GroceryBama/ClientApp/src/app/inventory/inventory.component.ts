@@ -21,7 +21,7 @@ export class InventoryComponent {
     resultsLength: number;
     @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
     constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string,
-        private authenticator: Authenticator,
+        public authenticator: Authenticator,
         private dialog: MatDialog) {
         this.groceryIdSubscription = authenticator.groceryId.subscribe(groceryId => {
             this.groceryId = groceryId;
@@ -91,7 +91,7 @@ export class UpdateQuantityDialog {
     @ViewChild('ConfirmButton', { static: false}) ConfirmButton: ElementRef;
     constructor(
         public dialogRef: MatDialogRef<UpdateQuantityDialog>,
-        @Inject(MAT_DIALOG_DATA) public data: object) {
+        @Inject(MAT_DIALOG_DATA) public data: any) {
         
     }
     ngAfterViewInit() {

@@ -18,7 +18,7 @@ export class LoginComponent  {
         password: new FormControl('', Validators.required),
     });
     constructor(
-        private authenticator: Authenticator,
+        public authenticator: Authenticator,
         private router: Router,
         private snackBar: MatSnackBar,
         private matBottomSheet: MatBottomSheet,
@@ -48,12 +48,14 @@ export class LoginComponent  {
                         else this.router.navigate(['/']);
                     }
                     else {
-                        if (result.errorCode == 5002) this.snackBar.open("Incorrect username or password :(", null, {duration: 2000});
-                        else this.snackBar.open("Server error :(", null, { duration: 2000 });
+                        
+                        if (result.errorCode == 5002) this.snackBar.open("Incorrect username or password :(", null, { duration: 2000, verticalPosition: "bottom", panelClass: "mat-stack-bar-success" });
+                        else this.snackBar.open("Server error :(", null, { duration: 2000, verticalPosition: "bottom", panelClass: "mat-stack-bar-success" });
+                        
                     }
                 },
                 error => {
-                    this.snackBar.open("Network error :(", null, { duration: 2000 });
+                    this.snackBar.open("Network error :(", null, { duration: 2000, verticalPosition: "bottom", panelClass: "mat-stack-bar-success" });
                     console.log(error);
                 }
             )
@@ -72,7 +74,7 @@ export class BottomSheetUserList {
         @Inject(MAT_BOTTOM_SHEET_DATA) private data: any,
         private http: HttpClient,
         @Inject('BASE_URL') private baseUrl: string,
-        private authenticator: Authenticator, ) {
+        public authenticator: Authenticator, ) {
         this.http.get<any>(this.baseUrl + 'users/demoGetUserList').subscribe(result => {
             if (result.success) this.users = result.data;
         }, error => console.error(error));

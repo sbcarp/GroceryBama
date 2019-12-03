@@ -1,7 +1,8 @@
 <div class="center-block">
+  <h2 *ngIf="orders == null">No Order Found</h2>
   <div *ngFor="let order of orders">
-    <h2 *ngIf="isDateDisplay(order)">{{ lastReformatedDate }}</h2>
-    <div class="account-info-container" >
+    <h2 *ngIf="isDateDisplay(order)">{{ order.displayDate }}</h2>
+    <div class="center-block-container">
       <div class="row no-gutters order-header">
         <h4 class="status col-8" [ngClass]="orderStatusToClass(order.status)">{{ orderStatusToString(order.status) }}</h4>
         <h6 class="orderId col-4">Order # {{ order.orderId.toString().padStart(9, '0') }}</h6>

@@ -20,7 +20,7 @@ export class CheckoutComponent {
     groceryId: number;
     @ViewChild('paymentMethods', {static: false}) paymentMethods: PaymentMethodsComponent;
     constructor(private http: HttpClient,@Inject('BASE_URL') private baseUrl: string,
-        private authenticator: Authenticator, private router: Router,
+        public authenticator: Authenticator, private router: Router,
         private snackBar: MatSnackBar) {
         this.groceryId = authenticator.groceryIdValue;
         var params = new HttpParams().append('groceryId', this.groceryId.toString());
