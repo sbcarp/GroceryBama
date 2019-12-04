@@ -10,7 +10,7 @@ Step 1. Download and install .NET Core 3.0 hosting bundle: [[Download](https://d
 
 Step 2. Disable windows firewalls & and antivirus if necessary
 
-Step 3. Run the scripts in MySQL Workbench,[[Scripts](https://docs.google.com/document/d/11RKRwwu7tyrILoEFjJlEf7VItdrr4hJiTAsBCoXQvAY/edit?usp=sharing)]
+Step 3. Import the dump file in MySQL Workbench,[[Scripts](https://drive.google.com/file/d/1yf4fUjfV7zZuAH3G6-4kyf-3oMoLrS9m/view?usp=sharing)]
 
 Note: make sure the port number of the instance is the default one: 3306
 
