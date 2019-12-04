@@ -14,7 +14,7 @@ Step 3. Import the dump file in MySQL Workbench, don't run it in script window [
 
 Note: make sure the port number of the instance is the default one: 3306
 
-Step 4. Go to the folder GroceryBama\bin\Release\, Run GroceryBama.exe as administrator
+Step 4. Go to the folder GroceryBama\bin\Release\netcoreapp3.0\publish\, Run GroceryBama.exe as administrator
 
 Step 5. Open the localhost url in browser with displayed port number
 
