@@ -20,7 +20,7 @@
             <span *ngIf="item.quantity">{{ item.quantity }}&nbsp;left</span>
           </div>
           <div class="inner-container">
-            <div class="img-container">
+            <div class="img-container" (click)="showExpireDate(item.expirationDate)">
               <img src="{{ 'assets/images/' + item.pictureUrl }}" class="pic" alt="...">
             </div>
             <div class="item-info-container flex flex-column">

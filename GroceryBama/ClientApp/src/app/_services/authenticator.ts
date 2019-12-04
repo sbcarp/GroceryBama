@@ -3,19 +3,23 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
+
 @Injectable({ providedIn: 'root' })
 export class Authenticator{
     private _currentUser;
     private currentGroceryId = new ReplaySubject<number>(1);
     private currentGroceryIdValue: number = 1;
     constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+        console.log("Authenticator is initialized");
         this._currentUser = JSON.parse(localStorage.getItem('currentUser'));
         //var gid = localStorage.getItem('currentGroceryId');
         this.setGroceryId(1);
-        //this.http.get<any>(this.baseUrl + 'stores/getStores').then(result => {
-        //    this.setGroceryId(result.data[0].id);
-        //    //this.currentGroceryId.next(gid != null ? parseInt(gid) : null);
-        //});
+        if (this._currentUser != null) {
+            fetch(this.baseUrl + 'users/CheckAuthenticationStatus', { headers: new Headers({ "Authorization": "Bearer " + this._currentUser.token }) })
+                .then(response => { if (response.status == 401) this.logout() })
+                .catch(() => console.log("CheckAuthenticationStatus network error"));
+        }
+        
     }
 
     public get isLoggedIn() {
@@ -36,7 +40,6 @@ export class Authenticator{
     }
     public setGroceryId(groceryId: number) {
         //localStorage.setItem('currentGroceryId', this.currentGroceryId._getNow().toString());
-        console.log('GroceryID is set to ' + groceryId);
         this.currentGroceryIdValue = groceryId;
         this.currentGroceryId.next(groceryId);
     }

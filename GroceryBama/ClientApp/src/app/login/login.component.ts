@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Authenticator } from 'src/app/_services/authenticator'
@@ -74,9 +74,11 @@ export class BottomSheetUserList {
         @Inject(MAT_BOTTOM_SHEET_DATA) private data: any,
         private http: HttpClient,
         @Inject('BASE_URL') private baseUrl: string,
-        public authenticator: Authenticator, ) {
+        public authenticator: Authenticator,
+        private changeDetectorRef: ChangeDetectorRef) {
         this.http.get<any>(this.baseUrl + 'users/demoGetUserList').subscribe(result => {
             if (result.success) this.users = result.data;
+            changeDetectorRef.markForCheck();
         }, error => console.error(error));
     }
     selectUser(username, password): void {

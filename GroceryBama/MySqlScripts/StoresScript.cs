@@ -100,7 +100,7 @@ namespace GroceryBama.MySqlScripts
         {
 
         }
-        public SearchResult GetItems(int groceryId, int startIndex, int endIndex, string foodGroup)
+        public SearchResult GetItems(int? groceryId, int startIndex, int endIndex, string foodGroup)
         {
             MySqlDataReader reader = GetStoredProcedureReader("SearchItems",
                             new MySqlParameter("@p_groceryID", groceryId),

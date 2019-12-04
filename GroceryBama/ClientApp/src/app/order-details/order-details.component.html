@@ -15,10 +15,9 @@
       <span class="col-6">{{ order.dateTime }}</span>
     </div>
     <div class="row">
-      <span class="col-6">Schedule Deliver On</span>
+      <span class="col-6">Schedule Delivery On</span>
       <span class="col-6">{{ order.requestDeliveryTime }}</span>
     </div>
-    
     <div class="row">
       <span class="col-6">Number of Items</span>
       <span class="col-6">{{ order.totalItems }}</span>
@@ -35,6 +34,15 @@
       <span class="col-6">Address</span>
       <span class="col-6">{{ order.addressLine2 }}<br />{{ order.streetAddress }}</span>
     </div>
+    <div class="row">
+      <span class="col-6">Deliverer Username</span>
+      <span class="col-6">{{ order.delivererUsername }}</span>
+    </div>
+    <div class="row">
+      <span class="col-6">Delivery Instructions</span>
+      <span class="col-6">{{ order.deliveryInstructions }}</span>
+    </div>
+
     <div class="row">
       <button mat-stroked-button *ngIf="receiptMode" [routerLink]="['/myorders']" class="my-orders-button">Go to My Orders</button>
       <button mat-stroked-button *ngIf="!receiptMode" [routerLink]="['/myorders']" class="my-orders-button">Back to My Orders</button>

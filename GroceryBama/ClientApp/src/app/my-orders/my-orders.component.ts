@@ -16,6 +16,7 @@ export class MyOrdersComponent {
     items: object[];
     orders: object[];
     lastReformatedDate: string = "";
+    pageStatus: string = "Loading";
     constructor(private http: HttpClient,
                 @Inject('BASE_URL') private baseUrl: string,
         public authenticator: Authenticator,
@@ -23,11 +24,16 @@ export class MyOrdersComponent {
         private changeDetectorRef: ChangeDetectorRef) {
         
         var params = new HttpParams().append('startIndex', '1')
-            .append('endIndex', '10');
+            .append('endIndex', '100');
         this.http.get<any>(this.baseUrl + 'stores/GetOrders', { params }).subscribe(result => {
             if (result.success) this.orders = result.data.results;
+            else if (result.errorCode == 5009) this.pageStatus = "No Order or Assignment Found";
+            else this.pageStatus = "Error when loading this page";
             console.log(this.orders);
-        }, error => console.error(error));
+        }, error => {
+                this.pageStatus = "Error when loading this page";
+            console.error(error)
+        });
     }
     ngAfterContentChecked() {
         //this.changeDetectorRef.detectChanges();
@@ -57,7 +63,8 @@ export class MyOrdersComponent {
             return dayToName[givenDayInTheWeek];
         }
         if (diffInDays > 7 && givenDateTime.getFullYear() == todayDateTime.getFullYear()) {
-            return (givenDateTime.getMonth() + 1) + "/" + givenDateTime.getDate();
+            var monthToName = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            return monthToName[givenDateTime.getMonth()] + " " + givenDateTime.getDate();
         }
         return (givenDateTime.getMonth() + 1) + "/" + givenDateTime.getDate() + "/" + givenDateTime.getFullYear();
     }
@@ -100,11 +107,12 @@ export class MyOrdersComponent {
     //    if (order.status == 0) return true;
     //    return false;
     //}
-    reformatTime(requestDeliveryTime) {
+    reformatTime(requestDeliveryTime, status) {
         var today: Date = new Date();
         var dateTimeObj: Date = new Date(requestDeliveryTime);
+        if (dateTimeObj.getTime() < today.getTime() && status < 2) return "ASAP";
         var diffInDays: number = this.getDiffInDays(dateTimeObj);
-        if (Math.abs(diffInDays) > 1) return (dateTimeObj.getMonth()+1) + '/' + dateTimeObj.getDate();
+        if (Math.abs(diffInDays) > 1) return this.dateDisplayReformat(requestDeliveryTime);
         var preffix: string = diffInDays != 0 ? this.dateDisplayReformat(requestDeliveryTime) : '';
         var suffix: string = dateTimeObj.getHours() < 12 ? "AM" : "PM";
         var hours = dateTimeObj.getHours() <= 12 ? dateTimeObj.getHours() : dateTimeObj.getHours() - 12;

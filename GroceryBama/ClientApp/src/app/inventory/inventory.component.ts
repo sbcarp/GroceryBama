@@ -29,7 +29,7 @@ export class InventoryComponent {
         });
     }
     getItems(groceryId: number, startIndex: number, endIndex: number, foodGroup: string) {
-        var params = new HttpParams().append('groceryId', groceryId.toString()).append('startIndex', startIndex.toString())
+        var params = new HttpParams().append('startIndex', startIndex.toString())
             .append('endIndex', endIndex.toString()).append('foodGroup', foodGroup);
         this.http.get<any>(this.baseUrl + 'stores/getitems', { params }).subscribe(result => {
             console.log(result);

@@ -87,4 +87,8 @@ export class HomeComponent {
         if (endIndex > pageEvent.length) endIndex = pageEvent.length;
         this.getItems(groceryId, startIndex, endIndex, this.foodGroup);
     }
+    showExpireDate(dateStr: string) {
+        var dateObj: Date = new Date(dateStr);
+        this.snackBar.open("The item expires on " + (dateObj.getMonth()+1) + "/" + dateObj.getDate() + "/" + dateObj.getFullYear(), null, { duration: 2000, verticalPosition: "bottom", panelClass: "mat-stack-bar-success" });
+    }
 }

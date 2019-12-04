@@ -49,7 +49,7 @@ namespace GroceryBama.Controllers
 
         [AllowAnonymous]
         [HttpGet("GetItems")]
-        public ActionResult GetItems(int groceryId, int startIndex, int endIndex, string foodGroup)
+        public ActionResult GetItems(int? groceryId, int startIndex, int endIndex, string foodGroup)
         {
             try
             {

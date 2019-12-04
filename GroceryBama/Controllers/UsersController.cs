@@ -23,6 +23,22 @@ namespace GroceryBama.Controllers
             usersScript = new UsersScript();
         }
         [AllowAnonymous]
+        [HttpGet("CheckAuthenticationStatus")]
+        public ActionResult CheckAuthenticationStatus()
+        {
+            try
+            {
+                if (User.Identity.IsAuthenticated) return Ok();
+                else return Unauthorized();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return StatusCode(500);
+            }
+        }
+
+        [AllowAnonymous]
         [HttpGet("DemoGetUserList")]
         public JsonResult DemoGetUserList()
         {

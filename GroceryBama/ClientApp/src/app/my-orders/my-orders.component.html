@@ -1,7 +1,9 @@
 <div class="center-block">
-  <h2 *ngIf="orders == null">No Order Found</h2>
+  <h2 *ngIf="orders == null">{{pageStatus}}</h2>
   <div *ngFor="let order of orders">
-    <h2 *ngIf="isDateDisplay(order)">{{ order.displayDate }}</h2>
+    <h2 *ngIf="isDateDisplay(order)">{{ order.displayDate
+    }}
+  </h2>
     <div class="center-block-container">
       <div class="row no-gutters order-header">
         <h4 class="status col-8" [ngClass]="orderStatusToClass(order.status)">{{ orderStatusToString(order.status) }}</h4>
@@ -12,7 +14,7 @@
           <i class="fas fa-store"></i>&nbsp;{{ order.storeName }}
         </div>
         <div class="col-3">
-          <i class="fas fa-shipping-fast"></i>&nbsp;{{ reformatTime(order.requestDeliveryTime) }}
+          <i class="fas fa-shipping-fast"></i>&nbsp;{{ reformatTime(order.requestDeliveryTime, order.status) }}
         </div>
         <div class="col-3">
           <i class="fas fa-dollar-sign"></i>&nbsp;{{ order.totalPrice.toFixed(2) }}
