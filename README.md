@@ -1,7 +1,6 @@
 # DEMO
 Open https://grocerybama.com/
 
-IE is not recommended
 
 # How To Run (Binary)
 System Reuqirements: Windows 7 or higher
